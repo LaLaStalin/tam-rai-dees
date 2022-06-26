@@ -1,0 +1,78 @@
+:root {
+  --txt-header: 20px;
+  --txt-sub: 16px;
+  --txt-primary: 14px;
+  --pLR: 20px;
+  --w-screen: 1200px;
+  --bg-theme: #fff;
+  --txt-theme: #222;
+  --divider-theme: #DBDBDB;
+  --main-3-color: linear-gradient(
+    45deg,
+    #ff512f 0%,
+    #f09819 51%,
+    #ff512f 100%
+  );
+  --main-color: linear-gradient(180deg, #F53803 0%, #F5D020 100%);
+  --border-color:  linear-gradient(180deg, #fff 0%, #fff 100%) padding-box,linear-gradient(180deg, #F53803 0%, #F5D020 100%) border-box;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+
+input[type=file] {
+  display: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+input {
+  border: none;
+}
+
+button {
+  border: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,h2,h3, h4, h5 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+
+body {
+  margin: 0;
+  height: 100%;
+  /* font-family: 'Nunito', sans-serif; */
+  
+
+
+
+  font-family: 'Fira Code', monospace, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg-theme);
+}
+
+.dark {
+  --bg: #222
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

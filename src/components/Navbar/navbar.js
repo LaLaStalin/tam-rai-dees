@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import "./navbar.css";
-import { AiOutlineUser } from "react-icons/ai";
+import React from "react";
 import { FiHelpCircle } from "react-icons/fi";
 import Divider from "../Divider/divider";
 import { FaHamburger } from "react-icons/fa";
@@ -8,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import SearchInput from "../SearchInput/searchInput";
 import { AuthContext } from "../../util/context";
+import Avatar from "@mui/material/Avatar";
 
 const logoAnimate = keyframes`
     from {transform: translateY(0px);}
@@ -19,11 +18,20 @@ const NavbarContainer = styled.div`
   background: transparent;
   height: 80px;
   position: relative;
-  z-index: 99;
+  z-index: 99999;
   box-shadow: ${({ path }) =>
     path === "/login" || path === "/register"
       ? null
       : "0px 2px 10px rgba(0, 0, 0, 0.3)"};
+
+  .navbar-wrapper {
+    display: flex;
+    height: 100%;
+    max-width: var(--w-screen);
+    margin: 0 auto;
+    justify-content: space-between;
+    padding: 0 var(--pLR);
+  }
 
   .text-logo {
     color: var(--txt-theme);
@@ -32,8 +40,28 @@ const NavbarContainer = styled.div`
 
   .logo-icon {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.3));
+    font-size: 40px;
 
     animation: ${logoAnimate} 0.8s infinite alternate;
+  }
+
+  .logo-navbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 25px;
+    font-weight: 700;
+  }
+
+  .nav-mobile {
+    display: none;
+
+    @media only screen and (max-width: 940px) {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 22px;
+    }
   }
 `;
 
@@ -45,6 +73,42 @@ const AuthWrapper = styled.div`
 
   @media screen and (max-width: 940px) {
     display: none;
+  }
+
+  .profile-button {
+    border-radius: 14px;
+    /* box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3); */
+    cursor: pointer;
+    padding: 1.5px 1.5px 1.5px 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid
+      ${(props) => (props.path === "/profile" ? "transparent" : "#dbdbdb")};
+
+    background: ${(props) =>
+      props.path === "/profile"
+        ? "linear-gradient(180deg, #fff 0%, #fff 100%) padding-box,var(--main-color) border-box"
+        : null};
+  }
+
+  .Avatar {
+    border-radius: 10px;
+    background: var(--main-color);
+  }
+
+  .help-icon {
+    margin-left: 40px;
+    font-size: 24px;
+    color: #dbdbdb;
+    cursor: pointer;
+    border-radius: 15px;
+
+    &:hover {
+      border-radius: 15px;
+      transition-duration: 0.5s;
+      box-shadow: inset 0 0 0 20px #222;
+    }
   }
 `;
 
@@ -63,10 +127,6 @@ const Navbar = (props) => {
   const { user } = AuthContext();
   const location = useLocation();
   const navigate = useNavigate();
-
-  const themeHandle = () => {
-    document.body.classList.add("dark");
-  };
 
   const renderAlreayLogin = () => {
     return (
@@ -99,9 +159,15 @@ const Navbar = (props) => {
               My Recipes
             </MenuItems>
           </Link>
+
+          {/* Profile */}
           <Link to="/profile">
             <span className="profile-button">
-              <AiOutlineUser className="profile-icon" />
+              <Avatar
+                className="Avatar"
+                style={{ borderRadius: "10px" }}
+                src="/images/profile/lala.png"
+              />
             </span>
           </Link>
 
@@ -133,10 +199,13 @@ const Navbar = (props) => {
         ) : (
           <AuthWrapper>
             <Divider vertical="30px" color="var(--divider-theme)" />
-            <Link to="/login" className="auth-wrapper ">
+            <Link
+              to="/login"
+              style={{ display: "flex", alignItems: "center", gap: "10px" }}
+            >
               <MenuItems keyword="">Login</MenuItems>
               <span className="profile-button">
-                <AiOutlineUser className="profile-icon" />
+                <Avatar className="Avatar" style={{ borderRadius: "10px" }} />
               </span>
             </Link>
             <FiHelpCircle className="help-icon" />

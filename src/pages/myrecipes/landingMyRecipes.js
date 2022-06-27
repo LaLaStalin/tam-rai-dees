@@ -7,7 +7,7 @@ const ContainerLandingMyRecipes = styled.section`
   align-items: center;
   max-width: var(--w-screen);
   margin: 0 auto;
-  background-image: url("./images/bg/bg-home.png");
+  background-image: url("/images/bg/bg-home.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -62,7 +62,7 @@ const LandingMyRecipes = () => {
     <>
       <ContainerLandingMyRecipes>
         <div className="profile-img">
-          <img src="./images/profile/lala.png" />
+          <img src="/images/profile/lala.png" />
         </div>
       </ContainerLandingMyRecipes>
       <UsernameWrapper>

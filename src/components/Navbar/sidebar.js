@@ -20,7 +20,7 @@ const Menu = styled.div`
         rgba(0, 0, 0, 0.5) 0%,
         rgba(0, 0, 0, 0.8) 100%
       ),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transprent 100%);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
     transition: all 0.4s ease-in-out;
     transform: ${({ isShowMobile }) =>
       isShowMobile ? "translateY(0)" : "translateY(-100%)"};
@@ -28,14 +28,14 @@ const Menu = styled.div`
   }
   .close-icon {
     position: absolute;
-    right: 20px;
-    top: 20px;
-    font-size: 25px;
-    color: #999;
+    right: 30px;
+    top: 30px;
+    font-size: 40px;
+    color: #fff;
     cursor: pointer;
 
     &:hover {
-      color: #fff;
+      color: red;
     }
   }
 

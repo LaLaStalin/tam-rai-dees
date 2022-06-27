@@ -151,6 +151,7 @@ const Profile = () => {
       <>
         {mapBtnSetting.map((btn) => (
           <ButtonSettings
+            key={btn.keyword}
             bgIcon="var(--main-color)"
             bg="linear-gradient(180deg, rgba(245, 56, 3, 0.1) 0%, rgba(245, 208, 32, 0.1) 100%)"
             borderColor="2px solid orange"

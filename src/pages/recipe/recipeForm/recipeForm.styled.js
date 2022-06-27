@@ -166,6 +166,7 @@ export const RecipeIngredientWrapper = styled.div`
 
       &:hover {
         color: #ff5c60;
+        font-size: 42px;
       }
     }
   }
@@ -202,6 +203,19 @@ export const RecipeCookingWrapper = styled.div`
 
     .cooking-input {
       padding-left: 40px;
+    }
+
+    .icon-delete {
+      cursor: pointer;
+      margin-left: 10px;
+      color: lightgray;
+      font-size: 38px;
+
+      &:hover {
+        color: #ff5c60;
+        font-size: 42px;
+        margin-left: 6px;
+      }
     }
   }
 `;
@@ -259,7 +273,6 @@ export const RecipeTagWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-
   .reciep-tag {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 50px));
@@ -281,7 +294,7 @@ export const RecipeTagWrapper = styled.div`
       &:hover {
         cursor: pointer;
         color: #fff;
-        background: red;
+        background: #ff5c60;
         font-size: 21px;
       }
     }

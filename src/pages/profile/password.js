@@ -70,7 +70,6 @@ const Password = () => {
   const [isShowNewPassword, setIsNewShowPassword] = useState(false);
   const [isShowRetypePassword, setIsRetypePassword] = useState(false);
   const { user } = AuthContext();
-  const navigate = useNavigate();
 
   const onSubmit = (values) => {
     console.log("submit ", values.email);
@@ -237,10 +236,7 @@ const Password = () => {
                       w="100px"
                       p="10px"
                       justify="center"
-                      onClick={() => {
-                        window.location.reload();
-                        navigate("/profile");
-                      }}
+                      onClick={() => window.location.reload(true)}
                     >
                       ยกเลิก
                     </ButtonCancel>

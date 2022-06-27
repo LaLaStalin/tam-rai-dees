@@ -35,8 +35,7 @@ export const RecipeInfoContainer = styled.section`
 
   .list-ingredient-recipe {
     display: flex;
-    padding: 10px 0;
-    padding-left: 10px;
+    padding: 10px;
     justify-content: space-between;
     border-radius: 8px;
     color: var(--txt-theme);

@@ -24,11 +24,12 @@ const Menu = styled.div`
     transition: all 0.4s ease-in-out;
     transform: ${({ isShowMobile }) =>
       isShowMobile ? "translateY(0)" : "translateY(-100%)"};
-    z-index: 999;
+    z-index: 9999;
   }
   .close-icon {
     position: absolute;
     right: 30px;
+    width: fit-content;
     top: 30px;
     font-size: 40px;
     color: #fff;

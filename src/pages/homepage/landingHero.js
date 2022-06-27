@@ -12,6 +12,10 @@ const ContainerLandingHero = styled.section`
   height: 350px;
   position: relative;
 
+  @media screen and (max-width: 610px) {
+    height: 240px;
+  }
+
   .wrapper-landing-hero {
     display: flex;
     position: absolute;

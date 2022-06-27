@@ -18,7 +18,7 @@ const NavbarContainer = styled.div`
   background: transparent;
   height: 80px;
   position: relative;
-  z-index: 99999;
+  z-index: 999;
   box-shadow: ${({ path }) =>
     path === "/login" || path === "/register"
       ? null

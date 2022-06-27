@@ -26,6 +26,10 @@ export const WrrapperRecipe = styled.section`
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     border-radius: 0 0 22px 22px;
 
+    @media screen and (max-width: 930px) {
+      height: 240px;
+    }
+
     .img-paralax {
       height: 100%;
       width: 100%;
@@ -152,6 +156,7 @@ const Recipe = () => {
             bgImage="/images/recipes/myrecipe.jpg"
             bgImageAlt="recipe"
             strength={-150}
+            height="100%"
           />
         </div>
         <div className="title-recipe">

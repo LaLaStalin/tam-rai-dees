@@ -10,7 +10,7 @@ import { IconButton } from "@material-ui/core";
 import { AuthContext } from "../../util/context";
 
 const ContainerPassword = styled.div`
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   border-radius: 12px;

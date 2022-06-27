@@ -10,6 +10,7 @@ const ArrowAnimate = keyframes`
 
 const ContainerFooter = styled.div`
   /* background-color: #222; */
+
   background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0.8) 0%,

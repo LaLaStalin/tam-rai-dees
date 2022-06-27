@@ -155,7 +155,7 @@ const Recipe = () => {
             className="img-paralax"
             bgImage="/images/recipes/myrecipe.jpg"
             bgImageAlt="recipe"
-            strength={-150}
+            strength={500}
             height="100%"
           />
         </div>

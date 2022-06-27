@@ -45,19 +45,11 @@ export const MenuIngredient = [
 ];
 
 export const materialMeat = [
-  {
-    id: 1,
-    name: "ไก่",
-    src: "https://drive.google.com/uc?id=1JpHXQmn6pUWnwXR3-E5hVbGZrJRAr1a5",
-  },
+  { id: 1, name: "ไก่", src: "/images/ingredients/meat/ไก่.png" },
   { id: 2, name: "เป็ด", src: "/images/ingredients/meat/เป็ด.png" },
   { id: 3, name: "แกะ", src: "/images/ingredients/meat/แกะ.png" },
   { id: 4, name: "วัว", src: "/images/ingredients/meat/วัว.png" },
-  {
-    id: 5,
-    name: "หมู",
-    src: "https://drive.google.com/uc?id=1JpHXQmn6pUWnwXR3-E5hVbGZrJRAr1a5",
-  },
+  { id: 5, name: "หมู", src: "/images/ingredients/meat/หมู.png" },
   { id: 6, name: "กบ", src: "/images/ingredients/meat/กบ.png" },
   { id: 7, name: "จระเข้", src: "/images/ingredients/meat/จระเข้.png" },
 ];

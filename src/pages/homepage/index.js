@@ -1,18 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import LandingHero from "./landingHero";
 import IngredientMenu from "./ingredientMenu";
 import WholeRecipe from "./wholeRecipe";
 import { ContainerGlobal } from "../../components/global.styled";
 import { useLocation } from "react-router-dom";
 const Homepage = () => {
-  // const handle = () => {
-  //   console.log(window.scrollY);
-  // };
-  // useEffect(() => {
-  //   document.addEventListener("scroll", handle);
-  // }, [handle]);
-  // const location = useLocation();
   const location = useLocation();
+  const refRecipe = useRef(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
@@ -20,9 +15,9 @@ const Homepage = () => {
   document.title = "Tam Rai Dee - Home";
   return (
     <ContainerGlobal>
-      <LandingHero />
+      <LandingHero refRecipe={refRecipe} />
       <IngredientMenu />
-      <WholeRecipe />
+      <WholeRecipe refRecipe={refRecipe} />
     </ContainerGlobal>
   );
 };

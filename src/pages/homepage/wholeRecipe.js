@@ -180,7 +180,7 @@ const ContainerWholeRecipe = styled.section`
   }
 `;
 
-const WholeRecipe = () => {
+const WholeRecipe = (props) => {
   const navigate = useNavigate();
 
   const [listRecipe, setListRecipe] = useState([]);
@@ -216,7 +216,7 @@ const WholeRecipe = () => {
   }, [listRecipe]);
 
   return (
-    <ContainerWholeRecipe>
+    <ContainerWholeRecipe ref={props.refRecipe}>
       <div className="header-whole-recipe">
         <span>
           <Icon icon="emojione:pot-of-food" className="icon-food" />

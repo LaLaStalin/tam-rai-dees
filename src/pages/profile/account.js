@@ -7,7 +7,7 @@ import { ButtonPrimary, ButtonCancel } from "../../components/Button/index";
 import { AuthContext } from "../../util/context";
 
 const ContainerAccount = styled.div`
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   border-radius: 12px;

@@ -50,13 +50,15 @@ const ContainerLandingHero = styled.section`
   }
 `;
 
-const LandingHero = () => {
+const LandingHero = (props) => {
   const handleSearch = (e) => {
     console.log("hi");
     if (e.key === "Enter") {
-      console.log("hieeee");
-
-      window.scrollTo({ top: 1080, behavior: "smooth" });
+      window.scrollTo({
+        top: props.refRecipe.current.offsetTop,
+        lef: 0,
+        behavior: "smooth",
+      });
     }
   };
 

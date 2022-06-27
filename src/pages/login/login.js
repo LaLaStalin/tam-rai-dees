@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ContainerLogin, WrapperLogin } from "./login.styled";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Field, Form } from "react-final-form";
 import { TextField } from "final-form-material-ui";
 import { ButtonPrimary } from "../../components/Button";
@@ -35,6 +35,7 @@ const Login = (props) => {
   document.title = "Tam Rai Dee - Login";
 
   const { setUser } = AuthContext();
+  const location = useLocation();
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const onSubmit = (values) => {
@@ -57,7 +58,7 @@ const Login = (props) => {
   };
   return (
     <ContainerLogin>
-      <WrapperLogin>
+      <WrapperLogin path={location.pathname}>
         <TopicHeaderAuth
           type="Sign In"
           isHave="ยังไม่มีบัญชี"

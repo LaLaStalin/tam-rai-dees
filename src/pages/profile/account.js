@@ -240,7 +240,7 @@ const Account = () => {
                       w="100px"
                       p="10px"
                       justify="center"
-                      onClick={() => window.location.reload(true)}
+                      onClick={() => window.location.reload(false)}
                     >
                       ยกเลิก
                     </ButtonCancel>

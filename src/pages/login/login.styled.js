@@ -30,7 +30,7 @@ export const WrapperLogin = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 50px;
-    margin-top: 100px;
+    margin-top: ${(props) => (props.path === "/register" ? "160px" : null)};
     padding-bottom: 4rem;
     background: #fff;
   }

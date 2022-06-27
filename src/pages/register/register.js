@@ -8,11 +8,13 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@material-ui/core";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Register = () => {
   document.title = "Tam Rai Dee - Register";
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowRetypePassword, setIsRetypePassword] = useState(false);
+  const location = useLocation();
 
   const onSubmit = (values) => {
     console.log("submit ", values.email);
@@ -34,7 +36,7 @@ const Register = () => {
   };
   return (
     <ContainerLogin isRegister="auto">
-      <WrapperLogin>
+      <WrapperLogin path={location.pathname}>
         <TopicHeaderAuth
           type="Sign Up"
           isHave="มีบัญชีหรือเป็นสมาชิก"

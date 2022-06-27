@@ -345,7 +345,11 @@ const RecipeForm = (props) => {
           </p>
         )}
 
-        <RecipeModalTag open={open} handleModalTag={handleModalTag} />
+        <RecipeModalTag
+          open={open}
+          handleModalTag={handleModalTag}
+          addListTag={handleAddTag}
+        />
 
         <WrapperAddItem>
           <ButtonAddRecipe whileTap={{ scale: 0.9 }} onClick={handleModalTag}>

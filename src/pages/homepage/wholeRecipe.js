@@ -186,7 +186,9 @@ const WholeRecipe = () => {
   const [listRecipe, setListRecipe] = useState([]);
   const [ingredientPerPage] = useState(8);
 
-  const [lengthOfIngredeint] = useState(listRecipe.length / ingredientPerPage);
+  const [lengthOfIngredeint, setLengthOfIngredient] = useState(
+    listRecipe.length / ingredientPerPage
+  );
   const [indexLastIngredient, setIndexLastIngredient] = useState(
     1 * ingredientPerPage
   );
@@ -210,6 +212,7 @@ const WholeRecipe = () => {
 
   useEffect(() => {
     setListRecipe(ListRecipe);
+    setLengthOfIngredient(listRecipe.length / ingredientPerPage);
   }, [listRecipe]);
 
   return (

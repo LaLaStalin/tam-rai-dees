@@ -88,13 +88,18 @@ const Favorite = (props) => {
 
   const [favoritePerPage] = useState(8);
 
-  const [lengthOfFavorite] = useState(listFavorite.length / favoritePerPage);
+  const [lengthOfFavorite, setLengthOfFavorite] = useState(1);
   const [indexLastFavorite, setIndexLastFavorite] = useState(
     1 * favoritePerPage
   );
   const [indexFirstFavorite, setIndexFirstFavorite] = useState(
     indexLastFavorite - favoritePerPage
   );
+
+  useEffect(() => {
+    setListFavorite(listMock);
+    setLengthOfFavorite(listFavorite.length / favoritePerPage);
+  }, [listFavorite]);
 
   const handlePagination = useCallback(
     (event, page) => {
@@ -105,10 +110,6 @@ const Favorite = (props) => {
     },
     [indexFirstFavorite, indexLastFavorite]
   );
-
-  useEffect(() => {
-    setListFavorite(listMock);
-  }, []);
 
   return (
     <>

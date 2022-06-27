@@ -104,7 +104,7 @@ const Recipes = () => {
 
   const [myRecipePerPage] = useState(8);
 
-  const [lengthOfMyRecipe] = useState(listMyRecipes.length / myRecipePerPage);
+  const [lengthOfMyRecipe, setLengthOfMyRecipe] = useState(1);
   const [indexLastMyRecipe, setIndexLastMyRecipe] = useState(
     1 * myRecipePerPage
   );
@@ -124,7 +124,8 @@ const Recipes = () => {
 
   useEffect(() => {
     setListMyRecipes(listMock);
-  }, []);
+    setLengthOfMyRecipe(listMyRecipes.length / myRecipePerPage);
+  }, [listMyRecipes]);
 
   return (
     <>

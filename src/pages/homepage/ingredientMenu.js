@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { ButtonMenuIngredientType } from "../../components/Button/index";
 import { MenuIngredient } from "../../util/staticData";
@@ -158,7 +158,7 @@ const IngredientMenu = () => {
   // จำนวนหน้า
   const [defaultPagination, setDefaultPagination] = useState(1);
 
-  const [ingredientPerPage, setIngredientPerpage] = useState(10);
+  const [ingredientPerPage] = useState(10);
 
   const [lengthOfIngredeint, setLengthOfIngredient] = useState(
     materialMeat.length / ingredientPerPage

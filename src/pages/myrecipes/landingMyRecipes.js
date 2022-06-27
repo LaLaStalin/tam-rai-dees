@@ -62,7 +62,7 @@ const LandingMyRecipes = () => {
     <>
       <ContainerLandingMyRecipes>
         <div className="profile-img">
-          <img src="/images/profile/lala.png" />
+          <img src="/images/profile/lala.png" alt="profile" />
         </div>
       </ContainerLandingMyRecipes>
       <UsernameWrapper>

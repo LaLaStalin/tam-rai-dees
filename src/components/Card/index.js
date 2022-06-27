@@ -45,7 +45,7 @@ export const CardIngredient = (props) => {
       onClick={props.onClicked}
     >
       <p>{props.name}</p>
-      <img src={props.img} />
+      <img src={props.img} alt="ingredient-img" />
     </ContainerCardIngredient>
   );
 };
@@ -133,7 +133,7 @@ export const CardRecipe = (props) => {
       </span>
 
       <div className="img-recipe">
-        <img src="./images/recipes/img1.png" />
+        <img src="./images/recipes/img1.png" alt="img-recipe" />
       </div>
 
       <div className="content-recipe">

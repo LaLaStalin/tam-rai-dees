@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { ContainerGlobal } from "../../components/global.styled";
 import { RiHeart3Fill } from "react-icons/ri";
@@ -8,7 +8,7 @@ import RecipeCooking from "./recipeCooking";
 import RecipeTag from "./recipeTag";
 import { motion } from "framer-motion/dist/framer-motion";
 import { Parallax } from "react-parallax";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 
 export const WrrapperRecipe = styled.section`
   display: flex;
@@ -139,7 +139,6 @@ const item = {
 const Recipe = () => {
   document.title = "Tam Rai Dee - Recipe";
 
-  const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);

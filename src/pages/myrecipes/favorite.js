@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import CardMyRecipe from "../../components/Card/CardMyRecipe";
 import { CardContainerMyRecipes } from "./recipes";
 import Pagination from "@mui/material/Pagination";
@@ -84,13 +84,11 @@ const listMock = [
 ];
 
 const Favorite = (props) => {
-  const [listFavorite, setListFavorite] = useState(listMock);
+  const [listFavorite, setListFavorite] = useState([]);
 
-  const [favoritePerPage, setFavoritePerpage] = useState(8);
+  const [favoritePerPage] = useState(8);
 
-  const [lengthOfFavorite, setLengthOfFavorite] = useState(
-    listFavorite.length / favoritePerPage
-  );
+  const [lengthOfFavorite] = useState(listFavorite.length / favoritePerPage);
   const [indexLastFavorite, setIndexLastFavorite] = useState(
     1 * favoritePerPage
   );
@@ -107,6 +105,10 @@ const Favorite = (props) => {
     },
     [indexFirstFavorite, indexLastFavorite]
   );
+
+  useEffect(() => {
+    setListFavorite(listMock);
+  }, []);
 
   return (
     <>

@@ -128,7 +128,7 @@ export const ButtonSettings = styled.button`
 const Profile = () => {
   const navigate = useNavigate();
   const [isAccount, setIsAccount] = useState("account");
-  const [hei, setHei] = useState("HELOOO");
+  const [hei] = useState("HELOOO");
 
   const mapBtnSetting = [
     {

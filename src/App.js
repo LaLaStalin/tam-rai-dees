@@ -6,7 +6,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Loading from "./components/Loading/loading";
 import MainLoading from "./components/Loading/mainLoading";
 import { AuthContext } from "./util/context";
 

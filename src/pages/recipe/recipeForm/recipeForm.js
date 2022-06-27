@@ -307,6 +307,10 @@ const RecipeForm = (props) => {
   const renderRecipeTag = () => {
     const [open, setOpen] = useState(false);
     const handleModalTag = () => setOpen(!open);
+
+    const handleAddTag = () => {
+      setListTag(null);
+    };
     return (
       <RecipeTagWrapper>
         <span className="header-subheader">

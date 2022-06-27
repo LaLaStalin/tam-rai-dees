@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import CardMyRecipe from "../../components/Card/CardMyRecipe";
 import Pagination from "@mui/material/Pagination";
@@ -100,13 +100,11 @@ const listMock = [
 
 const Recipes = () => {
   const navigate = useNavigate();
-  const [listMyRecipes, setListMyRecipes] = useState(listMock);
+  const [listMyRecipes, setListMyRecipes] = useState([]);
 
-  const [myRecipePerPage, setMyRecipePerpage] = useState(8);
+  const [myRecipePerPage] = useState(8);
 
-  const [lengthOfMyRecipe, setLengthOfMyRecipe] = useState(
-    listMyRecipes.length / myRecipePerPage
-  );
+  const [lengthOfMyRecipe] = useState(listMyRecipes.length / myRecipePerPage);
   const [indexLastMyRecipe, setIndexLastMyRecipe] = useState(
     1 * myRecipePerPage
   );
@@ -123,6 +121,10 @@ const Recipes = () => {
     },
     [indexFirstMyRecipe, indexLastMyRecipe]
   );
+
+  useEffect(() => {
+    setListMyRecipes(listMock);
+  }, []);
 
   return (
     <>

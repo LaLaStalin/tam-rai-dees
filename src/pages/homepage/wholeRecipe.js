@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { CardRecipe } from "../../components/Card";
@@ -183,12 +183,10 @@ const ContainerWholeRecipe = styled.section`
 const WholeRecipe = () => {
   const navigate = useNavigate();
 
-  const [listRecipe, setListRecipe] = useState(ListRecipe);
-  const [ingredientPerPage, setIngredientPerpage] = useState(8);
+  const [listRecipe, setListRecipe] = useState([]);
+  const [ingredientPerPage] = useState(8);
 
-  const [lengthOfIngredeint, setLengthOfIngredient] = useState(
-    listRecipe.length / ingredientPerPage
-  );
+  const [lengthOfIngredeint] = useState(listRecipe.length / ingredientPerPage);
   const [indexLastIngredient, setIndexLastIngredient] = useState(
     1 * ingredientPerPage
   );
@@ -209,6 +207,10 @@ const WholeRecipe = () => {
   const handleRecipeClicked = (id) => {
     navigate(`/recipe/${id}`);
   };
+
+  useEffect(() => {
+    setListRecipe(ListRecipe);
+  }, [listRecipe]);
 
   return (
     <ContainerWholeRecipe>

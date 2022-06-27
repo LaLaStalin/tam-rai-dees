@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import LandingMyRecipes from "./landingMyRecipes";
 import Recipes from "./recipes";
 import { ContainerGlobal } from "../../components/global.styled";
-import { ButtonPrimary, ButtonCancel } from "../../components/Button/index";
+import { ButtonPrimary } from "../../components/Button/index";
 import { Icon } from "@iconify/react";
 import styled from "styled-components";
 import Favorite from "./favorite";

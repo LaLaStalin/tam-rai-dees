@@ -222,6 +222,7 @@ const Navbar = (props) => {
           <div className="logo-navbar">
             <Link to="/">
               <img
+                alt="burger-icon-logo"
                 src="/logo/burger.png"
                 width={45}
                 height={45}

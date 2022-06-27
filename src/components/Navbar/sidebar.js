@@ -155,7 +155,7 @@ const Sidebar = (props) => {
             </>
           )}
 
-          <a className="menu-item">
+          <a href="/" target="_blank" className="menu-item">
             <h5>help</h5>
           </a>
         </div>

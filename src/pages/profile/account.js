@@ -169,7 +169,7 @@ const Account = () => {
         <div className="avatar-account">
           <span className="avatar-img">
             {urlProfile.map((imgSrc) => (
-              <img key={imgSrc} src={imgSrc} />
+              <img key={imgSrc} src={imgSrc} alt="avatar" />
             ))}
           </span>
           <ButtonChangeProfile

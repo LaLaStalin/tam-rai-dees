@@ -1,4 +1,3 @@
-import { BorderHorizontal } from "@mui/icons-material";
 import React from "react";
 import { CardIngredient } from "../../components/Card";
 

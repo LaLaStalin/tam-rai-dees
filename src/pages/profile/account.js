@@ -5,6 +5,7 @@ import { TextField } from "final-form-material-ui";
 import Divider from "../../components/Divider/divider";
 import { ButtonPrimary, ButtonCancel } from "../../components/Button/index";
 import { AuthContext } from "../../util/context";
+import { useNavigate } from "react-router-dom";
 
 const ContainerAccount = styled.div`
   margin-top: 20px;
@@ -77,7 +78,7 @@ const ContainerAccount = styled.div`
         grid-template-columns: auto auto;
         grid-gap: 30px;
 
-        @media screen and (max-width: 370px) {
+        @media screen and (max-width: 500px) {
           grid-template-rows: auto auto;
           grid-template-columns: none;
         }
@@ -128,6 +129,7 @@ const Account = () => {
   const [urlProfile, setUrlProfile] = useState(["./images/profile/lala.png"]);
   const refInputChangeProfile = useRef();
   const { user } = AuthContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(urlProfile);
@@ -240,7 +242,10 @@ const Account = () => {
                       w="100px"
                       p="10px"
                       justify="center"
-                      onClick={() => window.location.reload()}
+                      onClick={() => {
+                        window.location.reload();
+                        navigate("/profile");
+                      }}
                     >
                       ยกเลิก
                     </ButtonCancel>

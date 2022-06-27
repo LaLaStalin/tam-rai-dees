@@ -8,6 +8,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@material-ui/core";
 import { AuthContext } from "../../util/context";
+import { useNavigate } from "react-router-dom";
 
 const ContainerPassword = styled.div`
   margin-top: 20px;
@@ -69,6 +70,7 @@ const Password = () => {
   const [isShowNewPassword, setIsNewShowPassword] = useState(false);
   const [isShowRetypePassword, setIsRetypePassword] = useState(false);
   const { user } = AuthContext();
+  const navigate = useNavigate();
 
   const onSubmit = (values) => {
     console.log("submit ", values.email);
@@ -137,7 +139,9 @@ const Password = () => {
                       style={{
                         position: "absolute",
                         right: "10px",
+                        top: "3px",
                         color: "lightgray",
+                        cursor: "pointer",
                       }}
                     >
                       {isShowOldPassword ? (
@@ -171,7 +175,9 @@ const Password = () => {
                       style={{
                         position: "absolute",
                         right: "10px",
+                        top: "3px",
                         color: "lightgray",
+                        cursor: "pointer",
                       }}
                     >
                       {isShowNewPassword ? (
@@ -205,7 +211,9 @@ const Password = () => {
                       style={{
                         position: "absolute",
                         right: "10px",
+                        top: "3px",
                         color: "lightgray",
+                        cursor: "pointer",
                       }}
                     >
                       {isShowRetypePassword ? (
@@ -229,7 +237,10 @@ const Password = () => {
                       w="100px"
                       p="10px"
                       justify="center"
-                      onClick={() => window.location.reload()}
+                      onClick={() => {
+                        window.location.reload();
+                        navigate("/profile");
+                      }}
                     >
                       ยกเลิก
                     </ButtonCancel>

@@ -107,7 +107,9 @@ const Register = () => {
                     style={{
                       position: "absolute",
                       right: "10px",
+                      top: "3px",
                       color: "lightgray",
+                      cursor: "pointer",
                     }}
                   >
                     {isShowPassword ? (
@@ -141,7 +143,9 @@ const Register = () => {
                     style={{
                       position: "absolute",
                       right: "10px",
+                      top: "3px",
                       color: "lightgray",
+                      cursor: "pointer",
                     }}
                   >
                     {isShowRetypePassword ? (

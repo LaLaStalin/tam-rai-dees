@@ -106,9 +106,9 @@ const Login = (props) => {
                     style={{
                       position: "absolute",
                       right: "10px",
+                      top: "13px",
                       color: "lightgray",
                       cursor: "pointer",
-                      textAlign: "10px",
                     }}
                     edge="end"
                     size="small"

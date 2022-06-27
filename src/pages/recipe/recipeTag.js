@@ -50,7 +50,7 @@ const WrrapperRecipeTag = styled.div`
     margin-top: 20px;
     padding-left: 20px;
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 500px) {
       justify-content: center;
     }
 

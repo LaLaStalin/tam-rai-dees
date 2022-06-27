@@ -244,7 +244,7 @@ export const RecipeDurationAmountWrapper = styled.div`
       align-items: center;
       gap: 30px;
 
-      @media screen and (max-width: 400px) {
+      @media screen and (max-width: 500px) {
         flex-direction: column;
       }
     }

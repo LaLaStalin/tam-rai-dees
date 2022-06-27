@@ -51,7 +51,7 @@ const RecipeForm = (props) => {
     },
   ]);
   // TAG
-  const [listTag, setListTag] = useState([]);
+  const [listTag] = useState([]);
 
   const handleUploadImg = () => {
     refUploadImg.current.click();
@@ -308,9 +308,9 @@ const RecipeForm = (props) => {
     const [open, setOpen] = useState(false);
     const handleModalTag = () => setOpen(!open);
 
-    const handleAddTag = () => {
-      setListTag(null);
-    };
+    // const handleAddTag = () => {
+    //   setListTag(null);
+    // };
     return (
       <RecipeTagWrapper>
         <span className="header-subheader">
@@ -348,7 +348,7 @@ const RecipeForm = (props) => {
         <RecipeModalTag
           open={open}
           handleModalTag={handleModalTag}
-          addListTag={handleAddTag}
+          // addListTag={handleAddTag}
         />
 
         <WrapperAddItem>

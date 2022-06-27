@@ -8,7 +8,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@material-ui/core";
 import { AuthContext } from "../../util/context";
-import { useNavigate } from "react-router-dom";
 
 const ContainerPassword = styled.div`
   margin-top: 20px;

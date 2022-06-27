@@ -40,51 +40,49 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div>
-        {loading ? (
-          <MainLoading />
-        ) : (
-          <Suspense fallback={<MainLoading />}>
-            <Layout>
-              <Routes>
-                <Route exact path="/" element={<Homepage />} />
-                <Route
-                  exact
-                  path="/login"
-                  element={<Login setAuthToken={setAuthToken} />}
-                />
-                <Route exact path="/register" element={<Register />} />
-                <Route
-                  exact
-                  path="/profile"
-                  element={!authToken ? <Navigate to="/" /> : <Profile />}
-                />
-                <Route
-                  exact
-                  path="/myrecipes"
-                  element={!authToken ? <Navigate to="/" /> : <MyRecipes />}
-                />
+    <div>
+      {loading ? (
+        <MainLoading />
+      ) : (
+        <Suspense fallback={<MainLoading />}>
+          <Layout>
+            <Routes>
+              <Route exact path="/" element={<Homepage />} />
+              <Route
+                exact
+                path="/login"
+                element={<Login setAuthToken={setAuthToken} />}
+              />
+              <Route exact path="/register" element={<Register />} />
+              <Route
+                exact
+                path="/profile"
+                element={!authToken ? <Navigate to="/" /> : <Profile />}
+              />
+              <Route
+                exact
+                path="/myrecipes"
+                element={!authToken ? <Navigate to="/" /> : <MyRecipes />}
+              />
 
-                {/*RECIPE*/}
-                <Route exact path="/recipe/:idRecipe" element={<Recipe />} />
-                <Route
-                  exact
-                  path="/recipe/create"
-                  element={!authToken ? <Navigate to="/" /> : <RecipeCreate />}
-                />
-                <Route
-                  exact
-                  path="/recipe/edit/:idRecipe"
-                  element={!authToken ? <Navigate to="/" /> : <RecipeEdit />}
-                />
-                {/*RECIPE*/}
-              </Routes>
-            </Layout>
-          </Suspense>
-        )}
-      </div>
-    </Router>
+              {/*RECIPE*/}
+              <Route exact path="/recipe/:idRecipe" element={<Recipe />} />
+              <Route
+                exact
+                path="/recipe/create"
+                element={!authToken ? <Navigate to="/" /> : <RecipeCreate />}
+              />
+              <Route
+                exact
+                path="/recipe/edit/:idRecipe"
+                element={!authToken ? <Navigate to="/" /> : <RecipeEdit />}
+              />
+              {/*RECIPE*/}
+            </Routes>
+          </Layout>
+        </Suspense>
+      )}
+    </div>
   );
 }
 

@@ -1,11 +1,6 @@
 import Layout from "./layout";
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import MainLoading from "./components/Loading/mainLoading";
 import { AuthContext } from "./util/context";
 

@@ -45,46 +45,30 @@ export const MenuIngredient = [
 ];
 
 export const materialMeat = [
-  { id: 1, name: "Egg", src: "/images/ingredients/หมู.png" },
-  { id: 2, name: "A", src: "/images/ingredients/หมู.png" },
-  { id: 3, name: "B", src: "/images/ingredients/หมู.png" },
-  { id: 4, name: "C", src: "/images/ingredients/หมู.png" },
-  { id: 5, name: "D", src: "/images/ingredients/หมู.png" },
-  { id: 6, name: "E", src: "/images/ingredients/หมู.png" },
-  { id: 7, name: "F", src: "/images/ingredients/หมู.png" },
-  { id: 8, name: "G", src: "/images/ingredients/หมู.png" },
-  { id: 9, name: "H", src: "/images/ingredients/หมู.png" },
-  { id: 10, name: "I", src: "/images/ingredients/หมู.png" },
-  { id: 11, name: "K", src: "/images/ingredients/หมู.png" },
-  { id: 12, name: "J", src: "/images/ingredients/หมู.png" },
-  { id: 13, name: "M", src: "/images/ingredients/หมู.png" },
-  { id: 14, name: "N", src: "/images/ingredients/หมู.png" },
-  { id: 15, name: "O", src: "/images/ingredients/หมู.png" },
-  { id: 16, name: "P", src: "/images/ingredients/หมู.png" },
+  {
+    id: 1,
+    name: "ไก่",
+    src: "https://drive.google.com/uc?id=1JpHXQmn6pUWnwXR3-E5hVbGZrJRAr1a5",
+  },
+  { id: 2, name: "เป็ด", src: "/images/ingredients/meat/เป็ด.png" },
+  { id: 3, name: "แกะ", src: "/images/ingredients/meat/แกะ.png" },
+  { id: 4, name: "วัว", src: "/images/ingredients/meat/วัว.png" },
+  {
+    id: 5,
+    name: "หมู",
+    src: "https://drive.google.com/uc?id=1JpHXQmn6pUWnwXR3-E5hVbGZrJRAr1a5",
+  },
+  { id: 6, name: "กบ", src: "/images/ingredients/meat/กบ.png" },
+  { id: 7, name: "จระเข้", src: "/images/ingredients/meat/จระเข้.png" },
 ];
 
 export const materialSea = [
-  { id: 17, name: "Sea", src: "/images/ingredients/หมู.png" },
-  { id: 18, name: "A", src: "/images/ingredients/หมู.png" },
-  { id: 19, name: "B", src: "/images/ingredients/หมู.png" },
-  { id: 20, name: "C", src: "/images/ingredients/หมู.png" },
-  { id: 21, name: "D", src: "/images/ingredients/หมู.png" },
-  { id: 22, name: "E", src: "/images/ingredients/หมู.png" },
-  { id: 23, name: "F", src: "/images/ingredients/หมู.png" },
-  { id: 24, name: "G", src: "/images/ingredients/หมู.png" },
-  { id: 25, name: "H", src: "/images/ingredients/หมู.png" },
-  { id: 26, name: "I", src: "/images/ingredients/หมู.png" },
-  { id: 27, name: "K", src: "/images/ingredients/หมู.png" },
-  { id: 28, name: "J", src: "/images/ingredients/หมู.png" },
-  { id: 29, name: "M", src: "/images/ingredients/หมู.png" },
-  { id: 30, name: "N", src: "/images/ingredients/หมู.png" },
-  { id: 31, name: "O", src: "/images/ingredients/หมู.png" },
-  { id: 32, name: "P", src: "/images/ingredients/หมู.png" },
-  { id: 129, name: "M", src: "/images/ingredients/หมู.png" },
-  { id: 130, name: "N", src: "/images/ingredients/หมู.png" },
-  { id: 131, name: "O", src: "/images/ingredients/หมู.png" },
-  { id: 132, name: "P", src: "/images/ingredients/หมู.png" },
-  { id: 133, name: "P", src: "/images/ingredients/หมู.png" },
+  { id: 8, name: "กุ้ง", src: "/images/ingredients/sea/กุ้ง.jpg" },
+  { id: 9, name: "ปลา", src: "/images/ingredients/sea/ปลาสด.png" },
+  { id: 10, name: "ปู", src: "/images/ingredients/sea/ปู.png" },
+  { id: 11, name: "หอย", src: "/images/ingredients/sea/หอย.png" },
+  { id: 12, name: "กั้ง", src: "/images/ingredients/sea/กั้ง.png" },
+  { id: 13, name: "หมึก", src: "/images/ingredients/sea/หมึก.png" },
 ];
 
 export const materialVegetable = [
@@ -145,22 +129,12 @@ export const materialEggMilkButterCheese = [
 ];
 
 export const materialFrozen = [
-  { id: 81, name: "Frozen", src: "/images/ingredients/หมู.png" },
-  { id: 82, name: "A", src: "/images/ingredients/หมู.png" },
-  { id: 83, name: "B", src: "/images/ingredients/หมู.png" },
-  { id: 84, name: "C", src: "/images/ingredients/หมู.png" },
-  { id: 85, name: "D", src: "/images/ingredients/หมู.png" },
-  { id: 86, name: "E", src: "/images/ingredients/หมู.png" },
-  { id: 87, name: "F", src: "/images/ingredients/หมู.png" },
-  { id: 88, name: "G", src: "/images/ingredients/หมู.png" },
-  { id: 89, name: "H", src: "/images/ingredients/หมู.png" },
-  { id: 90, name: "I", src: "/images/ingredients/หมู.png" },
-  { id: 91, name: "K", src: "/images/ingredients/หมู.png" },
-  { id: 92, name: "J", src: "/images/ingredients/หมู.png" },
-  { id: 93, name: "M", src: "/images/ingredients/หมู.png" },
-  { id: 94, name: "N", src: "/images/ingredients/หมู.png" },
-  { id: 95, name: "O", src: "/images/ingredients/หมู.png" },
-  { id: 96, name: "P", src: "/images/ingredients/หมู.png" },
+  { id: 81, name: "เต้าหู้", src: "/images/ingredients/frozen/เต้าหู้.png" },
+  { id: 82, name: "กิมจิ/ผักดอง", src: "/images/ingredients/frozen/กิมจิ.png" },
+  { id: 83, name: "วาซาบิ", src: "/images/ingredients/frozen/วาซาบิ.png" },
+  { id: 84, name: "ต๊อกบกกี", src: "/images/ingredients/frozen/ต๊อกบกกี.png" },
+  { id: 85, name: "ไข่ปลา", src: "/images/ingredients/frozen/ไข่ปลา.png" },
+  { id: 86, name: "ไข่กุ้ง", src: "/images/ingredients/frozen/ไข่กุ้ง.png" },
 ];
 
 export const materialMeatTransform = [

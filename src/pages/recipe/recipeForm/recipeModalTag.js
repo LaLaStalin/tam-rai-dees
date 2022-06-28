@@ -211,7 +211,7 @@ const RecipeModalTag = ({ open, handleModalTag }) => {
             </Tabs>
           ) : (
             <img
-              height="100%"
+              height="230px"
               style={{ opjectFit: "cover" }}
               src="/images/bg/modal-bg-2.jpg"
               alt="img-sidebar"

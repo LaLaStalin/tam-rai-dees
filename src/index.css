@@ -22,7 +22,6 @@ ul {
   margin: 0;
 }
 
-
 input[type=file] {
   display: none;
 }
@@ -50,6 +49,17 @@ h1,h2,h3, h4, h5 {
 p {
   margin: 0;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(224, 221, 221);
+}
+
 
 
 body {

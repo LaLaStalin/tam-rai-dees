@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { ContainerGlobal } from "../../../components/global.styled";
 import { BsImageFill } from "react-icons/bs";
 import { Field, Form } from "react-final-form";
@@ -27,9 +27,10 @@ import {
 const RecipeForm = (props) => {
   document.title = "Tam Rai Dee - Create";
   const refUploadImg = useRef();
-  const [hoverDeleteTag, setHoverDeleteTag] = useState(false);
   const [countTextName, setCountTextName] = useState(0);
   const [countTextDescription, setCountTextDescription] = useState(0);
+  const [file, setFile] = useState([]);
+  const [urlRecipe, setUrlRecipe] = useState(null);
 
   //STATE FOR ADD INGREDIENT , COOKING , TAG INPUT
   //INGREDIENT
@@ -51,10 +52,25 @@ const RecipeForm = (props) => {
     },
   ]);
   // TAG
-  const [listTag] = useState([]);
+  const [listTag, setListTag] = useState([]);
 
-  const handleUploadImg = () => {
-    refUploadImg.current.click();
+  useEffect(() => {
+    console.log(urlRecipe);
+    if (file.length < 1) return;
+    const newFile = [];
+    file.forEach((img) => newFile.push(URL.createObjectURL(img)));
+    setUrlRecipe(newFile[0]);
+  }, [file]);
+
+  const handleUploadImg = (e) => {
+    console.log(e.target.files);
+    const imageFile = e.target.files[0];
+
+    if (!imageFile.name.match(/\.(jpg|jpeg|png)$/)) {
+      alert("Please select valid image.");
+      return;
+    }
+    setFile([...e.target.files]);
   };
 
   const renderRecipeName = () => {
@@ -283,12 +299,12 @@ const RecipeForm = (props) => {
                   .slice(0, 2);
               }}
             />
-            <p>นาที</p>{" "}
+            <p>นาที</p>
           </span>
         </div>
 
         <div className="amount">
-          <Header>สูตรนี้สำหรับ</Header>
+          <Header className="header-duration">สูตรนี้สำหรับ</Header>
           <Field
             fullWidth
             required
@@ -306,11 +322,31 @@ const RecipeForm = (props) => {
 
   const renderRecipeTag = () => {
     const [open, setOpen] = useState(false);
+    const [hoverDeleteTag, setHoverDeleteTag] = useState(null);
     const handleModalTag = () => setOpen(!open);
 
-    // const handleAddTag = () => {
-    //   setListTag(null);
-    // };
+    const handleListTag = (id, name) => {
+      console.log(listTag);
+
+      //DELETET tag
+      if (listTag.some((ob) => ob.id === id)) {
+        const newListTag = [...listTag];
+        const findIndex = newListTag.findIndex((ob) => ob.id === id);
+        newListTag.splice(findIndex, 1);
+        setListTag(newListTag);
+        return;
+      }
+
+      //Add tag
+      setListTag([
+        ...listTag,
+        {
+          id: id,
+          nameTag: name,
+        },
+      ]);
+    };
+
     return (
       <RecipeTagWrapper>
         <span className="header-subheader">
@@ -321,18 +357,23 @@ const RecipeForm = (props) => {
           </SubHeader>
         </span>
         {listTag.length > 0 ? (
-          listTag.map((items) => (
-            <div className="reciep-tag" key={items.id}>
-              <motion.div
-                whileTap={{ scale: 0.9 }}
-                onMouseEnter={() => setHoverDeleteTag(true)}
-                onMouseLeave={() => setHoverDeleteTag(false)}
-                className="box-tag"
+          <div className="reciep-tag">
+            {listTag.map((items) => (
+              <span
+                key={items.id}
+                onClick={() => handleListTag(items.id, items.name)}
               >
-                {hoverDeleteTag ? <IoClose /> : items.nameTag}
-              </motion.div>
-            </div>
-          ))
+                <motion.div
+                  whileTap={{ scale: 0.9 }}
+                  onMouseEnter={() => setHoverDeleteTag(items.id)}
+                  onMouseLeave={() => setHoverDeleteTag(null)}
+                  className="box-tag"
+                >
+                  {hoverDeleteTag === items.id ? "X" : items.nameTag}
+                </motion.div>
+              </span>
+            ))}
+          </div>
         ) : (
           <p
             style={{
@@ -348,6 +389,8 @@ const RecipeForm = (props) => {
         <RecipeModalTag
           open={open}
           handleModalTag={handleModalTag}
+          listTag={listTag}
+          handleListTag={handleListTag}
           // addListTag={handleAddTag}
         />
 
@@ -394,19 +437,44 @@ const RecipeForm = (props) => {
       <ContainerRecipeForm>
         <div className="wrrapper-recipe-form">
           <h1>เขียนสูตรอาหาร</h1>
-          <div className="box-image" onClick={handleUploadImg}>
-            <BsImageFill className="icon-image" />
-            <input
-              ref={refUploadImg}
-              type="file"
-              accept="image/png, image/jpeg, image/jpg"
-            />
-            <h3>
-              <u>อัพโหลด รูปภาพอาหาร</u>
-            </h3>
-            <p>
-              *โปรดใช้รูปอาหารที่คุณทำ ไฟล์ PNG JPEG หรือ JPG ขนาดต่ำกว่า 1 Mb
-            </p>
+          <div
+            className="box-image"
+            onClick={() => refUploadImg.current.click()}
+          >
+            {urlRecipe ? (
+              <>
+                <img
+                  src={urlRecipe}
+                  alt="img-recipe"
+                  width="100%"
+                  height="100%"
+                  style={{ objectFit: "cover", borderRadius: "22px" }}
+                />
+                <input
+                  onChange={handleUploadImg}
+                  ref={refUploadImg}
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg"
+                />
+              </>
+            ) : (
+              <>
+                <BsImageFill className="icon-image" />
+                <input
+                  onChange={handleUploadImg}
+                  ref={refUploadImg}
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg"
+                />
+                <h3>
+                  <u>อัพโหลด รูปภาพอาหาร</u>
+                </h3>
+                <p>
+                  *โปรดใช้รูปอาหารที่คุณทำ ไฟล์ PNG JPEG หรือ JPG ขนาดต่ำกว่า 1
+                  Mb
+                </p>
+              </>
+            )}
           </div>
 
           <Form

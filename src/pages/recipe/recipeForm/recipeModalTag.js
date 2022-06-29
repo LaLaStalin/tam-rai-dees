@@ -139,7 +139,7 @@ const ContentRecipeWrapper = styled.div`
   }
 `;
 
-const RecipeModalTag = ({ open, handleModalTag }) => {
+const RecipeModalTag = ({ open, handleModalTag, listTag, handleListTag }) => {
   const [listIngredientCheckbox, setListIngredientCheckbox] =
     useState(materialMeat);
   const [tileValue, setTitleValue] = useState(0);
@@ -150,10 +150,10 @@ const RecipeModalTag = ({ open, handleModalTag }) => {
     const handleChangeTitle = (event, newValue) => {
       setTitleValue(newValue);
       if (newValue === 1) setListIngredientCheckbox(CookingTechniques);
+      if (newValue === 0) setListIngredientCheckbox(materialMeat);
     };
 
     const handleChangeIngreMenu = (event, newValue) => {
-      console.log(newValue);
       if (newValue === 0) setListIngredientCheckbox(materialMeat);
       if (newValue === 1) setListIngredientCheckbox(materialSea);
       if (newValue === 2) setListIngredientCheckbox(materialVegetable);
@@ -211,7 +211,7 @@ const RecipeModalTag = ({ open, handleModalTag }) => {
             </Tabs>
           ) : (
             <img
-              height="230px"
+              height="230 px"
               style={{ opjectFit: "cover" }}
               src="/images/bg/modal-bg-2.jpg"
               alt="img-sidebar"
@@ -223,13 +223,7 @@ const RecipeModalTag = ({ open, handleModalTag }) => {
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={handleModalTag}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      disableAutoFocus
-    >
+    <Modal open={open} onClose={handleModalTag} disableAutoFocus>
       <ModalBox
       // variants={dropIn}
       // initial="hidden"
@@ -258,6 +252,10 @@ const RecipeModalTag = ({ open, handleModalTag }) => {
                     type="checkbox"
                     style={{ width: "30px" }}
                     name={items.name}
+                    onChange={() => handleListTag(items.id, items.name)}
+                    checked={listTag.some((ob) =>
+                      ob.id === items.id ? true : false
+                    )}
                   />
                   <p>{items.name}</p>
                 </div>

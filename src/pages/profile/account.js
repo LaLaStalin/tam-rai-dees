@@ -125,7 +125,7 @@ const ButtonChangeProfile = styled.button`
 
 const Account = () => {
   const [file, setFile] = useState([]);
-  const [urlProfile, setUrlProfile] = useState(["./images/profile/lala.png"]);
+  const [urlProfile, setUrlProfile] = useState("./images/profile/lala.png");
   const refInputChangeProfile = useRef();
   const { user } = AuthContext();
 
@@ -134,7 +134,7 @@ const Account = () => {
     if (file.length < 1) return;
     const newFile = [];
     file.forEach((img) => newFile.push(URL.createObjectURL(img)));
-    setUrlProfile(newFile);
+    setUrlProfile(newFile[0]);
   }, [file]);
 
   const handleProfile = (e) => {
@@ -168,9 +168,7 @@ const Account = () => {
       <>
         <div className="avatar-account">
           <span className="avatar-img">
-            {urlProfile.map((imgSrc) => (
-              <img key={imgSrc} src={imgSrc} alt="avatar" />
-            ))}
+            <img src={urlProfile} alt="avatar" />
           </span>
           <ButtonChangeProfile
             onClick={() => refInputChangeProfile.current.click()}

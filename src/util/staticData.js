@@ -262,12 +262,12 @@ export const materialDry = [
 ];
 
 export const CookingTechniques = [
-  { id: 1, name: "ผัด", keyword: "Stir Fried" },
-  { id: 2, name: "ปิ้งย่าง", keyword: "Grilled" },
-  { id: 3, name: "แกง", keyword: "Soup" },
-  { id: 4, name: "นึ่ง", keyword: "Steamed" },
-  { id: 5, name: "ทอด", keyword: "Deep Fried" },
-  { id: 6, name: "ยำ", keyword: "Salads" },
-  { id: 7, name: "ต้ม", keyword: "Boiled" },
-  { id: 8, name: "อบ", keyword: "Baking" },
+  { id: 94, name: "ผัด", keyword: "Stir Fried" },
+  { id: 95, name: "ปิ้งย่าง", keyword: "Grilled" },
+  { id: 96, name: "แกง", keyword: "Soup" },
+  { id: 97, name: "นึ่ง", keyword: "Steamed" },
+  { id: 98, name: "ทอด", keyword: "Deep Fried" },
+  { id: 99, name: "ยำ", keyword: "Salads" },
+  { id: 100, name: "ต้ม", keyword: "Boiled" },
+  { id: 101, name: "อบ", keyword: "Baking" },
 ];

@@ -28,8 +28,8 @@ export const ContainerRecipeForm = styled.div`
       justify-content: center;
       background: #e5e5e5;
       border-radius: 22px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       color: gray;
-      padding: 0 20px;
       gap: 5px;
       margin-top: 70px;
 
@@ -228,7 +228,6 @@ export const RecipeDurationAmountWrapper = styled.div`
   .duration-hr-m {
     display: grid;
     grid-template-columns: 40% 50%;
-    align-items: center;
 
     @media screen and (max-width: 760px) {
       display: flex;
@@ -244,7 +243,7 @@ export const RecipeDurationAmountWrapper = styled.div`
       align-items: center;
       gap: 30px;
 
-      @media screen and (max-width: 500px) {
+      @media screen and (max-width: 450px) {
         flex-direction: column;
       }
     }
@@ -259,7 +258,10 @@ export const RecipeDurationAmountWrapper = styled.div`
     display: grid;
     grid-template-columns: 40% 50%;
     grid-gap: 20px;
-    align-items: center;
+
+    .header-duration {
+      text-align: left;
+    }
 
     @media screen and (max-width: 760px) {
       display: flex;
@@ -273,6 +275,7 @@ export const RecipeTagWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
   .reciep-tag {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 50px));
@@ -295,7 +298,6 @@ export const RecipeTagWrapper = styled.div`
         cursor: pointer;
         color: #fff;
         background: #ff5c60;
-        font-size: 21px;
       }
     }
   }

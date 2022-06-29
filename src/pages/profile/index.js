@@ -105,7 +105,7 @@ export const ButtonSettings = styled.button`
     color: ${(props) => (props.active === props.keyword ? "#fff" : "")};
 
     .icon {
-      font-size: 18px;
+      font-size: 22px;
     }
   }
 
@@ -114,6 +114,7 @@ export const ButtonSettings = styled.button`
     gap: 2px;
     flex-direction: column;
     text-align: left;
+    line-height: 18px;
 
     & > h4 {
       font-size: var(--txt-primary);
@@ -129,6 +130,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const [isAccount, setIsAccount] = useState("account");
   const [hei] = useState("HELOOO");
+  document.title = "Tam Rai Dee - Profile";
 
   const mapBtnSetting = [
     {
@@ -146,7 +148,6 @@ const Profile = () => {
   ];
 
   const renderBtnSetting = () => {
-    document.title = "Tam Rai Dee - Profile";
     return (
       <>
         {mapBtnSetting.map((btn) => (

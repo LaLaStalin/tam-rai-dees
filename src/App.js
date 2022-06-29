@@ -14,6 +14,7 @@ const RecipeCreate = lazy(() =>
   import("./pages/recipe/recipeForm/recipeCreate")
 );
 const RecipeEdit = lazy(() => import("./pages/recipe/recipeForm/recipeEdit"));
+const AdminPage = lazy(() => import("./pages/admin/index"));
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -77,7 +78,8 @@ function App() {
                 path="/recipe/edit/:idRecipe"
                 element={!authToken ? <Navigate to="/" /> : <RecipeEdit />}
               />
-              {/*RECIPE*/}
+              {/*Admin Page*/}
+              <Route exact path="/admin" element={<AdminPage />} />
             </Routes>
           </Layout>
         </Suspense>

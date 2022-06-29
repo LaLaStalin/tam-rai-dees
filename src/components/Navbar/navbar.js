@@ -171,7 +171,9 @@ const Navbar = (props) => {
             </span>
           </Link>
 
-          <FiHelpCircle className="help-icon" />
+          <Link to="/admin">
+            <FiHelpCircle className="help-icon" keyword="/admin" />
+          </Link>
         </AuthWrapper>
       </>
     );
@@ -194,7 +196,9 @@ const Navbar = (props) => {
               </MenuItems>
             </Link>
 
-            <FiHelpCircle className="help-icon" />
+            <Link to="/admin">
+              <FiHelpCircle className="help-icon" keyword="/admin" />
+            </Link>
           </AuthWrapper>
         ) : (
           <AuthWrapper>
@@ -208,7 +212,9 @@ const Navbar = (props) => {
                 <Avatar className="Avatar" style={{ borderRadius: "10px" }} />
               </span>
             </Link>
-            <FiHelpCircle className="help-icon" />
+            <Link to="/admin">
+              <FiHelpCircle className="help-icon" keyword="/admin" />
+            </Link>
           </AuthWrapper>
         )}
       </>

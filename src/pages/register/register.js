@@ -16,7 +16,7 @@ const Register = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowRetypePassword, setIsRetypePassword] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const onSubmit = (values) => {
     // axios

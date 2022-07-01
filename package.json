@@ -13,11 +13,12 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@use-gesture/react": "^10.2.15",
+    "axios": "^0.27.2",
     "final-form": "^4.20.7",
     "final-form-material-ui": "^0.3.0",
     "framer-motion": "^6.3.11",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-final-form": "^6.5.9",
     "react-icons": "^4.4.0",
     "react-moving-text": "^0.0.7",
@@ -54,7 +55,6 @@
   },
   "devDependencies": {
     "@iconify/react": "^3.2.2",
-    "axios": "^0.27.2",
     "react-scroll": "^1.8.7"
   }
 }

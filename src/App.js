@@ -36,7 +36,7 @@ function App() {
     }
   }, []);
 
-  console.log("userrole: ", user);
+  console.log("userroles: ", user);
 
   return (
     <div>

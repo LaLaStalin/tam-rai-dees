@@ -9,7 +9,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@material-ui/core";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 
 const Register = () => {
   document.title = "Tam Rai Dee - Register";
@@ -19,20 +19,20 @@ const Register = () => {
   const navigate = useNavigate();
 
   const onSubmit = (values) => {
-    axios
-      .post(`http://localhost/tamraidee-api/auth/register.php`, {
-        firstname: values.firstname,
-        lastname: values.lastname,
-        email: values.email,
-        password: values.password,
-      })
-      .then((res) => {
-        if (res.data.exist) {
-          alert(res.data.warning);
-        }
-        alert(res.data.success);
-        navigate("/login");
-      });
+    // axios
+    //   .post(`http://localhost/tamraidee-api/auth/register.php`, {
+    //     firstname: values.firstname,
+    //     lastname: values.lastname,
+    //     email: values.email,
+    //     password: values.password,
+    //   })
+    //   .then((res) => {
+    //     if (res.data.exist) {
+    //       alert(res.data.warning);
+    //     }
+    //     alert(res.data.success);
+    //     navigate("/login");
+    //   });
   };
   const validateForm = (values) => {
     const err = {};

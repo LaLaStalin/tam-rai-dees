@@ -246,7 +246,7 @@ const Navbar = (props) => {
             </Link>
           </div>
 
-          {user.user_email ? (
+          {user && user.user_email ? (
             <>
               {/*Already login*/}
               {renderAlreayLogin()}

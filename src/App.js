@@ -31,8 +31,16 @@ function App() {
     //ถ้ามี user เคย login แล้ว
     const authCheck = localStorage.getItem("user_setup");
     if (authCheck) {
-      const parseUser = JSON.parse(authCheck);
-      setUser(parseUser);
+      // const parseUser = JSON.parse(authCheck);
+      // setUser(parseUser);
+
+      //mock
+      setUser({
+        user_firstname: "Kwai",
+        user_lastname: "stupid",
+        user_email: "benz@gmail.com",
+        user_urole: "M",
+      });
     }
   }, []);
 
@@ -52,12 +60,12 @@ function App() {
               <Route
                 exact
                 path="/profile"
-                element={!user ? <Navigate to="/" /> : <Profile />}
+                element={!user.user_email ? <Navigate to="/" /> : <Profile />}
               />
               <Route
                 exact
                 path="/myrecipes"
-                element={!user ? <Navigate to="/" /> : <MyRecipes />}
+                element={!user.user_email ? <Navigate to="/" /> : <MyRecipes />}
               />
 
               {/*RECIPE*/}
@@ -65,12 +73,16 @@ function App() {
               <Route
                 exact
                 path="/recipe/create"
-                element={!user ? <Navigate to="/" /> : <RecipeCreate />}
+                element={
+                  !user.user_email ? <Navigate to="/" /> : <RecipeCreate />
+                }
               />
               <Route
                 exact
                 path="/recipe/edit/:idRecipe"
-                element={!user ? <Navigate to="/" /> : <RecipeEdit />}
+                element={
+                  !user.user_email ? <Navigate to="/" /> : <RecipeEdit />
+                }
               />
               {/*Admin Page*/}
               <Route

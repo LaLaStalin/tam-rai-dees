@@ -96,13 +96,13 @@ const Sidebar = (props) => {
         </span>
         {/*Already login*/}
         <div className="wrapper-mobile">
-          {location.pathname === "/" && !user.email ? (
+          {location.pathname === "/" && !user ? (
             <span className="profile-button">
               <AiOutlineUser className="profile-icon" />
             </span>
           ) : null}
 
-          {user.email ? (
+          {user && user.user_email ? (
             <>
               <Link
                 to="/profile"

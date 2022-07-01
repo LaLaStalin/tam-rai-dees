@@ -127,7 +127,6 @@ const Navbar = (props) => {
   const { user } = AuthContext();
   const location = useLocation();
   const navigate = useNavigate();
-
   const renderAlreayLogin = () => {
     return (
       <>
@@ -247,7 +246,7 @@ const Navbar = (props) => {
             </Link>
           </div>
 
-          {user.email ? (
+          {user.user_email ? (
             <>
               {/*Already login*/}
               {renderAlreayLogin()}

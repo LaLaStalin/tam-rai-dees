@@ -8,6 +8,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@material-ui/core";
 import { AuthContext } from "../../util/context";
+import axios from "axios";
 
 export const TopicHeaderAuth = (props) => {
   return (
@@ -39,14 +40,21 @@ const Login = (props) => {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const onSubmit = (values) => {
-    setUser((user) => ({
-      ...user,
-      email: values.email,
-      password: values.password,
-    }));
-    localStorage.setItem("user_setup", JSON.stringify(1));
-    props.setAuthToken(1);
-    navigate("/");
+    axios
+      .post(`http://localhost/tamraidee-api/auth/login.php`, {
+        email: values.email,
+        password: values.password,
+      })
+      .then((res) => {
+        if (res.data.dataUser) {
+          setUser(res.data.dataUser);
+          localStorage.setItem("user_setup", JSON.stringify(res.data.dataUser));
+          if (res.data.dataUser.user_urole === "A") navigate("/admin");
+          navigate("/");
+        } else {
+          alert("email or password is wrong");
+        }
+      });
   };
 
   const validateForm = (values) => {

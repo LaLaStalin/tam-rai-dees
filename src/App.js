@@ -3,6 +3,7 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLoading from "./components/Loading/mainLoading";
 import { AuthContext } from "./util/context";
+import axios from "axios";
 
 const Homepage = lazy(() => import("./pages/homepage/index"));
 const Register = lazy(() => import("./pages/register/register"));
@@ -18,8 +19,7 @@ const AdminPage = lazy(() => import("./pages/admin/index"));
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [authToken, setAuthToken] = useState(null);
-  const { setUser } = AuthContext();
+  const { user, setUser } = AuthContext();
 
   useEffect(() => {
     console.log("load");
@@ -29,16 +29,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("ath");
+    //ถ้ามี user เคย login แล้ว
     const authCheck = localStorage.getItem("user_setup");
     if (authCheck) {
-      //SET USER FROM DATABASE
-
-      //MOCK DATA
-      setAuthToken(JSON.parse(authCheck));
-      setUser({ email: "lala@gmail.com", password: "1234" });
+      const parseUser = JSON.parse(authCheck);
+      setUser(parseUser);
     }
   }, []);
+
+  console.log("userrole: ", user);
 
   return (
     <div>
@@ -49,21 +48,17 @@ function App() {
           <Layout>
             <Routes>
               <Route exact path="/" element={<Homepage />} />
-              <Route
-                exact
-                path="/login"
-                element={<Login setAuthToken={setAuthToken} />}
-              />
+              <Route exact path="/login" element={<Login />} />
               <Route exact path="/register" element={<Register />} />
               <Route
                 exact
                 path="/profile"
-                element={!authToken ? <Navigate to="/" /> : <Profile />}
+                element={!user ? <Navigate to="/" /> : <Profile />}
               />
               <Route
                 exact
                 path="/myrecipes"
-                element={!authToken ? <Navigate to="/" /> : <MyRecipes />}
+                element={!user ? <Navigate to="/" /> : <MyRecipes />}
               />
 
               {/*RECIPE*/}
@@ -71,15 +66,21 @@ function App() {
               <Route
                 exact
                 path="/recipe/create"
-                element={!authToken ? <Navigate to="/" /> : <RecipeCreate />}
+                element={!user ? <Navigate to="/" /> : <RecipeCreate />}
               />
               <Route
                 exact
                 path="/recipe/edit/:idRecipe"
-                element={!authToken ? <Navigate to="/" /> : <RecipeEdit />}
+                element={!user ? <Navigate to="/" /> : <RecipeEdit />}
               />
               {/*Admin Page*/}
-              <Route exact path="/admin" element={<AdminPage />} />
+              <Route
+                exact
+                path="/admin"
+                element={
+                  user.user_urole !== "A" ? <Navigate to="/" /> : <AdminPage />
+                }
+              />
             </Routes>
           </Layout>
         </Suspense>

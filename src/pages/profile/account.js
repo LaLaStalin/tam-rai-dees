@@ -207,7 +207,9 @@ const Account = () => {
                     required
                     component={TextField}
                     type="text"
-                    initialValue={user.email ? user.email : ""}
+                    initialValue={
+                      user.user_firstname ? user.user_firstname : ""
+                    }
                     label="First name"
                     variant="outlined"
                     name="firstname"
@@ -218,7 +220,7 @@ const Account = () => {
                     required
                     component={TextField}
                     type="text"
-                    initialValue={user.password ? user.password : ""}
+                    initialValue={user.user_lastname ? user.user_lastname : ""}
                     label="Last name"
                     variant="outlined"
                     name="lastname"

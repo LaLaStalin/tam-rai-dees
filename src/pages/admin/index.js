@@ -4,6 +4,8 @@ import Member from "./member";
 import { ButtonSettings } from "../profile/index";
 import { FiUser } from "react-icons/fi";
 import { GiCook, GiCookingPot } from "react-icons/gi";
+import MemberIsRecipe from "./memberIsRecipe";
+import AdminIsRecipe from "./adminIsRecipe";
 
 const ContainerAdminPage = styled.div`
   height: 140vh;
@@ -58,7 +60,7 @@ const mapBtnAdmin = [
 
 const AdminPage = () => {
   document.title = "Tam Rai Dee - Admin";
-  const [isMember, setIsMember] = useState("account");
+  const [isBtnAdmin, setIsBtnAdmin] = useState("member");
 
   return (
     <ContainerAdminPage>
@@ -70,8 +72,8 @@ const AdminPage = () => {
               bgIcon="var(--main-color)"
               bg="linear-gradient(180deg, rgba(245, 56, 3, 0.1) 0%, rgba(245, 208, 32, 0.1) 100%)"
               borderColor="2px solid orange"
-              onClick={() => setIsMember(btn.keyword)}
-              active={isMember}
+              onClick={() => setIsBtnAdmin(btn.keyword)}
+              active={isBtnAdmin}
               keyword={btn.keyword}
             >
               <span className="box-icon">{btn.iconDisplay}</span>
@@ -83,7 +85,9 @@ const AdminPage = () => {
         </span>
       </div>
       <div className="wrrapper-admin-page">
-        <Member />
+        {isBtnAdmin === "member" && <Member />}
+        {isBtnAdmin === "memberIsRecipe" && <MemberIsRecipe />}
+        {isBtnAdmin === "adminIsRecipe" && <AdminIsRecipe />}
       </div>
     </ContainerAdminPage>
   );

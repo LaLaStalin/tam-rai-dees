@@ -8,17 +8,31 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@material-ui/core";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
   document.title = "Tam Rai Dee - Register";
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowRetypePassword, setIsRetypePassword] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const onSubmit = (values) => {
-    console.log("submit ", values.email);
-    console.log("submit ", values.password);
+    axios
+      .post(`http://localhost/tamraidee-api/auth/register.php`, {
+        firstname: values.firstname,
+        lastname: values.lastname,
+        email: values.email,
+        password: values.password,
+      })
+      .then((res) => {
+        if (res.data.exist) {
+          alert(res.data.warning);
+        }
+        alert(res.data.success);
+        navigate("/login");
+      });
   };
   const validateForm = (values) => {
     const err = {};

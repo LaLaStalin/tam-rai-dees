@@ -3,7 +3,6 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLoading from "./components/Loading/mainLoading";
 import { AuthContext } from "./util/context";
-import axios from "axios";
 
 const Homepage = lazy(() => import("./pages/homepage/index"));
 const Register = lazy(() => import("./pages/register/register"));

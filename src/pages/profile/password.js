@@ -112,7 +112,7 @@ const Password = () => {
             return (
               <form
                 className="form-password"
-                autoComplete="true"
+                autoComplete="false"
                 onSubmit={handleSubmit}
               >
                 <div className="wrapper-inputField">

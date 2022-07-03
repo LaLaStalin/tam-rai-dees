@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { ButtonPrimary, ButtonCancel } from "../../components/Button";
+import { AuthContext } from "../../util/context";
+
 const ContainerMember = styled.div`
   padding: 40px;
-  height: 400px;
+  height: ${(props) => (props.rowsPerPage === 5 ? "400px" : "650px")};
 `;
 
 export const Header = styled.h1`
@@ -16,6 +18,9 @@ export const Header = styled.h1`
 
 const Member = () => {
   const [listMember, setListMember] = useState([]);
+  const [refreshMemberWhenDelete, setRefreshMemberWhenDelete] = useState(null);
+  const { setUser } = AuthContext();
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const columns = [
     {
@@ -80,7 +85,7 @@ const Member = () => {
     },
   ];
 
-  useEffect(() => {
+  const addListMember = () => {
     axios
       .get("http://localhost/tamraidee-api/user/fetchAllUser.php")
       .then((res) => {
@@ -93,29 +98,50 @@ const Member = () => {
           user_datetime: users.user_datetime,
           user_urole: users.user_urole,
         }));
-        console.log("rowsss:", rows);
+        console.log("list Members:", rows);
         setListMember(rows);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    addListMember();
+  }, [refreshMemberWhenDelete]);
+
+  const onDelete = (id) => {
+    console.log("Holaaaaaaa:", id);
+    axios
+      .post(`http://localhost/tamraidee-api/user/deleteUser.php`, {
+        user_id: id,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          const newArrayListMember = [...listMember];
+          const findIndex = newArrayListMember.findIndex(
+            (object) => object.id === id
+          );
+          newArrayListMember.splice(findIndex, 1);
+          setRefreshMemberWhenDelete(newArrayListMember.length);
+          alert(res.data.msg);
+        }
+      });
+  };
 
   return (
-    <ContainerMember>
+    <ContainerMember rowsPerPage={rowsPerPage}>
       <Header>Member</Header>
       <DataGrid
-        rows={listMember.map((users) => ({
-          id: users.id,
-          user_firstname: users.user_firstname,
-          user_lastname: users.user_lastname,
-          user_email: users.user_email,
-          user_datetime: users.user_datetime,
-          user_urole: users.user_urole,
-        }))}
+        rows={listMember}
         columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
+        pageSize={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25, 50, 100]}
+        onPageSizeChange={(newPagesize) => setRowsPerPage(newPagesize)}
         onCellClick={(params) => {
           if (params.field === "edit") {
-            console.log(params.row);
+            console.log("params.row", params.row);
+          }
+          if (params.field === "delete") {
+            console.log("params.row", params.row);
+            onDelete(params.row.id);
           }
         }}
       />

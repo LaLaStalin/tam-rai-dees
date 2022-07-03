@@ -65,12 +65,13 @@ const RecipeForm = (props) => {
   const handleUploadImg = (e) => {
     console.log(e.target.files);
     const imageFile = e.target.files[0];
-
-    if (!imageFile.name.match(/\.(jpg|jpeg|png)$/)) {
-      alert("Please select valid image.");
-      return;
+    if (imageFile) {
+      if (!imageFile.name.match(/\.(jpg|jpeg|png)$/)) {
+        alert("Please select valid image.");
+        return;
+      }
+      setFile([...e.target.files]);
     }
-    setFile([...e.target.files]);
   };
 
   const renderRecipeName = () => {
@@ -269,7 +270,6 @@ const RecipeForm = (props) => {
           <Header>เวลาที่ใช้ในการทำ</Header>
           <span>
             <Field
-              required
               component={TextField}
               type="number"
               variant="outlined"

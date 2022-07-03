@@ -14,9 +14,16 @@ const ContainerAdminPage = styled.div`
   background-image: url("/images/bg/bg-theme-w.png");
   grid-gap: 30px;
 
+  @media screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--pLR);
+    gap: 10px;
+  }
+
   .sideber-admin-page {
     width: 100%;
-    height: fit-content;
+    height: 100%;
     background: var(--bg-theme);
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
     z-index: 1;
@@ -65,8 +72,6 @@ const mapBtnAdmin = [
 const AdminPage = () => {
   document.title = "Tam Rai Dee - Admin";
   const [isBtnAdmin, setIsBtnAdmin] = useState("member");
-  const [listMemberRecipe, setListMemberRecipe] = useState([]);
-  const [listAdminRecipe, setListAdminRecipe] = useState([]);
 
   return (
     <ContainerAdminPage>

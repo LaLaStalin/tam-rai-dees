@@ -123,7 +123,7 @@ const ButtonChangeProfile = styled.button`
 
 const Account = () => {
   const [file, setFile] = useState([]);
-  const [urlProfile, setUrlProfile] = useState();
+  const [urlProfile, setUrlProfile] = useState(null);
   const refInputChangeProfile = useRef();
   const { user, setUser } = AuthContext();
 
@@ -139,11 +139,13 @@ const Account = () => {
   const handleProfile = (e) => {
     const imageFile = e.target.files[0];
 
-    if (!imageFile.name.match(/\.(jpg|jpeg|png)$/)) {
-      alert("Please select valid image.");
-      return;
+    if (imageFile) {
+      if (!imageFile.name.match(/\.(jpg|jpeg|png)$/)) {
+        alert("Please select valid image.");
+        return;
+      }
+      setFile([...e.target.files]);
     }
-    setFile([...e.target.files]);
   };
 
   const handleRemoveProfile = () => {
@@ -154,13 +156,13 @@ const Account = () => {
   const onSubmit = (values) => {
     axios
       .post(`http://localhost/tamraidee-api/auth/account.php`, {
-        user_id: user.user_id,
+        user_id: parseInt(user.user_id),
         firstname: values.firstname,
         lastname: values.lastname,
         avatar: urlProfile,
       })
       .then((res) => {
-        console.log("data:s: ", res.data.dataUser);
+        console.log("data:s: ", res.data);
         if (res.data.success) {
           alert(res.data.success);
           setUser(res.data.dataUser);
@@ -182,7 +184,7 @@ const Account = () => {
           <Avatar
             className="avatar-img"
             style={{ borderRadius: "10px" }}
-            src={user.user_img && urlProfile}
+            src={urlProfile}
           >
             {!user.user_img && user.user_firstname[0]}
           </Avatar>

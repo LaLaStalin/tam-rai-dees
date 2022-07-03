@@ -5,6 +5,8 @@ import { TextField } from "final-form-material-ui";
 import Divider from "../../components/Divider/divider";
 import { ButtonPrimary, ButtonCancel } from "../../components/Button/index";
 import { AuthContext } from "../../util/context";
+import axios from "axios";
+import Avatar from "@mui/material/Avatar";
 
 const ContainerAccount = styled.div`
   margin-top: 30px;
@@ -46,14 +48,10 @@ const ContainerAccount = styled.div`
       .avatar-img {
         width: 100px;
         height: 100px;
+        font-size: 35px;
+        object-fit: cover;
         border-radius: 12px;
-
-        & > img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border-radius: 12px;
-        }
+        background: var(--main-color);
       }
 
       & > span {
@@ -125,12 +123,13 @@ const ButtonChangeProfile = styled.button`
 
 const Account = () => {
   const [file, setFile] = useState([]);
-  const [urlProfile, setUrlProfile] = useState("./images/profile/lala.png");
+  const [urlProfile, setUrlProfile] = useState();
   const refInputChangeProfile = useRef();
-  const { user } = AuthContext();
+  const { user, setUser } = AuthContext();
 
   useEffect(() => {
-    console.log(urlProfile);
+    console.log("img: ", user.user_img);
+    if (user.user_img) setUrlProfile(`/images/profile/${user.user_img}`);
     if (file.length < 1) return;
     const newFile = [];
     file.forEach((img) => newFile.push(URL.createObjectURL(img)));
@@ -149,12 +148,25 @@ const Account = () => {
 
   const handleRemoveProfile = () => {
     setFile([]);
-    setUrlProfile(["./images/profile/lala.png"]);
+    setUrlProfile([`user.user_img`]);
   };
 
   const onSubmit = (values) => {
-    console.log("submit ", values.firstname);
-    console.log("submit ", values.lastname);
+    axios
+      .post(`http://localhost/tamraidee-api/auth/account.php`, {
+        user_id: user.user_id,
+        firstname: values.firstname,
+        lastname: values.lastname,
+        avatar: urlProfile,
+      })
+      .then((res) => {
+        console.log("data:s: ", res.data.dataUser);
+        if (res.data.success) {
+          alert(res.data.success);
+          setUser(res.data.dataUser);
+          window.location.reload(false);
+        }
+      });
   };
   const validateForm = (values) => {
     const err = {};
@@ -167,9 +179,14 @@ const Account = () => {
     return (
       <>
         <div className="avatar-account">
-          <span className="avatar-img">
-            <img src={urlProfile} alt="avatar" />
-          </span>
+          <Avatar
+            className="avatar-img"
+            style={{ borderRadius: "10px" }}
+            src={user.user_img && urlProfile}
+          >
+            {!user.user_img && user.user_firstname[0]}
+          </Avatar>
+          {/* <img src={urlProfile} alt="avatar" /> */}
           <ButtonChangeProfile
             onClick={() => refInputChangeProfile.current.click()}
             className="btn-change-profile"

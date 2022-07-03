@@ -4,7 +4,6 @@ import Divider from "../Divider/divider";
 import { FaHamburger } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
-import SearchInput from "../SearchInput/searchInput";
 import { AuthContext } from "../../util/context";
 import Avatar from "@mui/material/Avatar";
 
@@ -132,14 +131,13 @@ const Navbar = (props) => {
       <>
         {/*Already login*/}
         <AuthWrapper path={location.pathname}>
-          {location.pathname !== "/" && (
+          {/* {location.pathname !== "/" && (
             <SearchInput
               radius="10px"
               w="350px"
               shadow="0px 2px 5px rgba(0, 0, 0, 0.2)"
             />
-          )}
-
+          )} */}
           <MenuItems
             path={location.pathname}
             keyword="/recipe/create"
@@ -147,7 +145,6 @@ const Navbar = (props) => {
           >
             + เขียนสูตรอาหาร
           </MenuItems>
-
           <Divider vertical="30px" color="var(--divider-theme)" />
           <Link to="/myrecipes">
             <MenuItems
@@ -158,18 +155,31 @@ const Navbar = (props) => {
               My Recipes
             </MenuItems>
           </Link>
-
+          <Divider vertical="30px" color="var(--divider-theme)" />
+          {/* Admin */}
+          {user.user_urole === "A" && (
+            <Link to="/admin">
+              <MenuItems
+                path={location.pathname}
+                keyword="/admin"
+                style={{ fontWeight: 550 }}
+              >
+                admin
+              </MenuItems>
+            </Link>
+          )}
           {/* Profile */}
           <Link to="/profile">
             <span className="profile-button">
               <Avatar
                 className="Avatar"
                 style={{ borderRadius: "10px" }}
-                src="/images/profile/lala.png"
-              />
+                src={`/images/profile/${user.user_img}`}
+              >
+                {!user.user_img && user.user_firstname[0]}
+              </Avatar>
             </span>
           </Link>
-
           <Link to="/admin">
             <FiHelpCircle className="help-icon" keyword="/admin" />
           </Link>
@@ -211,6 +221,7 @@ const Navbar = (props) => {
                 <Avatar className="Avatar" style={{ borderRadius: "10px" }} />
               </span>
             </Link>
+
             <Link to="/admin">
               <FiHelpCircle className="help-icon" keyword="/admin" />
             </Link>

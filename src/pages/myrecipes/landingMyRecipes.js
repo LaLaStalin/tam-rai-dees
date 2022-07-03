@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { AuthContext } from "../../util/context";
+import Avatar from "@mui/material/Avatar";
 
 const ContainerLandingMyRecipes = styled.section`
   display: flex;
@@ -22,13 +24,15 @@ const ContainerLandingMyRecipes = styled.section`
     height: 110px;
     width: 110px;
     bottom: -50px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
-    & > img {
+    .Avatar {
       border-radius: 100%;
       height: 100%;
       width: 100%;
       object-fit: cover;
+      font-size: 40px;
+      background: var(--main-color);
     }
   }
 `;
@@ -51,18 +55,23 @@ const UsernameWrapper = styled.section`
     height: 100%;
 
     & > h3 {
+      margin-top: 25px;
       color: var(--txt-theme);
-      text-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
+      text-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
     }
   }
 `;
 
 const LandingMyRecipes = () => {
+  const { user } = AuthContext();
   return (
     <>
       <ContainerLandingMyRecipes>
         <div className="profile-img">
-          <img src="/images/profile/lala.png" alt="profile" />
+          <Avatar className="Avatar" src={`/images/profile/${user.user_img}`}>
+            {!user.user_img && user.user_firstname[0]}
+          </Avatar>
+          {/* <img src="/images/profile/lala.png" alt="profile" /> */}
         </div>
       </ContainerLandingMyRecipes>
       <UsernameWrapper>

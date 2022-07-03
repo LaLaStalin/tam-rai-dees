@@ -18,7 +18,9 @@ export const ButtonPrimary = styled.button`
   background: ${(props) => props.bg};
   background-size: 200% auto;
   border-radius: 10px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: ${(props) => (props.border ? props.border : null)};
   cursor: pointer;
   user-select: none;
@@ -43,6 +45,9 @@ export const ButtonCancel = styled.button`
   border: 1px solid gray;
   border-radius: 10px;
   color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.1s ease-in;
   cursor: pointer;
 

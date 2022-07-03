@@ -8,14 +8,17 @@ import MemberIsRecipe from "./memberIsRecipe";
 import AdminIsRecipe from "./adminIsRecipe";
 
 const ContainerAdminPage = styled.div`
-  height: 140vh;
-  display: flex;
+  display: grid;
+  grid-template-columns: 25% auto;
+  padding-right: 30px;
+  background-image: url("/images/bg/bg-theme-w.png");
+  grid-gap: 30px;
 
   .sideber-admin-page {
-    width: 400px;
-    height: 100%;
+    width: 100%;
+    height: fit-content;
     background: var(--bg-theme);
-    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
     z-index: 1;
 
     .sideber-btn {
@@ -28,12 +31,13 @@ const ContainerAdminPage = styled.div`
   }
 
   .wrrapper-admin-page {
-    height: 100%;
-    background-image: url("/images/bg/bg-theme-w.png");
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: fit-content;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+    background: var(--bg-theme);
+    margin: 40px 0;
+    padding-bottom: 150px;
   }
 `;
 
@@ -61,6 +65,8 @@ const mapBtnAdmin = [
 const AdminPage = () => {
   document.title = "Tam Rai Dee - Admin";
   const [isBtnAdmin, setIsBtnAdmin] = useState("member");
+  const [listMemberRecipe, setListMemberRecipe] = useState([]);
+  const [listAdminRecipe, setListAdminRecipe] = useState([]);
 
   return (
     <ContainerAdminPage>

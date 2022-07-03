@@ -3,6 +3,7 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLoading from "./components/Loading/mainLoading";
 import { AuthContext } from "./util/context";
+import axios from "axios";
 
 const Homepage = lazy(() => import("./pages/homepage/index"));
 const Register = lazy(() => import("./pages/register/register"));
@@ -31,20 +32,30 @@ function App() {
     //ถ้ามี user เคย login แล้ว
     const authCheck = localStorage.getItem("user_setup");
     if (authCheck) {
-      // const parseUser = JSON.parse(authCheck);
-      // setUser(parseUser);
+      console.log("sdds");
+      const parseUser = JSON.parse(authCheck);
+      axios
+        .post("http://localhost/tamraidee-api/user/fetchUserById.php", {
+          id: parseInt(parseUser),
+        })
+        .then((res) => {
+          if (res.data.dataUser) {
+            console.log("data: ", res.data.dataUser);
+            setUser(res.data.dataUser);
+          }
+        });
 
       //mock
-      setUser({
-        user_firstname: "Kwai",
-        user_lastname: "stupid",
-        user_email: "benz@gmail.com",
-        user_urole: "M",
-      });
+      // setUser({
+      //   user_firstname: "Kwai",
+      //   user_lastname: "stupid",
+      //   user_email: "benz@gmail.com",
+      //   user_urole: "M",
+      // });
     }
   }, []);
 
-  console.log("userroles: ", user);
+  console.log(user);
 
   return (
     <div>
@@ -60,12 +71,12 @@ function App() {
               <Route
                 exact
                 path="/profile"
-                element={!user.user_email ? <Navigate to="/" /> : <Profile />}
+                element={!user ? <Navigate to="/" /> : <Profile />}
               />
               <Route
                 exact
                 path="/myrecipes"
-                element={!user.user_email ? <Navigate to="/" /> : <MyRecipes />}
+                element={!user ? <Navigate to="/" /> : <MyRecipes />}
               />
 
               {/*RECIPE*/}
@@ -73,23 +84,23 @@ function App() {
               <Route
                 exact
                 path="/recipe/create"
-                element={
-                  !user.user_email ? <Navigate to="/" /> : <RecipeCreate />
-                }
+                element={!user ? <Navigate to="/" /> : <RecipeCreate />}
               />
               <Route
                 exact
                 path="/recipe/edit/:idRecipe"
-                element={
-                  !user.user_email ? <Navigate to="/" /> : <RecipeEdit />
-                }
+                element={!user ? <Navigate to="/" /> : <RecipeEdit />}
               />
               {/*Admin Page*/}
               <Route
                 exact
                 path="/admin"
                 element={
-                  user.user_urole !== "A" ? <Navigate to="/" /> : <AdminPage />
+                  user.user_urole !== null && user.user_urole !== "A" ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <AdminPage />
+                  )
                 }
               />
             </Routes>

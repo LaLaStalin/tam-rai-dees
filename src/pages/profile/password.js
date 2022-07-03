@@ -8,6 +8,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@material-ui/core";
 import { AuthContext } from "../../util/context";
+import axios from "axios";
 
 const ContainerPassword = styled.div`
   margin-top: 30px;
@@ -68,11 +69,24 @@ const Password = () => {
   const [isShowOldPassword, setIsShowOldPassword] = useState(false);
   const [isShowNewPassword, setIsNewShowPassword] = useState(false);
   const [isShowRetypePassword, setIsRetypePassword] = useState(false);
-  const { user } = AuthContext();
+  const { user, setUser } = AuthContext();
 
   const onSubmit = (values) => {
-    console.log("submit ", values.email);
-    console.log("submit ", values.password);
+    axios
+      .post(`http://localhost/tamraidee-api/auth/password.php`, {
+        user_id: user.user_id,
+        oldPassword: values.oldPassword,
+        newPassword: values.newPassword,
+      })
+      .then((res) => {
+        if (res.data.exist) alert(res.data.warning);
+        if (res.data.success) {
+          console.log(res.data.dataUser);
+          alert(res.data.success);
+          setUser(res.data.dataUser);
+          window.location.reload(false);
+        }
+      });
   };
   const validateForm = (values) => {
     const err = {};
@@ -106,10 +120,12 @@ const Password = () => {
                     fullWidth
                     required
                     component={TextField}
-                    initialValue={user.email ? user.email : ""}
+                    initialValue={user.user_email ? user.user_email : ""}
                     type="email"
                     label="Email"
                     variant="outlined"
+                    disabled
+                    style={{ background: "lightgray" }}
                     name="email"
                     InputProps={{ className: "input-textfield" }}
                   />

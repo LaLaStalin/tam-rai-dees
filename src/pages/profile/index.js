@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ContainerGlobal } from "../../components/global.styled";
 import Account from "./account";
@@ -147,6 +147,11 @@ const Profile = () => {
     },
   ];
 
+  useEffect(() => {
+    const storageValue = localStorage.getItem("profile");
+    if (storageValue) setIsAccount(JSON.parse(storageValue));
+  }, []);
+
   const renderBtnSetting = () => {
     return (
       <>
@@ -156,7 +161,10 @@ const Profile = () => {
             bgIcon="var(--main-color)"
             bg="linear-gradient(180deg, rgba(245, 56, 3, 0.1) 0%, rgba(245, 208, 32, 0.1) 100%)"
             borderColor="2px solid orange"
-            onClick={() => setIsAccount(btn.keyword)}
+            onClick={() => {
+              setIsAccount(btn.keyword);
+              localStorage.setItem("profile", JSON.stringify(btn.keyword));
+            }}
             active={isAccount}
             keyword={btn.keyword}
           >

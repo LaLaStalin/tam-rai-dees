@@ -42,7 +42,7 @@
 .waviy span {
   position: relative;
   display: inline-block;
-  font-size: 40px;
+  font-size: 70px;
   font-weight: 700;
   color: #222;
   /* background: var(--main-color);
@@ -52,6 +52,12 @@
   text-transform: uppercase;
   animation: flip 0.8s infinite;
   animation-delay: calc(.1s * var(--i))
+}
+
+@media screen and (max-width: 500px) {
+   .waviy span {
+    font-size: 50px;
+   } 
 }
 @keyframes flip {
   0%,80% {

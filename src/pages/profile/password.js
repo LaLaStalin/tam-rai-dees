@@ -9,6 +9,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@material-ui/core";
 import { AuthContext } from "../../util/context";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ContainerPassword = styled.div`
   margin-top: 30px;
@@ -72,21 +73,66 @@ const Password = () => {
   const { user, setUser } = AuthContext();
 
   const onSubmit = (values) => {
-    axios
-      .post(`http://localhost/tamraidee-api/auth/password.php`, {
-        user_id: user.user_id,
-        oldPassword: values.oldPassword,
-        newPassword: values.newPassword,
-      })
-      .then((res) => {
-        if (res.data.exist) alert(res.data.warning);
-        if (res.data.success) {
-          console.log(res.data.dataUser);
-          alert(res.data.success);
-          setUser(res.data.dataUser);
-          window.location.reload(false);
-        }
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "อยากจะแก้ไขโปรไฟล์ของคุณจริงๆหรอ><",
+      icon: "warning",
+      cancelButtonText: "ไม่แก้ไข",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ใช่, แก้ไขเลย!",
+    }).then((result) => {
+      if (result.dismiss) return;
+      axios
+        .post(`http://localhost/tamraidee-api/auth/password.php`, {
+          user_id: user.user_id,
+          oldPassword: values.oldPassword,
+          newPassword: values.newPassword,
+        })
+        .then((res) => {
+          if (res.data.exist) alert(res.data.warning);
+          if (res.data.success) {
+            setUser(res.data.dataUser);
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Success",
+              text: "ข้อมูลถูกบันทึกเรียบร้อย><",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            window.location.reload(false);
+          }
+        });
+    });
+  };
+
+  const onCancel = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "อยากจะยกเลิกการแก้ไขรหัสผ่านของคุณจริงๆหรอ><",
+      icon: "warning",
+      cancelButtonText: "แก้ไขต่อ",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ใช่, ยกเลิกเลย!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "ยกเลิกสำเร็จ",
+          text: "Your Password has been canceled.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
+    });
   };
   const validateForm = (values) => {
     const err = {};
@@ -251,7 +297,7 @@ const Password = () => {
                       w="100px"
                       p="10px"
                       justify="center"
-                      onClick={() => window.location.reload(false)}
+                      onClick={onCancel}
                     >
                       ยกเลิก
                     </ButtonCancel>

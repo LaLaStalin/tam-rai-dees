@@ -6,9 +6,12 @@ import { TextField } from "final-form-material-ui";
 import { ButtonPrimary, ButtonCancel } from "../../../components/Button";
 import { IoClose } from "react-icons/io5";
 import { motion } from "framer-motion/dist/framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import RecipeModalTag from "./recipeModalTag";
+import { AuthContext } from "../../../util/context";
+import Swal from "sweetalert2";
+import axios from "axios";
 import {
   ContainerRecipeForm,
   Header,
@@ -25,12 +28,14 @@ import {
 } from "./recipeForm.styled";
 
 const RecipeForm = (props) => {
-  document.title = "Tam Rai Dee - Create";
   const refUploadImg = useRef();
   const [countTextName, setCountTextName] = useState(0);
   const [countTextDescription, setCountTextDescription] = useState(0);
   const [file, setFile] = useState([]);
   const [urlRecipe, setUrlRecipe] = useState(null);
+  const { user } = AuthContext();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   //STATE FOR ADD INGREDIENT , COOKING , TAG INPUT
   //INGREDIENT
@@ -38,9 +43,11 @@ const RecipeForm = (props) => {
     {
       id: 1,
       nameInputIngre: "recipeIngredient1",
-      nameInputVolumn: "recipeIngredientVolumn1",
+      nameInputVolume: "recipeIngredientVolume1",
       placeholderIngre: "เนื้อหมู",
-      placeholderVolumn: "1 Kg",
+      placeholderVolume: "1 Kg",
+      valueName: "",
+      valuevolume: "",
     },
   ]);
   //COOKING
@@ -49,21 +56,55 @@ const RecipeForm = (props) => {
       id: 1,
       nameInputCooking: "reciepCooking1",
       placeholderCooking: "ตีไข่แล้วผสมกับน้ำสต็อก",
+      valueCooking: "",
     },
   ]);
   // TAG
   const [listTag, setListTag] = useState([]);
 
   useEffect(() => {
-    console.log(urlRecipe);
     if (file.length < 1) return;
     const newFile = [];
     file.forEach((img) => newFile.push(URL.createObjectURL(img)));
     setUrlRecipe(newFile[0]);
   }, [file]);
 
+  useEffect(() => {
+    if (props.mode === "edit") {
+      console.log("tagggss");
+      location.state.recipeTagFromState.map((tags) => {
+        setListTag((preTag) => [
+          ...preTag,
+          { id: tags.tag_id, nameTag: tags.tag_name },
+        ]);
+      });
+      setListIngredientInput([]);
+      location.state.recipeIngredientFromState.map((ingre, index) => {
+        setListIngredientInput((preIngre) => [
+          ...preIngre,
+          {
+            id: ingre.ingredient_id,
+            nameInputIngre: `recipeIngredient${index + 1}`,
+            nameInputVolume: `recipeIngredientVolume${index + 1}`,
+            placeholderIngre: "",
+            placeholderVolume: "",
+            valueName: ingre.ingredient_name,
+            valueVolume: ingre.ingredient_volume,
+          },
+        ]);
+      });
+
+      // location.state.recipeTagFromState.map((tags) => {
+      //   setListTag((preTag) => [
+      //     ...preTag,
+      //     { id: tags.tag_id, nameTag: tags.tag_name },
+      //   ]);
+      // });
+    }
+  }, []);
+
   const handleUploadImg = (e) => {
-    console.log(e.target.files);
+    console.log(e.target.files[0]);
     const imageFile = e.target.files[0];
     if (imageFile) {
       if (!imageFile.name.match(/\.(jpg|jpeg|png)$/)) {
@@ -73,6 +114,7 @@ const RecipeForm = (props) => {
       setFile([...e.target.files]);
     }
   };
+  console.log("recipe: ", location.state);
 
   const renderRecipeName = () => {
     return (
@@ -87,11 +129,16 @@ const RecipeForm = (props) => {
             placeholder="เช่น ข้าวกะเพราหมูสับไข่ดาว"
             variant="outlined"
             name="recipeName"
+            initialValue={
+              props.mode === "edit"
+                ? location.state.recipeFromState.recipe_name
+                : ""
+            }
             InputProps={{
               className: "input-textfield input-name",
             }}
           />
-          <p className="count-text">{countTextName}/70</p>
+          <p className="count-text">{countTextName}</p>
         </div>
         <div className="box-field">
           <Field
@@ -103,8 +150,13 @@ const RecipeForm = (props) => {
             placeholder="อธิบายสั้น ๆ เกี่ยวกับเมนูอาหารนี้"
             name="recipeDescription"
             className="textarea-input"
+            initialValue={
+              props.mode === "edit"
+                ? location.state.recipeFromState.recipe_description
+                : ""
+            }
           />
-          <p className="count-text">{countTextDescription}/300</p>
+          <p className="count-text">{countTextDescription}</p>
         </div>
       </RecipeNameWrapper>
     );
@@ -112,7 +164,7 @@ const RecipeForm = (props) => {
 
   const renderRecipeIngredient = () => {
     // count number of List ingredient for generate ID
-    const [countIdListIngre, setCountIdListIngre] = useState(1);
+    const [countIdListIngre, setCountIdListIngre] = useState(listIngredientInput.length);
 
     const handleAddIngredient = () => {
       const plusCountId = countIdListIngre + 1;
@@ -121,12 +173,15 @@ const RecipeForm = (props) => {
         {
           id: plusCountId,
           nameInputIngre: `recipeIngredient${plusCountId}`,
-          nameInputVolumn: `recipeIngredientVolumn${plusCountId}`,
+          nameInputVolume: `recipeIngredientVolume${plusCountId}`,
           placeholderIngre: "",
-          placeholderVolumn: "",
+          placeholderVolume: "",
+          valueName: "",
+          valueVolume: "",
         },
       ]);
       setCountIdListIngre(plusCountId);
+      console.log(listIngredientInput);
     };
 
     const handleDeleteIngredient = (id) => {
@@ -156,19 +211,19 @@ const RecipeForm = (props) => {
               placeholder={items.placeholderIngre ? items.placeholderIngre : ""}
               variant="outlined"
               name={items.nameInputIngre}
+              initialValue={props.mode === "edit" ? items.valueName : ""}
               InputProps={{ className: "input-textfield" }}
             />
-
             <Field
               fullWidth
-              required
               component={TextField}
               type="text"
               placeholder={
-                items.placeholderVolumn ? items.placeholderVolumn : ""
+                items.placeholderVolume ? items.placeholderVolume : ""
               }
               variant="outlined"
-              name={items.nameInputVolumn}
+              name={items.nameInputVolume}
+              initialValue={props.mode === "edit" ? items.valueVolume : ""}
               InputProps={{ className: "input-textfield" }}
             />
 
@@ -192,7 +247,7 @@ const RecipeForm = (props) => {
   };
 
   const renderRecipeCooking = () => {
-    const [countIdListCooking, setCountIdListCooking] = useState(1);
+    const [countIdListCooking, setCountIdListCooking] = useState(listCookingInput.length);
     const handleAddCooking = () => {
       const plusCountId = countIdListCooking + 1;
       setListCookingInput([
@@ -307,12 +362,11 @@ const RecipeForm = (props) => {
           <Header className="header-duration">สูตรนี้สำหรับ</Header>
           <Field
             fullWidth
-            required
             component={TextField}
             type="text"
             placeholder="กี่ท่าน, กี่แก้ว, กี่ปอนด์, กี่แก้ว"
             variant="outlined"
-            name="ingredientVolume3"
+            name="amount"
             InputProps={{ className: "input-textfield" }}
           />
         </div>
@@ -404,29 +458,141 @@ const RecipeForm = (props) => {
   };
 
   const onSubmit = (values) => {
-    console.log("submit: ", values.recipeIngredient1);
+    if (listTag.length <= 0) {
+      return Swal.fire({
+        icon: "error",
+        title: "แท็ก",
+        text: "กรุณาเลือกอย่างน้อย 1 แท็ก!",
+      });
+    }
+    if (file.length <= 0) {
+      return Swal.fire({
+        icon: "error",
+        title: "รูปภาพ",
+        text: "กรุณาเลือกรูปภาพสูตรอาหาร!",
+      });
+    }
+
+    const getValueFromListIngredient = [];
+    listIngredientInput.map((items, index) => {
+      getValueFromListIngredient.push({
+        name: values[`recipeIngredient${index + 1}`],
+        volume: values[`recipeIngredientVolume${index + 1}`]
+          ? values[`recipeIngredientVolume${index + 1}`]
+          : null,
+      });
+    });
+
+    const getValueFromListCooking = [];
+    listCookingInput.map((items, index) => {
+      getValueFromListCooking.push(values[`reciepCooking${index + 1}`]);
+    });
+
+    const getValueFromListTag = [];
+    listTag.map((items, index) => {
+      getValueFromListTag.push(items.id);
+    });
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "พร้อมที่จะโพสต์สูตรอาหารของคุณแล้วใช่ไหม><",
+      icon: "warning",
+      cancelButtonText: "ไม่, ขอแก้ไขอีกแปป",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ใช่, โพสต์เลย!",
+    }).then((result) => {
+      if (result.dismiss) return;
+      axios
+        .post(`http://localhost/tamraidee-api/recipe/insertRecipe.php`, {
+          user_id: parseInt(user.user_id),
+          img: file[0].name,
+          name: values.recipeName,
+          description: values.recipeDescription,
+          listIngredient: getValueFromListIngredient,
+          listCooking: getValueFromListCooking,
+          minute: values.minute,
+          hour: values.hour ? values.hour : null,
+          amount: values.amount ? values.amount : null,
+          listTag: getValueFromListTag,
+        })
+        .then((res) => {
+          console.log("redS: ", res.data);
+          if (res.data.success) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Success",
+              text: "ข้อมูลถูกบันทึกเรียบร้อย><",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/");
+          }
+        });
+    });
   };
+
+  const onCancel = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "อยากจะยกเลิกการแก้ไขสูตรอาหารของคุณจริงๆหรอ><",
+      icon: "warning",
+      cancelButtonText: "แก้ไขต่อ",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ใช่, ยกเลิกเลย!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "ยกเลิกสำเร็จ",
+          text: "Your recipe has been canceled.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          navigate("/myrecipes");
+        }, 1500);
+      }
+    });
+  };
+
   const validateForm = (values) => {
     const err = {};
     if (values.recipeName) {
-      if (values.recipeName.length > 70) return;
-
       setCountTextName(values.recipeName.length);
-    }
-
-    if (values.recipeDescription) {
-      if (values.recipeDescription.length > 300) return;
-
-      setCountTextDescription(values.recipeDescription.length);
     }
 
     if (!values.recipeName) {
       setCountTextName(0);
       err.recipeName = "กรุณากรอกชื่อสูตรอาหาร";
     }
+
+    if (values.recipeDescription) {
+      setCountTextDescription(values.recipeDescription.length);
+    }
+
     if (!values.recipeDescription) {
       setCountTextDescription(0);
       err.recipeDescription = "กรุณากรอกคำอธิบายสั้นๆเกี่ยวกับเมนูอาหารนี้";
+    }
+
+    listIngredientInput.map((items, index) => {
+      if (!values[`recipeIngredient${index + 1}`])
+        err[`recipeIngredient${index + 1}`] = "กรุณากรอกชื่อวัตถุดิบ";
+    });
+
+    listCookingInput.map((items, index) => {
+      if (!values[`reciepCooking${index + 1}`])
+        err[`reciepCooking${index + 1}`] = "กรุณากรอกวิธีการทำอาหาร";
+    });
+
+    if (!values.minute) {
+      err.minute = "กรุณากรอกนาที";
     }
 
     return err;
@@ -541,16 +707,15 @@ const RecipeForm = (props) => {
 
                   {/* Button ยกเลิก & บันทึก */}
                   <SubmittingWrapper>
-                    <Link to="/">
-                      <ButtonCancel
-                        type="reset"
-                        w="100px"
-                        p="10px"
-                        justify="center"
-                      >
-                        ยกเลิก
-                      </ButtonCancel>
-                    </Link>
+                    <ButtonCancel
+                      type="reset"
+                      w="100px"
+                      p="10px"
+                      onClick={onCancel}
+                      justify="center"
+                    >
+                      ยกเลิก
+                    </ButtonCancel>
 
                     <ButtonPrimary
                       w="100px"

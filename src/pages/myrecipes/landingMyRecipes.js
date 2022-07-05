@@ -68,7 +68,10 @@ const LandingMyRecipes = () => {
     <>
       <ContainerLandingMyRecipes>
         <div className="profile-img">
-          <Avatar className="Avatar" src={`/images/profile/${user.user_img}`}>
+          <Avatar
+            className="Avatar"
+            src={`https://drive.google.com/uc?export=view&id=${user.user_img}`}
+          >
             {!user.user_img && user.user_firstname[0]}
           </Avatar>
           {/* <img src="/images/profile/lala.png" alt="profile" /> */}

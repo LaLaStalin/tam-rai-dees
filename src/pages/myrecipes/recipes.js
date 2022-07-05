@@ -3,6 +3,8 @@ import styled from "styled-components";
 import CardMyRecipe from "../../components/Card/CardMyRecipe";
 import Pagination from "@mui/material/Pagination";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../.././util/context";
 
 export const CardContainerMyRecipes = styled.section`
   display: grid;
@@ -18,88 +20,9 @@ export const CardContainerMyRecipes = styled.section`
   }
 `;
 
-const listMock = [
-  {
-    id: 1,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 2,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 3,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 4,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 5,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 6,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 7,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 8,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 9,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 10,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-  {
-    id: 11,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe.jpg",
-  },
-];
-
 const Recipes = () => {
   const navigate = useNavigate();
+  const { user } = AuthContext();
   const [listMyRecipes, setListMyRecipes] = useState([]);
 
   const [myRecipePerPage] = useState(8);
@@ -123,9 +46,18 @@ const Recipes = () => {
   );
 
   useEffect(() => {
-    setListMyRecipes(listMock);
-    setLengthOfMyRecipe(listMyRecipes.length / myRecipePerPage);
-  }, [listMyRecipes]);
+    axios
+      .post(`http://localhost/tamraidee-api/recipe/fetchAllMyRecipe.php`, {
+        id: parseInt(user.user_id),
+      })
+      .then((res) => {
+        console.log("11", res.data);
+        if (res.data.success) {
+          setListMyRecipes(res.data.dataRecipe);
+          setLengthOfMyRecipe(res.data.dataRecipe.length / myRecipePerPage);
+        }
+      });
+  }, []);
 
   return (
     <>
@@ -134,12 +66,14 @@ const Recipes = () => {
           .slice(indexFirstMyRecipe, indexLastMyRecipe)
           .map((items) => (
             <CardMyRecipe
-              onClicked={() => navigate("/recipe/1")}
-              key={items.id}
-              keyword={items.id}
-              recipeName={items.name}
-              recipeDescription={items.description}
-              src={items.src}
+              onClicked={() =>
+                navigate(`/recipe/${items.recipe_id}`, { state: items })
+              }
+              key={items.recipe_id}
+              keyword={items.recipe_id}
+              recipeName={items.recipe_name}
+              recipeDescription={items.recipe_description}
+              src={`/images/recipes/${items.recipe_img}`}
             />
           ))}
       </CardContainerMyRecipes>

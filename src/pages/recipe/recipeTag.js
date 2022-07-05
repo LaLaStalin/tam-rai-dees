@@ -2,33 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { RecipeInfoContainer } from "./recipeIngredient";
 
-const listTag = [
-  {
-    id: 1,
-    step: "ไข่ไก่",
-  },
-  {
-    id: 2,
-    step: "หมู",
-  },
-  {
-    id: 3,
-    step: "พริก",
-  },
-  {
-    id: 4,
-    step: "ใบกะเพรา",
-  },
-  {
-    id: 5,
-    step: "กระเทียม",
-  },
-  {
-    id: 6,
-    step: "ผัด",
-  },
-];
-
 const WrrapperRecipeTag = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,15 +37,15 @@ const WrrapperRecipeTag = styled.div`
   }
 `;
 
-const RecipeTag = () => {
+const RecipeTag = (props) => {
   return (
     <RecipeInfoContainer>
       <WrrapperRecipeTag>
         <h1>แท็ก</h1>
         <div className="wrapper">
-          {listTag.map((items) => (
-            <span className="tag-box" key={items.id}>
-              <p>{items.step}</p>
+          {props.listTag.map((items) => (
+            <span className="tag-box" key={items.tag_id}>
+              <p>{items.tag_name}</p>
             </span>
           ))}
         </div>

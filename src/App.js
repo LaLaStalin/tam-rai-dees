@@ -44,18 +44,8 @@ function App() {
             setUser(res.data.dataUser);
           }
         });
-
-      //mock
-      // setUser({
-      //   user_firstname: "Kwai",
-      //   user_lastname: "stupid",
-      //   user_email: "benz@gmail.com",
-      //   user_urole: "M",
-      // });
     }
   }, []);
-
-  console.log(user);
 
   return (
     <div>

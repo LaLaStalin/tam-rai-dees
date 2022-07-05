@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LandingMyRecipes from "./landingMyRecipes";
 import Recipes from "./recipes";
 import { ContainerGlobal } from "../../components/global.styled";
@@ -6,6 +6,7 @@ import { ButtonPrimary } from "../../components/Button/index";
 import { Icon } from "@iconify/react";
 import styled from "styled-components";
 import Favorite from "./favorite";
+import { useLocation } from "react-router-dom";
 
 const ButtonMenuWrrapper = styled.div`
   display: flex;
@@ -37,7 +38,10 @@ const MyRecipes = () => {
   document.title = "Tam Rai Dee - My Recipe";
 
   const [isMyRecipe, setIsMyRecipe] = useState("recipe");
-
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   const renderBtn = () => {
     return (
       <>

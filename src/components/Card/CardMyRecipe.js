@@ -48,7 +48,10 @@ const CardMyRecipe = (props) => {
     <ContainerCardMyRecipe src={props.src} onClick={props.onClicked}>
       <div className="info-recipe">
         <h4>{props.recipeName}</h4>
-        <p>{props.recipeDescription}</p>
+        <p>
+          {props.recipeDescription.substring(0, 150)}
+          {props.recipeDescription.length > 150 && "..."}
+        </p>
       </div>
     </ContainerCardMyRecipe>
   );

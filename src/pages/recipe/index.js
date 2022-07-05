@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ContainerGlobal } from "../../components/global.styled";
 import { RiHeart3Fill } from "react-icons/ri";
@@ -8,7 +8,10 @@ import RecipeCooking from "./recipeCooking";
 import RecipeTag from "./recipeTag";
 import { motion } from "framer-motion/dist/framer-motion";
 import { Parallax } from "react-parallax";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import axios from "axios";
+import { ButtonPrimary } from "../../components/Button";
+import { AuthContext } from "../../util/context";
 
 export const WrrapperRecipe = styled.section`
   display: flex;
@@ -41,6 +44,7 @@ export const WrrapperRecipe = styled.section`
 
   .title-recipe {
     display: flex;
+    width: 93%;
     flex-direction: column;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     padding: 40px 30px;
@@ -129,7 +133,8 @@ export const WrrapperRecipe = styled.section`
   .datetime-recipe {
     display: flex;
     width: 100%;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: space-between;
     font-size: var(--txt-sub);
     color: grey;
   }
@@ -142,10 +147,35 @@ const item = {
 
 const Recipe = () => {
   document.title = "Tam Rai Dee - Recipe";
-
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = AuthContext();
+  const [recipeWriter, setRecipeWriter] = useState();
+  const [listIngredient, setListIngredient] = useState([]);
+  const [listCooking, setListCooking] = useState([]);
+  const [listTag, setListTag] = useState([]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log("location: ", location.state);
+    axios
+      .post(`http://localhost/tamraidee-api/recipe/cookingTagIngreById.php`, {
+        id_user: location.state.user_id,
+        id_recipe: location.state.recipe_id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          setRecipeWriter(
+            res.data.dataUser.user_firstname +
+              " " +
+              res.data.dataUser.user_lastname
+          );
+          setListIngredient(res.data.dataIngre);
+          setListCooking(res.data.dataCooking);
+          setListTag(res.data.dataTag);
+        }
+      });
   }, [location]);
   return (
     <ContainerGlobal>
@@ -153,7 +183,7 @@ const Recipe = () => {
         <div className="background-recipe">
           <Parallax
             className="img-paralax"
-            bgImage="/images/recipes/myrecipe.jpg"
+            bgImage={`/images/recipes/${location.state.recipe_img}`}
             bgImageAlt="recipe"
             strength={500}
             height="100%"
@@ -161,13 +191,13 @@ const Recipe = () => {
         </div>
         <div className="title-recipe">
           <div className="recipe-writer">
-            <p>Nattida Jang</p>
+            <p>{recipeWriter}</p>
             <div className="profile-img">
               <img alt="profile" src="/images/profile/lala.png" />
             </div>
           </div>
 
-          <h1>ข้าวกะเพราหมูสับไข่ดาว</h1>
+          <h1>{location.state.recipe_name}</h1>
           <span className="description-recipe">
             <motion.p
               variants={item}
@@ -175,10 +205,7 @@ const Recipe = () => {
               animate="visible"
               transition={{ duration: 1, times: [0, 0.2, 1] }}
             >
-              ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ
-              แล้วล่ะก็มันก็คงจะต้องนึกถึงเมนู "ผัดกะเพรา"
-              เพราะเมนูนี้ทำง่ายไม่ยุ่งยาก และขึ้นชื่อว่าเป็นผัดกะเพรา
-              วันนี้เราจะมาสอนทำผัดกะเพราหมูสับแบบง่าย ๆ แถมอร่อยด้วย
+              {location.state.recipe_description}
             </motion.p>
           </span>
 
@@ -197,10 +224,36 @@ const Recipe = () => {
             </motion.span>
           </div>
         </div>
-        <RecipeIngredient />
-        <RecipeCooking />
-        <RecipeTag />
-        <p className="datetime-recipe">วันที่โพสต: 02/04/2022</p>
+        {/* Ingre */}
+        <RecipeIngredient listIngredient={listIngredient} />
+        {/* Cooking */}
+        <RecipeCooking
+          listCooking={listCooking}
+          duration_m={location.state.recipe_duration_m}
+          duration_hr={location.state.recipe_duration_hr}
+        />
+        {/* Tag */}
+        <RecipeTag listTag={listTag} />
+        <p className="datetime-recipe">
+          วันที่โพสต์: {location.state.recipe_datetime}
+          {location.state.user_id === user.user_id && (
+            <ButtonPrimary
+              onClick={() =>
+                navigate(`/recipe/edit/${location.state.recipe_id}`, {
+                  state: {
+                    recipeIngredientFromState: listIngredient,
+                    recipeCookingFromState: listCooking,
+                    recipeTagFromState: listTag,
+                    recipeFromState: location.state,
+                  },
+                })
+              }
+              style={{ marginRight: "20px" }}
+            >
+              แก้ไข
+            </ButtonPrimary>
+          )}
+        </p>
       </WrrapperRecipe>
     </ContainerGlobal>
   );

@@ -17,7 +17,7 @@ const NavbarContainer = styled.div`
   background: transparent;
   height: 80px;
   position: relative;
-  z-index: 999;
+  z-index: 888;
   box-shadow: ${({ path }) =>
     path === "/login" || path === "/register"
       ? null
@@ -174,7 +174,7 @@ const Navbar = (props) => {
               <Avatar
                 className="Avatar"
                 style={{ borderRadius: "10px" }}
-                src={`/images/profile/${user.user_img}`}
+                src={`https://drive.google.com/uc?export=view&id=${user.user_img}`}
               >
                 {!user.user_img && user.user_firstname[0]}
               </Avatar>

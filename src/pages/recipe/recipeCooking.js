@@ -1,30 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { RecipeInfoContainer } from "./recipeIngredient";
 import { Icon } from "@iconify/react";
-
-const listCooking = [
-  {
-    id: 1,
-    step: "เทน้ำมันพืชลงในกระทะ ตั้งไฟปานกลง รอจนน้ำมันร้อนตอกไข่ไก่ใส่ลงไป ทอดจนกระทั่งสุกได้ที่ นำมาพักไว้",
-  },
-  {
-    id: 2,
-    step: "หั่นพริก ปอกกระเทียมสับพอหยาบๆ",
-  },
-  {
-    id: 3,
-    step: "ใช้น้ำมันที่เหลือจากการทอดไข่ตั้งไฟปานกลาง ใส่พริกกับกระเทียม ผัดให้มีกลิ่นหอม",
-  },
-  {
-    id: 4,
-    step: "ใส่หมูสับลงไป ผัดพอสุก ปรุงรสด้วยน้ำปลา น้ำมันหอย ซีอิ๊ว ใส่น้ำเปล่าเล็กน้อย จากนั้นใส่ใบกะเพรา ผัดสักครู่",
-  },
-  {
-    id: 5,
-    step: "จัดกะเพราหมูใส่ลงจาน แต่งด้วยใบกะเพรา พร้อมเสิร์ฟ",
-  },
-];
+import { motion } from "framer-motion/dist/framer-motion";
 
 const WrrapperRecipeCooking = styled.div`
   & > h1 {
@@ -76,7 +54,31 @@ const WrrapperRecipeCooking = styled.div`
   }
 `;
 
-const RecipeCooking = () => {
+const list = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+};
+
+const item = {
+  visible: { opacity: 1, x: 0 },
+  hidden: { opacity: 0, x: -100 },
+};
+
+const RecipeCooking = (props) => {
+  const [itemAnimate, setItemAnimate] = useState(false);
+
+  const handleAnimate = () => {
+    if (window.scrollY >= 600) {
+      setItemAnimate(true);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("scroll", handleAnimate);
+    return () => {
+      document.removeEventListener("scroll", handleAnimate);
+    };
+  }, [handleAnimate]);
   return (
     <RecipeInfoContainer>
       <WrrapperRecipeCooking>
@@ -96,16 +98,24 @@ const RecipeCooking = () => {
             className="time-icon"
             color="var(--txt-theme)"
           />
-          <p>15 นาที</p>
+          {props.duration_hr && <p>{props.duration_hr} ชั่วโมง</p>}
+          <p>{props.duration_m} นาที</p>
         </div>
         <h1>วิธีทำ</h1>
-        {listCooking.map((items, index) => (
-          <div className="list-cooking-recipe" key={items.id}>
-            <span className="index-box">
+        {props.listCooking.map((items, index) => (
+          <motion.div
+            initial="hidden"
+            transition={{ duration: 1, times: [0, 0.2, 1] }}
+            animate={itemAnimate && "visible"}
+            variants={list}
+            className="list-cooking-recipe"
+            key={items.cooking_id}
+          >
+            <motion.span variants={item} className="index-box">
               <p>{index + 1}</p>
-            </span>
-            <p>{items.step}</p>
-          </div>
+            </motion.span>
+            <motion.p variants={item}>{items.cooking_step}</motion.p>
+          </motion.div>
         ))}
       </WrrapperRecipeCooking>
     </RecipeInfoContainer>

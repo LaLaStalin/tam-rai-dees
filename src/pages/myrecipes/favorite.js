@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import CardMyRecipe from "../../components/Card/CardMyRecipe";
 import { CardContainerMyRecipes } from "./recipes";
 import Pagination from "@mui/material/Pagination";
+import { useNavigate } from "react-router-dom";
 
 const listMock = [
   {
@@ -84,6 +85,7 @@ const listMock = [
 ];
 
 const Favorite = (props) => {
+  const navigate = useNavigate();
   const [listFavorite, setListFavorite] = useState([]);
 
   const [favoritePerPage] = useState(8);
@@ -123,6 +125,7 @@ const Favorite = (props) => {
               recipeName={items.name}
               recipeDescription={items.description}
               src={items.src}
+              onClicked={() => navigate("/recipe/1")}
             />
           ))}
       </CardContainerMyRecipes>

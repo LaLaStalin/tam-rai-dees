@@ -7,6 +7,8 @@ import { ButtonPrimary, ButtonCancel } from "../../components/Button/index";
 import { AuthContext } from "../../util/context";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
+import LoadingData from "../../components/Loading/loadingData";
+import Swal from "sweetalert2";
 
 const ContainerAccount = styled.div`
   margin-top: 30px;
@@ -126,10 +128,14 @@ const Account = () => {
   const [urlProfile, setUrlProfile] = useState(null);
   const refInputChangeProfile = useRef();
   const { user, setUser } = AuthContext();
+  const [loadingUrlFromDrive, setLoadingUrlFromDrive] = useState(false);
 
   useEffect(() => {
-    console.log("img: ", user.user_img);
-    if (user.user_img) setUrlProfile(`/images/profile/${user.user_img}`);
+    if (user.user_img) {
+      setUrlProfile(
+        `https://drive.google.com/uc?export=view&id=${user.user_img}`
+      );
+    }
     if (file.length < 1) return;
     const newFile = [];
     file.forEach((img) => newFile.push(URL.createObjectURL(img)));
@@ -150,31 +156,9 @@ const Account = () => {
 
   const handleRemoveProfile = () => {
     setFile([]);
-    setUrlProfile([`user.user_img`]);
-  };
-
-  const onSubmit = (values) => {
-    axios
-      .post(`http://localhost/tamraidee-api/auth/account.php`, {
-        user_id: parseInt(user.user_id),
-        firstname: values.firstname,
-        lastname: values.lastname,
-        avatar: urlProfile,
-      })
-      .then((res) => {
-        console.log("data:s: ", res.data);
-        if (res.data.success) {
-          alert(res.data.success);
-          setUser(res.data.dataUser);
-          window.location.reload(false);
-        }
-      });
-  };
-  const validateForm = (values) => {
-    const err = {};
-    if (!values.firstname) err.firstname = "กรุณากรอกชื่อ";
-    if (!values.lastname) err.lastname = "กรุณากรอกนามสกุล";
-    return err;
+    setUrlProfile(
+      `https://drive.google.com/uc?export=view&id=${user.user_img}`
+    );
   };
 
   const renderAvatar = () => {
@@ -208,6 +192,124 @@ const Account = () => {
   };
 
   const renderInputForm = () => {
+    const onSubmit = (values) => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "อยากจะแก้ไขโปรไฟล์ของคุณจริงๆหรอ><",
+        icon: "warning",
+        cancelButtonText: "ไม่แก้ไข",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ใช่, แก้ไขเลย!",
+      }).then((result) => {
+        if (result.dismiss) return;
+        if (file.length < 1) {
+          axios
+            .post(`http://localhost/tamraidee-api/auth/account.php`, {
+              user_id: parseInt(user.user_id),
+              firstname: values.firstname,
+              lastname: values.lastname,
+              avatar: user.user_img,
+            })
+            .then((res) => {
+              console.log("data:s: ", res.data);
+              if (res.data.success) {
+                setUser(res.data.dataUser);
+              }
+            });
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Success",
+            text: "ข้อมูลถูกบันทึกเรียบร้อย><",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+
+          return;
+        }
+        // upload IMG TO GOOGLE DRIVE
+        setLoadingUrlFromDrive(true);
+        var reader = new FileReader(); //this for convert to Base64
+        reader.readAsDataURL(file[0]); //start conversion...
+        reader.onload = async function (e) {
+          //.. once finished..
+          var rawLog = reader.result.split(",")[1]; //extract only thee file data part
+          var dataSend = {
+            dataReq: { data: rawLog, name: file[0].name, type: file[0].type },
+            fname: "uploadFilesToGoogleDrive",
+          }; //preapre info to send to API
+          await Promise.all([
+            fetch(
+              "https://script.google.com/macros/s/AKfycbycfvz44d5Vr0CrA2LCgONxND7njlbbQhaFztmhZnub1XLKI7PzVFW0y-T3PYz4H8EXZA/exec", //your AppsScript URL
+              { method: "POST", body: JSON.stringify(dataSend) }
+            ) //send to Api
+              .then((res) => res.json())
+              .then((a) => {
+                axios
+                  .post(`http://localhost/tamraidee-api/auth/account.php`, {
+                    user_id: parseInt(user.user_id),
+                    firstname: values.firstname,
+                    lastname: values.lastname,
+                    avatar: a.url.split("/")[5],
+                  })
+                  .then((res) => {
+                    if (res.data.success) {
+                      setUser(res.data.dataUser);
+                    }
+                  });
+                console.log(a.url.split("/")[5]);
+                setLoadingUrlFromDrive(false);
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Success",
+                  text: "อยากจะยกเลิกการแก้ไขโปรไฟล์ของคุณจริงๆหรอ><",
+
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }),
+          ]).catch((e) => console.log(e)); // Or Error in console
+        };
+      });
+    };
+
+    const onCancel = () => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "อยากจะยกเลิกการแก้ไขโปรไฟล์ของคุณจริงๆหรอ><",
+        icon: "warning",
+        cancelButtonText: "แก้ไขต่อ",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ใช่, ยกเลิกเลย!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "ยกเลิกสำเร็จ",
+            text: "Your prfile has been canceled.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        }
+      });
+    };
+
+    const validateForm = (values) => {
+      const err = {};
+      if (!values.firstname) err.firstname = "กรุณากรอกชื่อ";
+      if (!values.lastname) err.lastname = "กรุณากรอกนามสกุล";
+      return err;
+    };
+
     return (
       <>
         <Form
@@ -259,7 +361,7 @@ const Account = () => {
                       w="100px"
                       p="10px"
                       justify="center"
-                      onClick={() => window.location.reload(false)}
+                      onClick={onCancel}
                     >
                       ยกเลิก
                     </ButtonCancel>
@@ -298,6 +400,10 @@ const Account = () => {
         {renderAvatar()}
         {renderInputForm()}
       </div>
+      <LoadingData
+        open={loadingUrlFromDrive}
+        statement="กำลังอัพเดทข้อมูลของท่าน"
+      />
     </ContainerAccount>
   );
 };

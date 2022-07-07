@@ -9,7 +9,7 @@ const ContainerLandingMyRecipes = styled.section`
   align-items: center;
   max-width: var(--w-screen);
   margin: 0 auto;
-  background-image: url("/images/bg/bg-home.png");
+  background-image: url("./images/bg/bg-home.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -63,14 +63,14 @@ const UsernameWrapper = styled.section`
 `;
 
 const LandingMyRecipes = () => {
-  const { user } = AuthContext();
+  const { user, apiUrl } = AuthContext();
   return (
     <>
       <ContainerLandingMyRecipes>
         <div className="profile-img">
           <Avatar
             className="Avatar"
-            src={`https://drive.google.com/uc?export=view&id=${user.user_img}`}
+            src={`${apiUrl}/imgs/profile/${user.user_img}`}
           >
             {!user.user_img && user.user_firstname[0]}
           </Avatar>

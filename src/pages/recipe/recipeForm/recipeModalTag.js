@@ -213,7 +213,7 @@ const RecipeModalTag = ({ open, handleModalTag, listTag, handleListTag }) => {
             <img
               height="230 px"
               style={{ opjectFit: "cover" }}
-              src="/images/bg/modal-bg-2.jpg"
+              src="./images/bg/modal-bg-2.jpg"
               alt="img-sidebar"
             />
           )}

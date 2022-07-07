@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
@@ -19,7 +19,7 @@ export const Header = styled.h1`
 const Member = () => {
   const [listMember, setListMember] = useState([]);
   const [refreshMemberWhenDelete, setRefreshMemberWhenDelete] = useState(null);
-  const { setUser } = AuthContext();
+  const { user, setUser, apiUrl } = AuthContext();
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const columns = [
@@ -86,21 +86,19 @@ const Member = () => {
   ];
 
   const addListMember = () => {
-    axios
-      .get("http://localhost/tamraidee-api/user/fetchAllUser.php")
-      .then((res) => {
-        console.log("res: ", typeof res.data.dataUser);
-        const rows = res.data.dataUser.map((users) => ({
-          id: users.user_id,
-          user_firstname: users.user_firstname,
-          user_lastname: users.user_lastname,
-          user_email: users.user_email,
-          user_datetime: users.user_datetime,
-          user_urole: users.user_urole,
-        }));
-        console.log("list Members:", rows);
-        setListMember(rows);
-      });
+    axios.get(`${apiUrl}/user/fetchAllUser.php`).then((res) => {
+      console.log("res: ", typeof res.data.dataUser);
+      const rows = res.data.dataUser.map((users) => ({
+        id: users.user_id,
+        user_firstname: users.user_firstname,
+        user_lastname: users.user_lastname,
+        user_email: users.user_email,
+        user_datetime: users.user_datetime,
+        user_urole: users.user_urole,
+      }));
+      console.log("list Members:", rows);
+      setListMember(rows);
+    });
   };
 
   useEffect(() => {
@@ -110,7 +108,7 @@ const Member = () => {
   const onDelete = (id) => {
     console.log("Holaaaaaaa:", id);
     axios
-      .post(`http://localhost/tamraidee-api/user/deleteUser.php`, {
+      .post(`${apiUrl}/user/deleteUser.php`, {
         user_id: id,
       })
       .then((res) => {

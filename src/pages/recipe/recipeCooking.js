@@ -34,6 +34,7 @@ const WrrapperRecipeCooking = styled.div`
     display: grid;
     grid-template-columns: 50px auto;
     padding: 20px 0;
+    align-items: center;
     color: var(--txt-theme);
     font-size: var(--txt-sub);
     font-weight: bold;
@@ -68,7 +69,7 @@ const RecipeCooking = (props) => {
   const [itemAnimate, setItemAnimate] = useState(false);
 
   const handleAnimate = () => {
-    if (window.scrollY >= 600) {
+    if (window.scrollY >= 200) {
       setItemAnimate(true);
     }
   };
@@ -79,6 +80,7 @@ const RecipeCooking = (props) => {
       document.removeEventListener("scroll", handleAnimate);
     };
   }, [handleAnimate]);
+
   return (
     <RecipeInfoContainer>
       <WrrapperRecipeCooking>

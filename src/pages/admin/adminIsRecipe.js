@@ -4,6 +4,7 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { ButtonPrimary, ButtonCancel } from "../../components/Button";
 import { Header } from "./member";
+import { AuthContext } from "../../util/context";
 
 const ContainerAdminIsRecipe = styled.div`
   padding: 40px;
@@ -12,7 +13,7 @@ const ContainerAdminIsRecipe = styled.div`
 
 const AdminIsRecipe = () => {
   const [listMemberIsRecipe, setListMemberIsRecipe] = useState([]);
-
+  const { apiUrl } = AuthContext();
   const columns = [
     {
       field: "id",
@@ -81,9 +82,8 @@ const AdminIsRecipe = () => {
   ];
 
   useEffect(() => {
-    axios
-      .get("http://localhost/tamraidee-api/admin/fetchAdminIsRecipe.php")
-      .then((res) => {
+    axios.get(`${apiUrl}/admin/fetchAdminIsRecipe.php`).then((res) => {
+      if (res.data.success) {
         console.log("res: ", typeof res.data.dataUser);
         const rows = res.data.dataUser.map((recipes) => ({
           id: recipes.recipe_id,
@@ -95,7 +95,8 @@ const AdminIsRecipe = () => {
         }));
         console.log("list Member recipe:", rows);
         setListMemberIsRecipe(rows);
-      });
+      }
+    });
   }, []);
   return (
     <ContainerAdminIsRecipe>

@@ -123,7 +123,7 @@ const MenuItems = styled.p`
 `;
 
 const Navbar = (props) => {
-  const { user } = AuthContext();
+  const { user, apiUrl } = AuthContext();
   const location = useLocation();
   const navigate = useNavigate();
   const renderAlreayLogin = () => {
@@ -174,7 +174,11 @@ const Navbar = (props) => {
               <Avatar
                 className="Avatar"
                 style={{ borderRadius: "10px" }}
-                src={`https://drive.google.com/uc?export=view&id=${user.user_img}`}
+                src={
+                  user.user_img
+                    ? `${apiUrl}/imgs/profile/${user.user_img}`
+                    : null
+                }
               >
                 {!user.user_img && user.user_firstname[0]}
               </Avatar>
@@ -239,7 +243,7 @@ const Navbar = (props) => {
             <Link to="/">
               <img
                 alt="burger-icon-logo"
-                src="/logo/burger.png"
+                src="./logo/burger.png"
                 width={45}
                 height={45}
                 className="logo-icon"

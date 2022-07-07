@@ -11,7 +11,7 @@ const ContainerAdminPage = styled.div`
   display: grid;
   grid-template-columns: 25% auto;
   padding-right: 30px;
-  background-image: url("/images/bg/bg-theme-w.png");
+  background-image: url("./images/bg/bg-theme-w.png");
   grid-gap: 30px;
 
   @media screen and (max-width: 600px) {

@@ -70,7 +70,7 @@ const Password = () => {
   const [isShowOldPassword, setIsShowOldPassword] = useState(false);
   const [isShowNewPassword, setIsNewShowPassword] = useState(false);
   const [isShowRetypePassword, setIsRetypePassword] = useState(false);
-  const { user, setUser } = AuthContext();
+  const { user, setUser, apiUrl } = AuthContext();
 
   const onSubmit = (values) => {
     Swal.fire({
@@ -85,7 +85,7 @@ const Password = () => {
     }).then((result) => {
       if (result.dismiss) return;
       axios
-        .post(`http://localhost/tamraidee-api/auth/password.php`, {
+        .post(`${apiUrl}/auth/password.php`, {
           user_id: user.user_id,
           oldPassword: values.oldPassword,
           newPassword: values.newPassword,

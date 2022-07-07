@@ -149,7 +149,7 @@ const Recipe = () => {
   document.title = "Tam Rai Dee - Recipe";
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = AuthContext();
+  const { user, apiUrl } = AuthContext();
   const [recipeWriter, setRecipeWriter] = useState();
   const [listIngredient, setListIngredient] = useState([]);
   const [listCooking, setListCooking] = useState([]);
@@ -159,7 +159,7 @@ const Recipe = () => {
     window.scrollTo(0, 0);
     console.log("location: ", location.state);
     axios
-      .post(`http://localhost/tamraidee-api/recipe/cookingTagIngreById.php`, {
+      .post(`${apiUrl}/recipe/cookingTagIngreById.php`, {
         id_user: location.state.user_id,
         id_recipe: location.state.recipe_id,
       })
@@ -183,7 +183,7 @@ const Recipe = () => {
         <div className="background-recipe">
           <Parallax
             className="img-paralax"
-            bgImage={`/images/recipes/${location.state.recipe_img}`}
+            bgImage={`./images/recipes/${location.state.recipe_img}`}
             bgImageAlt="recipe"
             strength={500}
             height="100%"
@@ -193,7 +193,7 @@ const Recipe = () => {
           <div className="recipe-writer">
             <p>{recipeWriter}</p>
             <div className="profile-img">
-              <img alt="profile" src="/images/profile/lala.png" />
+              <img alt="profile" src="./images/profile/lala.png" />
             </div>
           </div>
 

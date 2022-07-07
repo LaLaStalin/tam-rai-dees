@@ -33,7 +33,7 @@ const RecipeForm = (props) => {
   const [countTextDescription, setCountTextDescription] = useState(0);
   const [file, setFile] = useState([]);
   const [urlRecipe, setUrlRecipe] = useState(null);
-  const { user } = AuthContext();
+  const { user, apiUrl } = AuthContext();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -47,7 +47,7 @@ const RecipeForm = (props) => {
       placeholderIngre: "เนื้อหมู",
       placeholderVolume: "1 Kg",
       valueName: "",
-      valuevolume: "",
+      valueVolume: "",
     },
   ]);
   //COOKING
@@ -61,29 +61,26 @@ const RecipeForm = (props) => {
   ]);
   // TAG
   const [listTag, setListTag] = useState([]);
-
-  useEffect(() => {
-    if (file.length < 1) return;
-    const newFile = [];
-    file.forEach((img) => newFile.push(URL.createObjectURL(img)));
-    setUrlRecipe(newFile[0]);
-  }, [file]);
-
-  useEffect(() => {
-    if (props.mode === "edit") {
-      console.log("tagggss");
+  if (props.mode === "edit") {
+    useEffect(() => {
+      console.log("lossss: ", location.state);
+      setUrlRecipe(
+        `./images/recipes/${location.state.recipeFromState.recipe_img}`
+      );
+      // List Tag
       location.state.recipeTagFromState.map((tags) => {
-        setListTag((preTag) => [
+        return setListTag((preTag) => [
           ...preTag,
-          { id: tags.tag_id, nameTag: tags.tag_name },
+          { id: parseInt(tags.tag_id), nameTag: tags.tag_name },
         ]);
       });
+      //List Ingre
       setListIngredientInput([]);
       location.state.recipeIngredientFromState.map((ingre, index) => {
-        setListIngredientInput((preIngre) => [
+        return setListIngredientInput((preIngre) => [
           ...preIngre,
           {
-            id: ingre.ingredient_id,
+            id: index + 1,
             nameInputIngre: `recipeIngredient${index + 1}`,
             nameInputVolume: `recipeIngredientVolume${index + 1}`,
             placeholderIngre: "",
@@ -93,15 +90,28 @@ const RecipeForm = (props) => {
           },
         ]);
       });
+      //List Cooking
+      setListCookingInput([]);
+      location.state.recipeCookingFromState.map((cook, index) => {
+        return setListCookingInput((preCook) => [
+          ...preCook,
+          {
+            id: index + 1,
+            nameInputCooking: `reciepCooking${index + 1}`,
+            placeholderCooking: "",
+            valueCooking: cook.cooking_step,
+          },
+        ]);
+      });
+    }, [location.state.recipeFromState]);
+  }
 
-      // location.state.recipeTagFromState.map((tags) => {
-      //   setListTag((preTag) => [
-      //     ...preTag,
-      //     { id: tags.tag_id, nameTag: tags.tag_name },
-      //   ]);
-      // });
-    }
-  }, []);
+  useEffect(() => {
+    if (file.length < 1) return;
+    const newFile = [];
+    file.forEach((img) => newFile.push(URL.createObjectURL(img)));
+    setUrlRecipe(newFile[0]);
+  }, [file]);
 
   const handleUploadImg = (e) => {
     console.log(e.target.files[0]);
@@ -114,7 +124,6 @@ const RecipeForm = (props) => {
       setFile([...e.target.files]);
     }
   };
-  console.log("recipe: ", location.state);
 
   const renderRecipeName = () => {
     return (
@@ -164,10 +173,15 @@ const RecipeForm = (props) => {
 
   const renderRecipeIngredient = () => {
     // count number of List ingredient for generate ID
-    const [countIdListIngre, setCountIdListIngre] = useState(listIngredientInput.length);
+    const [countIdListIngre, setCountIdListIngre] = useState(() =>
+      props.mode === "edit"
+        ? location.state.recipeIngredientFromState.length
+        : 1
+    );
 
     const handleAddIngredient = () => {
       const plusCountId = countIdListIngre + 1;
+
       setListIngredientInput([
         ...listIngredientInput,
         {
@@ -181,7 +195,6 @@ const RecipeForm = (props) => {
         },
       ]);
       setCountIdListIngre(plusCountId);
-      console.log(listIngredientInput);
     };
 
     const handleDeleteIngredient = (id) => {
@@ -247,7 +260,9 @@ const RecipeForm = (props) => {
   };
 
   const renderRecipeCooking = () => {
-    const [countIdListCooking, setCountIdListCooking] = useState(listCookingInput.length);
+    const [countIdListCooking, setCountIdListCooking] = useState(
+      props.mode === "edit" ? location.state.recipeCookingFromState.length : 1
+    );
     const handleAddCooking = () => {
       const plusCountId = countIdListCooking + 1;
       setListCookingInput([
@@ -296,6 +311,7 @@ const RecipeForm = (props) => {
               }
               variant="outlined"
               name={items.nameInputCooking}
+              initialValue={props.mode === "edit" ? items.valueCooking : ""}
               InputProps={{
                 className: "input-textfield cooking-input",
               }}
@@ -332,6 +348,11 @@ const RecipeForm = (props) => {
               InputProps={{
                 className: "input-number",
               }}
+              initialValue={
+                props.mode === "edit"
+                  ? location.state.recipeFromState.recipe_duration_hr
+                  : ""
+              }
               onInput={(e) => {
                 e.target.value = Math.max(0, parseInt(e.target.value))
                   .toString()
@@ -345,6 +366,11 @@ const RecipeForm = (props) => {
               type="number"
               variant="outlined"
               name="minute"
+              initialValue={
+                props.mode === "edit"
+                  ? location.state.recipeFromState.recipe_duration_m
+                  : ""
+              }
               InputProps={{
                 className: "input-number",
               }}
@@ -367,6 +393,11 @@ const RecipeForm = (props) => {
             placeholder="กี่ท่าน, กี่แก้ว, กี่ปอนด์, กี่แก้ว"
             variant="outlined"
             name="amount"
+            initialValue={
+              props.mode === "edit"
+                ? location.state.recipeFromState.recipe_amount
+                : ""
+            }
             InputProps={{ className: "input-textfield" }}
           />
         </div>
@@ -380,8 +411,6 @@ const RecipeForm = (props) => {
     const handleModalTag = () => setOpen(!open);
 
     const handleListTag = (id, name) => {
-      console.log(listTag);
-
       //DELETET tag
       if (listTag.some((ob) => ob.id === id)) {
         const newListTag = [...listTag];
@@ -465,7 +494,7 @@ const RecipeForm = (props) => {
         text: "กรุณาเลือกอย่างน้อย 1 แท็ก!",
       });
     }
-    if (file.length <= 0) {
+    if (file.length <= 0 && !urlRecipe) {
       return Swal.fire({
         icon: "error",
         title: "รูปภาพ",
@@ -475,7 +504,7 @@ const RecipeForm = (props) => {
 
     const getValueFromListIngredient = [];
     listIngredientInput.map((items, index) => {
-      getValueFromListIngredient.push({
+      return getValueFromListIngredient.push({
         name: values[`recipeIngredient${index + 1}`],
         volume: values[`recipeIngredientVolume${index + 1}`]
           ? values[`recipeIngredientVolume${index + 1}`]
@@ -485,12 +514,12 @@ const RecipeForm = (props) => {
 
     const getValueFromListCooking = [];
     listCookingInput.map((items, index) => {
-      getValueFromListCooking.push(values[`reciepCooking${index + 1}`]);
+      return getValueFromListCooking.push(values[`reciepCooking${index + 1}`]);
     });
 
     const getValueFromListTag = [];
     listTag.map((items, index) => {
-      getValueFromListTag.push(items.id);
+      return getValueFromListTag.push(items.id);
     });
 
     Swal.fire({
@@ -504,33 +533,42 @@ const RecipeForm = (props) => {
       confirmButtonText: "ใช่, โพสต์เลย!",
     }).then((result) => {
       if (result.dismiss) return;
-      axios
-        .post(`http://localhost/tamraidee-api/recipe/insertRecipe.php`, {
-          user_id: parseInt(user.user_id),
-          img: file[0].name,
-          name: values.recipeName,
-          description: values.recipeDescription,
-          listIngredient: getValueFromListIngredient,
-          listCooking: getValueFromListCooking,
-          minute: values.minute,
-          hour: values.hour ? values.hour : null,
-          amount: values.amount ? values.amount : null,
-          listTag: getValueFromListTag,
-        })
-        .then((res) => {
-          console.log("redS: ", res.data);
-          if (res.data.success) {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Success",
-              text: "ข้อมูลถูกบันทึกเรียบร้อย><",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            navigate("/");
-          }
-        });
+      else {
+        axios
+          .post(`${apiUrl}/recipe/insertRecipe.php`, {
+            user_id: parseInt(user.user_id),
+            img:
+              file.length <= 0
+                ? location.state.recipeFromState.recipe_img
+                : file[0].name,
+            name: values.recipeName,
+            description: values.recipeDescription,
+            listIngredient: getValueFromListIngredient,
+            listCooking: getValueFromListCooking,
+            minute: values.minute,
+            hour: values.hour ? values.hour : null,
+            amount: values.amount ? values.amount : null,
+            listTag: getValueFromListTag,
+            recipe_id:
+              props.mode === "edit"
+                ? location.state.recipeFromState.recipe_id
+                : null,
+          })
+          .then((res) => {
+            console.log("redS: ", res.data);
+            if (res.data.success) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Success",
+                text: "ข้อมูลถูกบันทึกเรียบร้อย><",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate("/myrecipes");
+            }
+          });
+      }
     });
   };
 
@@ -581,15 +619,29 @@ const RecipeForm = (props) => {
       err.recipeDescription = "กรุณากรอกคำอธิบายสั้นๆเกี่ยวกับเมนูอาหารนี้";
     }
 
-    listIngredientInput.map((items, index) => {
-      if (!values[`recipeIngredient${index + 1}`])
+    listIngredientInput.forEach(function (items, index) {
+      if (!values[`recipeIngredient${index + 1}`]) {
         err[`recipeIngredient${index + 1}`] = "กรุณากรอกชื่อวัตถุดิบ";
+      }
     });
 
-    listCookingInput.map((items, index) => {
-      if (!values[`reciepCooking${index + 1}`])
+    // listIngredientInput.map((items, index) => {
+    //   if (!values[`recipeIngredient${index + 1}`]) {
+    //     err[`recipeIngredient${index + 1}`] = "กรุณากรอกชื่อวัตถุดิบ";
+    //   }
+    // });
+
+    listCookingInput.forEach(function (items, index) {
+      if (!values[`reciepCooking${index + 1}`]) {
         err[`reciepCooking${index + 1}`] = "กรุณากรอกวิธีการทำอาหาร";
+      }
     });
+
+    // listCookingInput.map((items, index) => {
+    //   if (!values[`reciepCooking${index + 1}`]) {
+    //     err[`reciepCooking${index + 1}`] = "กรุณากรอกวิธีการทำอาหาร";
+    //   }
+    // });
 
     if (!values.minute) {
       err.minute = "กรุณากรอกนาที";

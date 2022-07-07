@@ -125,16 +125,16 @@ const ButtonChangeProfile = styled.button`
 
 const Account = () => {
   const [file, setFile] = useState([]);
+  const [uploadImgUrl, setUploadImgUrl] = useState();
   const [urlProfile, setUrlProfile] = useState(null);
   const refInputChangeProfile = useRef();
-  const { user, setUser } = AuthContext();
+  const { user, setUser, apiUrl } = AuthContext();
   const [loadingUrlFromDrive, setLoadingUrlFromDrive] = useState(false);
 
   useEffect(() => {
+    console.log("REmove");
     if (user.user_img) {
-      setUrlProfile(
-        `https://drive.google.com/uc?export=view&id=${user.user_img}`
-      );
+      setUrlProfile(`${apiUrl}/imgs/profile/${user.user_img}`);
     }
     if (file.length < 1) return;
     const newFile = [];
@@ -150,15 +150,19 @@ const Account = () => {
         alert("Please select valid image.");
         return;
       }
+
+      let fileReader = new FileReader();
+      fileReader.readAsDataURL(imageFile);
+      fileReader.onload = (event) => {
+        setUploadImgUrl(event.target.result);
+      };
       setFile([...e.target.files]);
     }
   };
 
   const handleRemoveProfile = () => {
     setFile([]);
-    setUrlProfile(
-      `https://drive.google.com/uc?export=view&id=${user.user_img}`
-    );
+    setUrlProfile(`${apiUrl}/imgs/profile/${user.user_img}`);
   };
 
   const renderAvatar = () => {
@@ -204,75 +208,28 @@ const Account = () => {
         confirmButtonText: "ใช่, แก้ไขเลย!",
       }).then((result) => {
         if (result.dismiss) return;
-        if (file.length < 1) {
-          axios
-            .post(`http://localhost/tamraidee-api/auth/account.php`, {
-              user_id: parseInt(user.user_id),
-              firstname: values.firstname,
-              lastname: values.lastname,
-              avatar: user.user_img,
-            })
-            .then((res) => {
-              console.log("data:s: ", res.data);
-              if (res.data.success) {
-                setUser(res.data.dataUser);
-              }
-            });
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Success",
-            text: "ข้อมูลถูกบันทึกเรียบร้อย><",
-            showConfirmButton: false,
-            timer: 1500,
+        axios
+          .post(`${apiUrl}/auth/account.php`, {
+            user_id: parseInt(user.user_id),
+            firstname: values.firstname,
+            lastname: values.lastname,
+            uploadImg: file.length > 0 ? uploadImgUrl : null,
+            exist_img: file.length < 1 ? user.user_img : null,
+          })
+          .then((res) => {
+            console.log("data:s: ", res.data);
+            if (res.data.success) {
+              setUser(res.data.dataUser);
+            }
           });
-
-          return;
-        }
-        // upload IMG TO GOOGLE DRIVE
-        setLoadingUrlFromDrive(true);
-        var reader = new FileReader(); //this for convert to Base64
-        reader.readAsDataURL(file[0]); //start conversion...
-        reader.onload = async function (e) {
-          //.. once finished..
-          var rawLog = reader.result.split(",")[1]; //extract only thee file data part
-          var dataSend = {
-            dataReq: { data: rawLog, name: file[0].name, type: file[0].type },
-            fname: "uploadFilesToGoogleDrive",
-          }; //preapre info to send to API
-          await Promise.all([
-            fetch(
-              "https://script.google.com/macros/s/AKfycbycfvz44d5Vr0CrA2LCgONxND7njlbbQhaFztmhZnub1XLKI7PzVFW0y-T3PYz4H8EXZA/exec", //your AppsScript URL
-              { method: "POST", body: JSON.stringify(dataSend) }
-            ) //send to Api
-              .then((res) => res.json())
-              .then((a) => {
-                axios
-                  .post(`http://localhost/tamraidee-api/auth/account.php`, {
-                    user_id: parseInt(user.user_id),
-                    firstname: values.firstname,
-                    lastname: values.lastname,
-                    avatar: a.url.split("/")[5],
-                  })
-                  .then((res) => {
-                    if (res.data.success) {
-                      setUser(res.data.dataUser);
-                    }
-                  });
-                console.log(a.url.split("/")[5]);
-                setLoadingUrlFromDrive(false);
-                Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Success",
-                  text: "อยากจะยกเลิกการแก้ไขโปรไฟล์ของคุณจริงๆหรอ><",
-
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }),
-          ]).catch((e) => console.log(e)); // Or Error in console
-        };
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Success",
+          text: "ข้อมูลถูกบันทึกเรียบร้อย><",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
     };
 

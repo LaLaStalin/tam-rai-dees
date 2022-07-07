@@ -19,7 +19,7 @@ const AdminPage = lazy(() => import("./pages/admin/index"));
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const { user, setUser } = AuthContext();
+  const { user, setUser, apiUrl } = AuthContext();
 
   useEffect(() => {
     console.log("load");
@@ -35,7 +35,7 @@ function App() {
       console.log("sdds");
       const parseUser = JSON.parse(authCheck);
       axios
-        .post("http://localhost/tamraidee-api/user/fetchUserById.php", {
+        .post(`${apiUrl}/user/fetchUserById.php`, {
           id: parseInt(parseUser),
         })
         .then((res) => {

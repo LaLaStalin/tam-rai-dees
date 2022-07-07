@@ -10,8 +10,10 @@ const GlobalContexts = (props) => {
     user_urole: null,
   });
 
+  const [apiUrl, setApiUrl] = useState("http://localhost/tamraidee-api");
+
   return (
-    <GlobalContext.Provider value={{ user, setUser }}>
+    <GlobalContext.Provider value={{ user, setUser, apiUrl, setApiUrl }}>
       {props.children}
     </GlobalContext.Provider>
   );

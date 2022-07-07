@@ -10,6 +10,8 @@ import { IconButton } from "@material-ui/core";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../../util/context";
+import Swal from "sweetalert2";
 
 const Register = () => {
   document.title = "Tam Rai Dee - Register";
@@ -17,20 +19,30 @@ const Register = () => {
   const [isShowRetypePassword, setIsRetypePassword] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { apiUrl } = AuthContext();
 
   const onSubmit = (values) => {
     axios
-      .post(`http://localhost/tamraidee-api/auth/register.php`, {
+      .post(`${apiUrl}/auth/register.php`, {
         firstname: values.firstname,
         lastname: values.lastname,
         email: values.email,
         password: values.password,
       })
       .then((res) => {
+        console.log("dsa", res);
         if (res.data.exist) {
           alert(res.data.warning);
         }
-        alert(res.data.success);
+        // alert(res.data.success);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Success",
+          text: "สมัครสมาชิกสำเร็จ><",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         navigate("/login");
       });
   };

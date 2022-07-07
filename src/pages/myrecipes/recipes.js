@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import CardMyRecipe from "../../components/Card/CardMyRecipe";
 import Pagination from "@mui/material/Pagination";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../.././util/context";
 
@@ -22,7 +22,7 @@ export const CardContainerMyRecipes = styled.section`
 
 const Recipes = () => {
   const navigate = useNavigate();
-  const { user } = AuthContext();
+  const { user, apiUrl } = AuthContext();
   const [listMyRecipes, setListMyRecipes] = useState([]);
 
   const [myRecipePerPage] = useState(8);
@@ -47,7 +47,7 @@ const Recipes = () => {
 
   useEffect(() => {
     axios
-      .post(`http://localhost/tamraidee-api/recipe/fetchAllMyRecipe.php`, {
+      .post(`${apiUrl}/recipe/fetchAllMyRecipe.php`, {
         id: parseInt(user.user_id),
       })
       .then((res) => {
@@ -62,20 +62,35 @@ const Recipes = () => {
   return (
     <>
       <CardContainerMyRecipes>
-        {listMyRecipes
-          .slice(indexFirstMyRecipe, indexLastMyRecipe)
-          .map((items) => (
-            <CardMyRecipe
-              onClicked={() =>
-                navigate(`/recipe/${items.recipe_id}`, { state: items })
-              }
-              key={items.recipe_id}
-              keyword={items.recipe_id}
-              recipeName={items.recipe_name}
-              recipeDescription={items.recipe_description}
-              src={`/images/recipes/${items.recipe_img}`}
-            />
-          ))}
+        {listMyRecipes.length > 0 ? (
+          listMyRecipes
+            .slice(indexFirstMyRecipe, indexLastMyRecipe)
+            .map((items) => (
+              <CardMyRecipe
+                onClicked={() =>
+                  navigate(`/recipe/${items.recipe_id}`, { state: items })
+                }
+                key={items.recipe_id}
+                keyword={items.recipe_id}
+                recipeName={items.recipe_name}
+                recipeDescription={items.recipe_description}
+                src={`./images/recipes/${items.recipe_img}`}
+              />
+            ))
+        ) : (
+          <Link to="/recipe/create">
+            <p
+              style={{
+                color: "gray",
+                opacity: 0.5,
+                textAlign: "center",
+                cursor: "pointer",
+              }}
+            >
+              มาสร้างสูตรอาหารกันเถอะ!
+            </p>
+          </Link>
+        )}
       </CardContainerMyRecipes>
       <Pagination
         count={Math.ceil(lengthOfMyRecipe)}

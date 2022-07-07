@@ -9,6 +9,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@material-ui/core";
 import { AuthContext } from "../../util/context";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export const TopicHeaderAuth = (props) => {
   return (
@@ -35,13 +36,13 @@ export const TopicHeaderAuth = (props) => {
 const Login = (props) => {
   document.title = "Tam Rai Dee - Login";
 
-  const { setUser } = AuthContext();
+  const { setUser, apiUrl } = AuthContext();
   const location = useLocation();
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const onSubmit = (values) => {
     axios
-      .post(`http://localhost/tamraidee-api/auth/login.php`, {
+      .post(`${apiUrl}/auth/login.php`, {
         email: values.email,
         password: values.password,
       })
@@ -53,7 +54,23 @@ const Login = (props) => {
             JSON.stringify(res.data.dataUser.user_id)
           );
           if (res.data.dataUser.user_urole === "A") navigate("/admin");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Success",
+            text: "เข้าสู่ระบบAdminสำเร็จ><",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           navigate("/");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Success",
+            text: "เข้าสู่ระบบสำเร็จ><",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         } else {
           alert("email or password is wrong");
         }

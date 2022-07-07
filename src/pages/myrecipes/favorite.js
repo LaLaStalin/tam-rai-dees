@@ -10,77 +10,77 @@ const listMock = [
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 2,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 3,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 4,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 5,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 6,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 7,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 8,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 9,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 10,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
   {
     id: 11,
     name: "ข้าวกะเพราหมูสับไข่ดาว",
     description:
       "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "/images/recipes/myrecipe3.jpg",
+    src: "./images/recipes/myrecipe3.jpg",
   },
 ];
 

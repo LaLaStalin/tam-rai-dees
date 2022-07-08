@@ -72,19 +72,13 @@ const Login = (props) => {
             timer: 1500,
           });
         } else {
-          alert("email or password is wrong");
+          Swal.fire({
+            icon: "error",
+            title: "เข้าสู่ระบบ",
+            text: "email or password is wrong.",
+          });
         }
       });
-
-    //mock
-    // setUser({
-    //   user_firstname: "Kwai",
-    //   user_lastname: "stupid",
-    //   user_email: values.email,
-    //   user_urole: "M",
-    // });
-    // navigate("/");
-    // localStorage.setItem("user_setup", JSON.stringify(1));
   };
 
   const validateForm = (values) => {

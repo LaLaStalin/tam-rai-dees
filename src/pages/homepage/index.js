@@ -12,16 +12,29 @@ const Homepage = () => {
   const refRecipe = useRef(null);
   const [allUser, setAllUser] = useState([]);
   const [allRecipe, setAllRecipe] = useState([]);
+  const [showRecipe, setShowRecipe] = useState([]);
   const { apiUrl } = AuthContext();
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location]);
+  }, [location.pathname]);
 
   useEffect(() => {
     axios.get(`${apiUrl}/user/fetchAllUser.php`).then((res) => {
-      console.log("all: ", res.data);
       setAllUser(res.data.dataUser);
-      setAllRecipe(res.data.dataRecipe);
+      const addLikeIntoRecipe = [];
+      res.data.dataRecipe.forEach((items) => {
+        for (let i = 0; i < res.data.like.length; i++) {
+          if (items.recipe_id === res.data.like[i].recipe_id_by_like) {
+            addLikeIntoRecipe.push({
+              recipeAdded: items,
+              likeCount: res.data.like[i].count_like,
+            });
+            break;
+          }
+        }
+      });
+      setAllRecipe(addLikeIntoRecipe);
+      setShowRecipe(addLikeIntoRecipe);
     });
   }, []);
 
@@ -31,13 +44,15 @@ const Homepage = () => {
       <LandingHero
         allUser={allUser}
         allRecipe={allRecipe}
+        showRecipe={showRecipe}
+        setShowRecipe={setShowRecipe}
         refRecipe={refRecipe}
       />
       <IngredientMenu />
       <WholeRecipe
-        refRecipe={refRecipe}
         allUser={allUser}
-        allRecipe={allRecipe}
+        showRecipe={showRecipe}
+        refRecipe={refRecipe}
       />
     </ContainerGlobal>
   );

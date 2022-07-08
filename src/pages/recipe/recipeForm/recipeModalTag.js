@@ -40,21 +40,6 @@ const ModalBox = styled(motion.div)`
   }
 `;
 
-// const dropIn = {
-//   hidden: {
-//     x: -100,
-//     opacity: 0,
-//   },
-//   visible: {
-//     x: 0,
-//     opacity: 1,
-//   },
-//   exit: {
-//     x: 100,
-//     opacity: 0,
-//   },
-// };
-
 const RecipeTag = styled.div`
   color: var(--txt-theme);
 
@@ -223,13 +208,13 @@ const RecipeModalTag = ({ open, handleModalTag, listTag, handleListTag }) => {
   };
 
   return (
-    <Modal open={open} onClose={handleModalTag} disableAutoFocus>
-      <ModalBox
-      // variants={dropIn}
-      // initial="hidden"
-      // animate="visible"
-      // exit="exit"
-      >
+    <Modal
+      sx={{ margin: "0 var(--pLR)" }}
+      open={open}
+      onClose={handleModalTag}
+      disableAutoFocus
+    >
+      <ModalBox>
         <span className="close-icon" onClick={handleModalTag}>
           <IoClose />
         </span>

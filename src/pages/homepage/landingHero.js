@@ -11,6 +11,7 @@ const ContainerLandingHero = styled.section`
   background-repeat: no-repeat;
   height: 350px;
   position: relative;
+  margin-bottom: 80px;
 
   @media screen and (max-width: 610px) {
     height: 240px;
@@ -52,8 +53,27 @@ const ContainerLandingHero = styled.section`
 
 const LandingHero = (props) => {
   const handleSearch = (e) => {
-    console.log("hi");
     if (e.key === "Enter") {
+      if (e.target.value) {
+        const filterAllRecipe = props.allRecipe.filter((items) => {
+          const objectForSearch = {
+            recipeName: items.recipeAdded.recipe_name,
+            writter: items.recipeAdded.user_firstname,
+            lastname: items.recipeAdded.user_lastname,
+            des: items.recipeAdded.recipe_description.replace(/\s/g, ""),
+            duration: items.recipeAdded.recipe_duration_m + "นาที",
+          };
+          return Object.values(objectForSearch)
+            .join("")
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase());
+        });
+        console.log(filterAllRecipe);
+        props.setShowRecipe(filterAllRecipe);
+      } else {
+        props.setShowRecipe(props.allRecipe);
+      }
+
       window.scrollTo({
         top: props.refRecipe.current.offsetTop,
         lef: 0,

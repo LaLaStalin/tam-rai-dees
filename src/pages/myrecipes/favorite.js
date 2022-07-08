@@ -2,94 +2,16 @@ import React, { useState, useCallback, useEffect } from "react";
 import CardMyRecipe from "../../components/Card/CardMyRecipe";
 import { CardContainerMyRecipes } from "./recipes";
 import Pagination from "@mui/material/Pagination";
-import { useNavigate } from "react-router-dom";
-
-const listMock = [
-  {
-    id: 1,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 2,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 3,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 4,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 5,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 6,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 7,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 8,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 9,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 10,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-  {
-    id: 11,
-    name: "ข้าวกะเพราหมูสับไข่ดาว",
-    description:
-      "ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....ถ้าพูดถึงของผัด ๆ ที่เผ็ด ๆ แซ่บ ๆ ....",
-    src: "./images/recipes/myrecipe3.jpg",
-  },
-];
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../.././util/context";
 
 const Favorite = (props) => {
+  const { user, apiUrl } = AuthContext();
   const navigate = useNavigate();
   const [listFavorite, setListFavorite] = useState([]);
 
   const [favoritePerPage] = useState(8);
-
   const [lengthOfFavorite, setLengthOfFavorite] = useState(1);
   const [indexLastFavorite, setIndexLastFavorite] = useState(
     1 * favoritePerPage
@@ -99,9 +21,18 @@ const Favorite = (props) => {
   );
 
   useEffect(() => {
-    setListFavorite(listMock);
-    setLengthOfFavorite(listFavorite.length / favoritePerPage);
-  }, [listFavorite]);
+    axios
+      .post(`${apiUrl}/recipe/fetchAllFavorite.php`, {
+        id: parseInt(user.user_id),
+      })
+      .then((res) => {
+        console.log("favorite", res.data);
+        if (res.data.success) {
+          setListFavorite(res.data.dataFavorite);
+          setLengthOfFavorite(res.data.dataFavorite.length / favoritePerPage);
+        }
+      });
+  }, []);
 
   const handlePagination = useCallback(
     (event, page) => {
@@ -116,18 +47,35 @@ const Favorite = (props) => {
   return (
     <>
       <CardContainerMyRecipes>
-        {listFavorite
-          .slice(indexFirstFavorite, indexLastFavorite)
-          .map((items) => (
-            <CardMyRecipe
-              key={items.id}
-              keyword={items.id}
-              recipeName={items.name}
-              recipeDescription={items.description}
-              src={items.src}
-              onClicked={() => navigate("/recipe/1")}
-            />
-          ))}
+        {listFavorite.length > 0 ? (
+          listFavorite
+            .slice(indexFirstFavorite, indexLastFavorite)
+            .map((items) => (
+              <CardMyRecipe
+                key={items.recipe_id}
+                keyword={items.recipe_id}
+                recipeName={items.recipe_name}
+                recipeDescription={items.recipe_description}
+                src={`${apiUrl}/imgs/recipe/${items.recipe_img}`}
+                onClicked={() =>
+                  navigate(`/recipe/${items.recipe_id}`, { state: items })
+                }
+              />
+            ))
+        ) : (
+          <Link to="/">
+            <p
+              style={{
+                color: "gray",
+                opacity: 0.5,
+                textAlign: "center",
+                cursor: "pointer",
+              }}
+            >
+              มาติดตามสูตรอาหารกันเถอะ!
+            </p>
+          </Link>
+        )}
       </CardContainerMyRecipes>
       <Pagination
         count={Math.ceil(lengthOfFavorite)}

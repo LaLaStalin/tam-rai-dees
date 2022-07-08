@@ -32,6 +32,7 @@ const RecipeForm = (props) => {
   const [countTextName, setCountTextName] = useState(0);
   const [countTextDescription, setCountTextDescription] = useState(0);
   const [file, setFile] = useState([]);
+  const [uploadImgUrl, setUploadImgUrl] = useState();
   const [urlRecipe, setUrlRecipe] = useState(null);
   const { user, apiUrl } = AuthContext();
   const navigate = useNavigate();
@@ -61,11 +62,12 @@ const RecipeForm = (props) => {
   ]);
   // TAG
   const [listTag, setListTag] = useState([]);
+
   if (props.mode === "edit") {
     useEffect(() => {
       console.log("lossss: ", location.state);
       setUrlRecipe(
-        `./images/recipes/${location.state.recipeFromState.recipe_img}`
+        `${apiUrl}/imgs/recipe/${location.state.recipeFromState.recipe_img}`
       );
       // List Tag
       location.state.recipeTagFromState.map((tags) => {
@@ -107,6 +109,18 @@ const RecipeForm = (props) => {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (props.mode === "edit") {
+      if (user.user_img) {
+        setUrlRecipe(
+          `${apiUrl}/imgs/recipe/${location.state.recipeFromState.recipe_img}`
+        );
+      }
+    }
+
     if (file.length < 1) return;
     const newFile = [];
     file.forEach((img) => newFile.push(URL.createObjectURL(img)));
@@ -121,6 +135,12 @@ const RecipeForm = (props) => {
         alert("Please select valid image.");
         return;
       }
+
+      let fileReader = new FileReader();
+      fileReader.readAsDataURL(imageFile);
+      fileReader.onload = (event) => {
+        setUploadImgUrl(event.target.result);
+      };
       setFile([...e.target.files]);
     }
   };
@@ -537,10 +557,17 @@ const RecipeForm = (props) => {
         axios
           .post(`${apiUrl}/recipe/insertRecipe.php`, {
             user_id: parseInt(user.user_id),
-            img:
-              file.length <= 0
-                ? location.state.recipeFromState.recipe_img
-                : file[0].name,
+            uploadImg: file.length > 0 ? uploadImgUrl : null,
+            deleteOldImg:
+              props.mode === "edit"
+                ? file.length > 0 && location.state.recipeFromState.recipe_img
+                : null,
+            exist_img:
+              props.mode === "edit"
+                ? file.length < 1
+                  ? location.state.recipeFromState.recipe_img
+                  : null
+                : null,
             name: values.recipeName,
             description: values.recipeDescription,
             listIngredient: getValueFromListIngredient,
@@ -625,23 +652,11 @@ const RecipeForm = (props) => {
       }
     });
 
-    // listIngredientInput.map((items, index) => {
-    //   if (!values[`recipeIngredient${index + 1}`]) {
-    //     err[`recipeIngredient${index + 1}`] = "กรุณากรอกชื่อวัตถุดิบ";
-    //   }
-    // });
-
     listCookingInput.forEach(function (items, index) {
       if (!values[`reciepCooking${index + 1}`]) {
         err[`reciepCooking${index + 1}`] = "กรุณากรอกวิธีการทำอาหาร";
       }
     });
-
-    // listCookingInput.map((items, index) => {
-    //   if (!values[`reciepCooking${index + 1}`]) {
-    //     err[`reciepCooking${index + 1}`] = "กรุณากรอกวิธีการทำอาหาร";
-    //   }
-    // });
 
     if (!values.minute) {
       err.minute = "กรุณากรอกนาที";

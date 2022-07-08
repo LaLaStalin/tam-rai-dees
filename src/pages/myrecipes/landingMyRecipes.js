@@ -74,12 +74,11 @@ const LandingMyRecipes = () => {
           >
             {!user.user_img && user.user_firstname[0]}
           </Avatar>
-          {/* <img src="/images/profile/lala.png" alt="profile" /> */}
         </div>
       </ContainerLandingMyRecipes>
       <UsernameWrapper>
         <div className="username-recipe">
-          <h3>Nattida Jang</h3>
+          <h3>{user.user_firstname + " " + user.user_lastname}</h3>
         </div>
       </UsernameWrapper>
     </>

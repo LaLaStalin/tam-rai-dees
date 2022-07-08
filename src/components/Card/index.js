@@ -5,6 +5,7 @@ import Divider from "../../components/Divider/divider";
 import { Icon } from "@iconify/react";
 import { RiHeart3Fill } from "react-icons/ri";
 import { ButtonTransparent } from "../Button/index";
+import { AuthContext } from "../../util/context";
 
 const ContainerCardIngredient = styled(motion.div)`
   position: relative;
@@ -57,7 +58,7 @@ const ContainerCardRecipe = styled.div`
   border-radius: 12px;
   padding: 16px;
   margin: 20px 0;
-  height: fit-content;
+  height: 100%;
   gap: 20px;
   color: gray;
   font-size: var(--txt-primary);
@@ -65,8 +66,8 @@ const ContainerCardRecipe = styled.div`
 
   .icon-like {
     display: flex;
-    align-items: center;
     position: absolute;
+    gap: 2px;
     right: 10px;
     font-size: var(--txt-primary);
     cursor: pointer;
@@ -90,7 +91,7 @@ const ContainerCardRecipe = styled.div`
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    height: 100%;
+    height: 176px;
 
     .content-recipe-info {
       display: flex;
@@ -110,8 +111,12 @@ const ContainerCardRecipe = styled.div`
         font-weight: bold;
         color: var(--txt-theme);
       }
+    }
+    .duration-button {
+      display: flex;
+      flex-direction: column;
 
-      & > span {
+      .duration {
         display: flex;
         align-items: center;
         gap: 4px;
@@ -123,39 +128,53 @@ const ContainerCardRecipe = styled.div`
 `;
 
 export const CardRecipe = (props) => {
+  const { apiUrl } = AuthContext();
   return (
     <ContainerCardRecipe>
       <span className="icon-like">
         <p>{props.like}</p>
-        <motion.span whileTap={{ scale: 0.9 }}>
-          <RiHeart3Fill style={{ color: "#F44336" }} />
+        <motion.span whileTap={{ scale: 0.6 }}>
+          <RiHeart3Fill style={{ color: "#F44336", fontSize: "18px" }} />
         </motion.span>
       </span>
 
       <div className="img-recipe">
-        <img src="./images/recipes/img1.png" alt="img-recipe" />
+        <img
+          src={`${apiUrl}/imgs/recipe/${props.recipe_img}`}
+          alt="img-recipe"
+        />
       </div>
 
       <div className="content-recipe">
         <div className="content-recipe-info">
           <h3>{props.nameRecipe}</h3>
-          <p className="content-recipe-name">{props.writer}</p>
+          <p className="content-recipe-name">{props.writter}</p>
           <Divider horizontal="100%" color="lightgray" />
-          <p>{props.description}</p>
-          <span>
+          <p>
+            {props.description.substring(0, 180)}
+            {props.description.length > 190 && ". . ."}
+          </p>
+        </div>
+
+        <div className="duration-button">
+          <span className="duration">
             <Icon
               icon="icon-park-outline:time"
               className="time-icon"
               color="var(--txt-theme)"
             />
-
-            <p> ใช้เวลาทำอาหาร {props.duration} นาที</p>
+            <p>
+              {" "}
+              ใช้เวลาทำอาหาร{" "}
+              {props.duration_hr && props.duration_hr + " ชั่งโมง "}
+              {props.duration_m} นาที
+            </p>
           </span>
-        </div>
 
-        <ButtonTransparent borderColor="lightgray" onClick={props.onClicked}>
-          View
-        </ButtonTransparent>
+          <ButtonTransparent borderColor="lightgray" onClick={props.onClicked}>
+            View
+          </ButtonTransparent>
+        </div>
       </div>
     </ContainerCardRecipe>
   );

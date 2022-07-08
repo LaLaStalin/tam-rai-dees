@@ -74,7 +74,7 @@ const Recipes = () => {
                 keyword={items.recipe_id}
                 recipeName={items.recipe_name}
                 recipeDescription={items.recipe_description}
-                src={`./images/recipes/${items.recipe_img}`}
+                src={`${apiUrl}/imgs/recipe/${items.recipe_img}`}
               />
             ))
         ) : (

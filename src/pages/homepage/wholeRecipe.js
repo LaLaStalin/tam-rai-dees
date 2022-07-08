@@ -5,153 +5,6 @@ import { CardRecipe } from "../../components/Card";
 import Pagination from "@mui/material/Pagination";
 import { useNavigate } from "react-router-dom";
 
-const ListRecipe = [
-  {
-    id: 1,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 2,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 3,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 4,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 5,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 6,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 7,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 8,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 9,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 10,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 11,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 12,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 13,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 14,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 15,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-  {
-    id: 16,
-    like: 25,
-    nameRecipe: "ไข่อบซอสมะเขือเทศ",
-    writer: "ชลลดา นาเจริญ",
-    description:
-      "อาหารอิตาเลียนใช่ว่าจะต้องเลี่ยนเสมอไป แถมยังดีต่อสุขภาพแบบทำเองง่ายๆที่บ้านด้วย พาสต้าอกไก่ครีมซอส เพิ่มประโยชน์ด้วยผักเคล (Kale) ตัดเลี่ยนด้วยรสอมเปรี้ยวของมะเขือเทศเชอรี่",
-    duration: "15",
-  },
-];
-
 const ContainerWholeRecipe = styled.section`
   display: flex;
   flex-direction: column;
@@ -206,14 +59,14 @@ const WholeRecipe = (props) => {
     [indexFirstIngredient, indexLastIngredient]
   );
 
-  const handleRecipeClicked = (id) => {
-    navigate(`/recipe/${id}`);
-  };
-
   useEffect(() => {
-    setListRecipe(ListRecipe);
-    setLengthOfIngredient(listRecipe.length / ingredientPerPage);
-  }, [listRecipe]);
+    if (props.showRecipe) {
+      setListRecipe(props.showRecipe);
+      setLengthOfIngredient(props.showRecipe.length / ingredientPerPage);
+    }
+  }, [props.showRecipe]);
+
+  console.log("LIST: ", props.showRecipe);
 
   return (
     <ContainerWholeRecipe ref={props.refRecipe}>
@@ -229,14 +82,24 @@ const WholeRecipe = (props) => {
         .slice(indexFirstIngredient, indexLastIngredient)
         .map((recipe) => (
           <CardRecipe
-            key={recipe.id}
-            id={recipe.id}
-            like={recipe.like}
-            nameRecipe={recipe.nameRecipe}
-            writer={recipe.writer}
-            description={recipe.description}
-            duration={recipe.duration}
-            onClicked={() => handleRecipeClicked(recipe.id)}
+            key={recipe.recipeAdded.recipe_id}
+            id={recipe.recipeAdded.recipe_id}
+            recipe_img={recipe.recipeAdded.recipe_img}
+            like={recipe.likeCount}
+            nameRecipe={recipe.recipeAdded.recipe_name}
+            writter={
+              recipe.recipeAdded.user_firstname +
+              " " +
+              recipe.recipeAdded.user_lastname
+            }
+            description={recipe.recipeAdded.recipe_description}
+            duration_m={recipe.recipeAdded.recipe_duration_m}
+            duration_hr={recipe.recipeAdded.recipe_duration_hr}
+            onClicked={() =>
+              navigate(`/recipe/${recipe.recipe_id}`, {
+                state: recipe.recipeAdded,
+              })
+            }
           />
         ))}
       <Pagination

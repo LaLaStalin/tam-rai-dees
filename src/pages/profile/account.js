@@ -7,7 +7,6 @@ import { ButtonPrimary, ButtonCancel } from "../../components/Button/index";
 import { AuthContext } from "../../util/context";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
-import LoadingData from "../../components/Loading/loadingData";
 import Swal from "sweetalert2";
 
 const ContainerAccount = styled.div`
@@ -129,7 +128,6 @@ const Account = () => {
   const [urlProfile, setUrlProfile] = useState(null);
   const refInputChangeProfile = useRef();
   const { user, setUser, apiUrl } = AuthContext();
-  const [loadingUrlFromDrive, setLoadingUrlFromDrive] = useState(false);
 
   useEffect(() => {
     console.log("REmove");
@@ -173,6 +171,7 @@ const Account = () => {
             className="avatar-img"
             style={{ borderRadius: "10px" }}
             src={urlProfile}
+            alt="avatar"
           >
             {!user.user_img && user.user_firstname[0]}
           </Avatar>
@@ -214,6 +213,11 @@ const Account = () => {
             firstname: values.firstname,
             lastname: values.lastname,
             uploadImg: file.length > 0 ? uploadImgUrl : null,
+            deleteOldImg: user.user_img
+              ? file.length > 0
+                ? user.user_img
+                : null
+              : null,
             exist_img: file.length < 1 ? user.user_img : null,
           })
           .then((res) => {
@@ -357,10 +361,6 @@ const Account = () => {
         {renderAvatar()}
         {renderInputForm()}
       </div>
-      <LoadingData
-        open={loadingUrlFromDrive}
-        statement="กำลังอัพเดทข้อมูลของท่าน"
-      />
     </ContainerAccount>
   );
 };

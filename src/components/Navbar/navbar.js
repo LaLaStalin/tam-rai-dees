@@ -131,13 +131,6 @@ const Navbar = (props) => {
       <>
         {/*Already login*/}
         <AuthWrapper path={location.pathname}>
-          {/* {location.pathname !== "/" && (
-            <SearchInput
-              radius="10px"
-              w="350px"
-              shadow="0px 2px 5px rgba(0, 0, 0, 0.2)"
-            />
-          )} */}
           <MenuItems
             path={location.pathname}
             keyword="/recipe/create"
@@ -248,13 +241,6 @@ const Navbar = (props) => {
                 height={45}
                 className="logo-icon"
               />
-              {/* <video
-                autoPlay
-                loop
-                src="/videos/logo-animation1.mp4"
-                type="video/mp4"
-                width={80}
-              /> */}
             </Link>
             <Link to="/">
               <h3 className="text-logo">Tam Rai Dee</h3>

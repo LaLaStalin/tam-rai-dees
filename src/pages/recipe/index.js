@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ContainerGlobal } from "../../components/global.styled";
-import { RiHeart3Fill } from "react-icons/ri";
+import { RiHeart3Fill, RiDeleteBin6Fill } from "react-icons/ri";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import RecipeIngredient from "./recipeIngredient";
 import RecipeCooking from "./recipeCooking";
@@ -10,8 +10,11 @@ import { motion } from "framer-motion/dist/framer-motion";
 import { Parallax } from "react-parallax";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
-import { ButtonPrimary } from "../../components/Button";
+import { ButtonPrimary, ButtonCancel } from "../../components/Button";
 import { AuthContext } from "../../util/context";
+import Avatar from "@mui/material/Avatar";
+import { MdModeEditOutline } from "react-icons/md";
+import Swal from "sweetalert2";
 
 export const WrrapperRecipe = styled.section`
   display: flex;
@@ -80,10 +83,13 @@ export const WrrapperRecipe = styled.section`
         width: 50px;
         box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
 
-        & > img {
-          border-radius: 100%;
+        .avatar-img {
+          width: 100%;
           height: 100%;
+          font-size: 25px;
           object-fit: cover;
+          border-radius: 100%;
+          background: var(--main-color);
         }
       }
     }
@@ -150,40 +156,114 @@ const Recipe = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, apiUrl } = AuthContext();
-  const [recipeWriter, setRecipeWriter] = useState();
+  const [recipeWriter, setRecipeWriter] = useState({});
+  const [letterFirstname, setLetterFirstname] = useState();
   const [listIngredient, setListIngredient] = useState([]);
   const [listCooking, setListCooking] = useState([]);
   const [listTag, setListTag] = useState([]);
+  const [checkLike, setCheckLike] = useState(null);
+  const [checkFavorite, setCheckFavorite] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     console.log("location: ", location.state);
     axios
       .post(`${apiUrl}/recipe/cookingTagIngreById.php`, {
-        id_user: location.state.user_id,
+        id_user: user.user_id ? user.user_id : null,
+        id_writter: location.state.user_id,
         id_recipe: location.state.recipe_id,
       })
       .then((res) => {
         console.log(res.data);
         if (res.data.success) {
-          setRecipeWriter(
-            res.data.dataUser.user_firstname +
-              " " +
-              res.data.dataUser.user_lastname
-          );
+          setRecipeWriter(res.data.dataUser);
+          setLetterFirstname(res.data.dataUser.user_firstname[0]);
           setListIngredient(res.data.dataIngre);
           setListCooking(res.data.dataCooking);
           setListTag(res.data.dataTag);
+          setCheckLike(res.data.checkLiked);
+          setCheckFavorite(res.data.checkFavorited);
         }
       });
-  }, [location]);
+  }, [location.state]);
+
+  const deleteRecipe = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "อยากจะลบสูตรอาหารของคุณจริงๆหรอ><",
+      icon: "warning",
+      cancelButtonText: "ไม่ลบ",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ใช่, ลบเลย!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post(`${apiUrl}/recipe/deleteRecipe.php`, {
+            id_recipe: location.state.recipe_id,
+            deleteImg: location.state.recipe_img,
+          })
+          .then((res) => {
+            if (res.data.success) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "สูตรอาหารถูกลบแล้ว",
+                text: "Your recipe has been deleted.",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              setTimeout(() => {
+                navigate("/myrecipes");
+              }, 1500);
+            }
+          });
+      }
+    });
+  };
+
+  const handleLike = () => {
+    if (!user.user_id) return;
+    if (location.state.user_id !== user.user_id) {
+      axios
+        .post(`${apiUrl}/recipe/handleLike.php`, {
+          id_user: user.user_id,
+          id_recipe: location.state.recipe_id,
+          check_Liked: checkLike,
+        })
+        .then((res) => {
+          console.log("hi: ", res);
+          if (res.data.success) {
+            setCheckLike(!checkLike);
+          }
+        });
+    }
+  };
+
+  const handleFavorite = () => {
+    if (!user.user_id) return;
+    if (location.state.user_id !== user.user_id) {
+      axios
+        .post(`${apiUrl}/recipe/handleFavorite.php`, {
+          id_user: user.user_id,
+          id_recipe: location.state.recipe_id,
+          check_favorited: checkFavorite,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setCheckFavorite(!checkFavorite);
+          }
+        });
+    }
+  };
   return (
     <ContainerGlobal>
       <WrrapperRecipe>
         <div className="background-recipe">
           <Parallax
             className="img-paralax"
-            bgImage={`./images/recipes/${location.state.recipe_img}`}
+            bgImage={`${apiUrl}/imgs/recipe/${location.state.recipe_img}`}
             bgImageAlt="recipe"
             strength={500}
             height="100%"
@@ -191,9 +271,20 @@ const Recipe = () => {
         </div>
         <div className="title-recipe">
           <div className="recipe-writer">
-            <p>{recipeWriter}</p>
+            <p>
+              {recipeWriter.user_firstname + " " + recipeWriter.user_lastname}
+            </p>
             <div className="profile-img">
-              <img alt="profile" src="./images/profile/lala.png" />
+              <Avatar
+                className="avatar-img"
+                alt="profile"
+                src={
+                  recipeWriter.user_img &&
+                  `${apiUrl}/imgs/profile/${recipeWriter.user_img}`
+                }
+              >
+                {!recipeWriter.user_img && letterFirstname}
+              </Avatar>
             </div>
           </div>
 
@@ -210,16 +301,16 @@ const Recipe = () => {
           </span>
 
           <div className="icon-like-favorite">
-            <motion.span whileTap={{ scale: 0.1 }}>
+            <motion.span whileTap={{ scale: 0.5 }} onClick={handleLike}>
               <RiHeart3Fill
                 className="icon-like"
-                style={{ color: "lightgray" }}
+                style={{ color: checkLike ? "#F44336" : "lightgray" }}
               />
             </motion.span>
-            <motion.span whileTap={{ scale: 0.1 }}>
+            <motion.span whileTap={{ scale: 0.5 }} onClick={handleFavorite}>
               <BsFillBookmarkFill
                 className="icon-favorite"
-                style={{ color: "lightgray" }}
+                style={{ color: checkFavorite ? "orange" : "lightgray" }}
               />
             </motion.span>
           </div>
@@ -234,26 +325,38 @@ const Recipe = () => {
         />
         {/* Tag */}
         <RecipeTag listTag={listTag} />
-        <p className="datetime-recipe">
+        <div className="datetime-recipe">
           วันที่โพสต์: {location.state.recipe_datetime}
           {location.state.user_id === user.user_id && (
-            <ButtonPrimary
-              onClick={() =>
-                navigate(`/recipe/edit/${location.state.recipe_id}`, {
-                  state: {
-                    recipeIngredientFromState: listIngredient,
-                    recipeCookingFromState: listCooking,
-                    recipeTagFromState: listTag,
-                    recipeFromState: location.state,
-                  },
-                })
-              }
-              style={{ marginRight: "20px" }}
-            >
-              แก้ไข
-            </ButtonPrimary>
+            <div style={{ display: "flex", gap: "20px" }}>
+              <ButtonCancel
+                p="10px 20px"
+                style={{ gap: "5px" }}
+                onClick={deleteRecipe}
+              >
+                <RiDeleteBin6Fill fontSize={16} />
+                ลบ
+              </ButtonCancel>
+              <ButtonPrimary
+                onClick={() =>
+                  navigate(`/recipe/edit/${location.state.recipe_id}`, {
+                    state: {
+                      recipeIngredientFromState: listIngredient,
+                      recipeCookingFromState: listCooking,
+                      recipeTagFromState: listTag,
+                      recipeFromState: location.state,
+                    },
+                  })
+                }
+                p="10px 20px"
+                style={{ marginRight: "20px", gap: "5px" }}
+              >
+                <MdModeEditOutline fontSize={16} />
+                แก้ไข
+              </ButtonPrimary>
+            </div>
           )}
-        </p>
+        </div>
       </WrrapperRecipe>
     </ContainerGlobal>
   );

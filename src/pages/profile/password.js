@@ -91,7 +91,13 @@ const Password = () => {
           newPassword: values.newPassword,
         })
         .then((res) => {
-          if (res.data.exist) alert(res.data.warning);
+          if (res.data.exist) {
+            return Swal.fire({
+              icon: "error",
+              title: "รหัสผ่าน",
+              text: res.data.warning,
+            });
+          }
           if (res.data.success) {
             setUser(res.data.dataUser);
             Swal.fire({

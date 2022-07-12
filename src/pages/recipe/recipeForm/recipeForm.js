@@ -63,6 +63,7 @@ const RecipeForm = (props) => {
   // TAG
   const [listTag, setListTag] = useState([]);
 
+  //Checking that is edit mode? if true, in this code below will handle for setting initial value of input
   if (props.mode === "edit") {
     useEffect(() => {
       console.log("lossss: ", location.state);
@@ -112,6 +113,7 @@ const RecipeForm = (props) => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  //update image url for showing on the screen
   useEffect(() => {
     if (props.mode === "edit") {
       if (user.user_img) {
@@ -120,13 +122,13 @@ const RecipeForm = (props) => {
         );
       }
     }
-
     if (file.length < 1) return;
     const newFile = [];
     file.forEach((img) => newFile.push(URL.createObjectURL(img)));
     setUrlRecipe(newFile[0]);
   }, [file]);
 
+  //upload image
   const handleUploadImg = (e) => {
     console.log(e.target.files[0]);
     const imageFile = e.target.files[0];
@@ -522,6 +524,7 @@ const RecipeForm = (props) => {
       });
     }
 
+    //map aaray to new array for update Recipe
     const getValueFromListIngredient = [];
     listIngredientInput.map((items, index) => {
       return getValueFromListIngredient.push({
@@ -531,12 +534,12 @@ const RecipeForm = (props) => {
           : null,
       });
     });
-
+    //map aaray to new array for update Recipe
     const getValueFromListCooking = [];
     listCookingInput.map((items, index) => {
       return getValueFromListCooking.push(values[`reciepCooking${index + 1}`]);
     });
-
+    //map aaray to new array for update Recipe
     const getValueFromListTag = [];
     listTag.map((items, index) => {
       return getValueFromListTag.push(items.id);
@@ -556,12 +559,21 @@ const RecipeForm = (props) => {
       else {
         axios
           .post(`${apiUrl}/recipe/insertRecipe.php`, {
-            user_id: parseInt(user.user_id),
+            recipe_id:
+              props.mode === "edit"
+                ? location.state.recipeFromState.recipe_id
+                : null,
+            user_id:
+              props.mode === "edit" && location.state.adminState
+                ? location.state.recipeFromState.user_id
+                : user.user_id,
             uploadImg: file.length > 0 ? uploadImgUrl : null,
+            //file.length > 0 is image was chosen
             deleteOldImg:
               props.mode === "edit"
                 ? file.length > 0 && location.state.recipeFromState.recipe_img
                 : null,
+            //file.length < 1 is image was not chosen
             exist_img:
               props.mode === "edit"
                 ? file.length < 1
@@ -576,10 +588,6 @@ const RecipeForm = (props) => {
             hour: values.hour ? values.hour : null,
             amount: values.amount ? values.amount : null,
             listTag: getValueFromListTag,
-            recipe_id:
-              props.mode === "edit"
-                ? location.state.recipeFromState.recipe_id
-                : null,
           })
           .then((res) => {
             console.log("redS: ", res.data);
@@ -592,7 +600,11 @@ const RecipeForm = (props) => {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              navigate("/myrecipes");
+              if (user.user_urole === "A") {
+                navigate("/admin");
+              } else {
+                navigate("/myrecipes");
+              }
             }
           });
       }
@@ -620,7 +632,11 @@ const RecipeForm = (props) => {
           timer: 1500,
         });
         setTimeout(() => {
-          navigate("/myrecipes");
+          if (location.state.adminState) {
+            navigate("/admin");
+          } else {
+            navigate("/myrecipes");
+          }
         }, 1500);
       }
     });

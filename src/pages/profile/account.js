@@ -5,9 +5,8 @@ import { TextField } from "final-form-material-ui";
 import Divider from "../../components/Divider/divider";
 import { ButtonPrimary, ButtonCancel } from "../../components/Button/index";
 import { AuthContext } from "../../util/context";
-import axios from "axios";
 import Avatar from "@mui/material/Avatar";
-import Swal from "sweetalert2";
+import { handleSubmitAccount, handleCancelAccount } from "./apiProfile";
 
 const ContainerAccount = styled.div`
   margin-top: 30px;
@@ -105,7 +104,7 @@ const ContainerAccount = styled.div`
   }
 `;
 
-const ButtonChangeProfile = styled.button`
+export const ButtonChangeProfile = styled.button`
   background: linear-gradient(
     180deg,
     rgba(245, 56, 3, 0.1) 0%,
@@ -130,7 +129,6 @@ const Account = () => {
   const { user, setUser, apiUrl } = AuthContext();
 
   useEffect(() => {
-    console.log("REmove");
     if (user.user_img) {
       setUrlProfile(`${apiUrl}/imgs/profile/${user.user_img}`);
     }
@@ -175,7 +173,6 @@ const Account = () => {
           >
             {!user.user_img && user.user_firstname[0]}
           </Avatar>
-          {/* <img src={urlProfile} alt="avatar" /> */}
           <ButtonChangeProfile
             onClick={() => refInputChangeProfile.current.click()}
             className="btn-change-profile"
@@ -196,72 +193,11 @@ const Account = () => {
 
   const renderInputForm = () => {
     const onSubmit = (values) => {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "อยากจะแก้ไขโปรไฟล์ของคุณจริงๆหรอ><",
-        icon: "warning",
-        cancelButtonText: "ไม่แก้ไข",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "ใช่, แก้ไขเลย!",
-      }).then((result) => {
-        if (result.dismiss) return;
-        axios
-          .post(`${apiUrl}/auth/account.php`, {
-            user_id: parseInt(user.user_id),
-            firstname: values.firstname,
-            lastname: values.lastname,
-            uploadImg: file.length > 0 ? uploadImgUrl : null,
-            deleteOldImg: user.user_img
-              ? file.length > 0
-                ? user.user_img
-                : null
-              : null,
-            exist_img: file.length < 1 ? user.user_img : null,
-          })
-          .then((res) => {
-            console.log("data:s: ", res.data);
-            if (res.data.success) {
-              setUser(res.data.dataUser);
-            }
-          });
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Success",
-          text: "ข้อมูลถูกบันทึกเรียบร้อย><",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      });
+      handleSubmitAccount(values, apiUrl, uploadImgUrl, user, file, setUser);
     };
 
     const onCancel = () => {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "อยากจะยกเลิกการแก้ไขโปรไฟล์ของคุณจริงๆหรอ><",
-        icon: "warning",
-        cancelButtonText: "แก้ไขต่อ",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "ใช่, ยกเลิกเลย!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "ยกเลิกสำเร็จ",
-            text: "Your prfile has been canceled.",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          setTimeout(() => {
-            window.location.reload();
-          }, 1500);
-        }
-      });
+      handleCancelAccount();
     };
 
     const validateForm = (values) => {

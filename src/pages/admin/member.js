@@ -4,10 +4,12 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import { ButtonPrimary, ButtonCancel } from "../../components/Button";
 import { AuthContext } from "../../util/context";
+import { handleApiDeleteMember, addListMember } from "./apiAdmin";
 
 const ContainerMember = styled.div`
   padding: 40px;
   height: ${(props) => (props.rowsPerPage === 5 ? "400px" : "650px")};
+  padding-bottom: 150px;
 `;
 
 export const Header = styled.h1`
@@ -16,10 +18,10 @@ export const Header = styled.h1`
   color: var(--txt-theme);
 `;
 
-const Member = () => {
+const Member = (props) => {
   const [listMember, setListMember] = useState([]);
   const [refreshMemberWhenDelete, setRefreshMemberWhenDelete] = useState(null);
-  const { user, setUser, apiUrl } = AuthContext();
+  const { apiUrl } = AuthContext();
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const columns = [
@@ -31,12 +33,12 @@ const Member = () => {
     {
       field: "user_firstname",
       headerName: "Firstname",
-      width: 200,
+      width: 150,
     },
     {
       field: "user_lastname",
       headerName: "Lastname",
-      width: 200,
+      width: 150,
     },
     {
       field: "user_email",
@@ -85,43 +87,18 @@ const Member = () => {
     },
   ];
 
-  const addListMember = () => {
-    axios.get(`${apiUrl}/user/fetchAllUser.php`).then((res) => {
-      console.log("res: ", typeof res.data.dataUser);
-      const rows = res.data.dataUser.map((users) => ({
-        id: users.user_id,
-        user_firstname: users.user_firstname,
-        user_lastname: users.user_lastname,
-        user_email: users.user_email,
-        user_datetime: users.user_datetime,
-        user_urole: users.user_urole,
-      }));
-      console.log("list Members:", rows);
-      setListMember(rows);
-    });
-  };
-
   useEffect(() => {
-    addListMember();
+    addListMember(apiUrl, setListMember);
   }, [refreshMemberWhenDelete]);
 
-  const onDelete = (id) => {
-    console.log("Holaaaaaaa:", id);
-    axios
-      .post(`${apiUrl}/user/deleteUser.php`, {
-        user_id: id,
-      })
-      .then((res) => {
-        if (res.data.success) {
-          const newArrayListMember = [...listMember];
-          const findIndex = newArrayListMember.findIndex(
-            (object) => object.id === id
-          );
-          newArrayListMember.splice(findIndex, 1);
-          setRefreshMemberWhenDelete(newArrayListMember.length);
-          alert(res.data.msg);
-        }
-      });
+  const onDelete = (id, username) => {
+    handleApiDeleteMember(
+      username,
+      apiUrl,
+      id,
+      listMember,
+      setRefreshMemberWhenDelete
+    );
   };
 
   return (
@@ -136,10 +113,12 @@ const Member = () => {
         onCellClick={(params) => {
           if (params.field === "edit") {
             console.log("params.row", params.row);
+            props.setIsBtnAdmin("member-edit");
+            props.setMemberSelected(params.row);
           }
           if (params.field === "delete") {
             console.log("params.row", params.row);
-            onDelete(params.row.id);
+            onDelete(params.row.id, params.row.user_firstname);
           }
         }}
       />

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Member from "./member";
+import MemberEdit from "./memberEdit";
 import { ButtonSettings } from "../profile/index";
 import { FiUser } from "react-icons/fi";
 import { GiCook, GiCookingPot } from "react-icons/gi";
@@ -44,7 +45,6 @@ const ContainerAdminPage = styled.div`
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
     background: var(--bg-theme);
     margin: 40px 0;
-    padding-bottom: 150px;
   }
 `;
 
@@ -72,7 +72,9 @@ const mapBtnAdmin = [
 const AdminPage = () => {
   document.title = "Tam Rai Dee - Admin";
   const [isBtnAdmin, setIsBtnAdmin] = useState("member");
+  const [memberSelected, setMemberSelected] = useState({});
 
+  console.log("memberSelected", memberSelected);
   return (
     <ContainerAdminPage>
       <div className="sideber-admin-page">
@@ -96,7 +98,15 @@ const AdminPage = () => {
         </span>
       </div>
       <div className="wrrapper-admin-page">
-        {isBtnAdmin === "member" && <Member />}
+        {isBtnAdmin === "member" && (
+          <Member
+            setIsBtnAdmin={setIsBtnAdmin}
+            setMemberSelected={setMemberSelected}
+          />
+        )}
+        {isBtnAdmin === "member-edit" && (
+          <MemberEdit memberSelected={memberSelected} />
+        )}
         {isBtnAdmin === "memberIsRecipe" && <MemberIsRecipe />}
         {isBtnAdmin === "adminIsRecipe" && <AdminIsRecipe />}
       </div>

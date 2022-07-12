@@ -5,26 +5,28 @@ import { DataGrid } from "@mui/x-data-grid";
 import { ButtonPrimary, ButtonCancel } from "../../components/Button";
 import { Header } from "./member";
 import { AuthContext } from "../../util/context";
+import { useLocation, useNavigate } from "react-router";
+import { handleDeleteRecipe, addListRecipe } from "./apiAdmin";
 
 const ContainerMemberIsRecipe = styled.div`
   padding: 40px;
   height: 650px;
+  padding-bottom: 150px;
 `;
 
 const MemberIsRecipe = () => {
   const [listMemberIsRecipe, setListMemberIsRecipe] = useState([]);
   const { apiUrl } = AuthContext();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [refreshRecipeWhenDelete, setRefreshRecipeWhenDelete] = useState(false);
+
   const columns = [
     {
-      field: "id",
+      field: "recipe_id",
       headerName: "ID",
-      width: 130,
+      width: 80,
     },
-    // {
-    //   field: "recipe_img",
-    //   headerName: "รูปภาพ",
-    //   width: 130,
-    // },
     {
       field: "recipe_name",
       headerName: "ชื่อสูตรอาหาร",
@@ -43,13 +45,13 @@ const MemberIsRecipe = () => {
     {
       field: "user_lastname",
       headerName: "นามสกุล",
-      width: 150,
+      width: 140,
     },
     {
       field: "recipe_datetime",
       headerName: "Date",
       sort: "disabled",
-      width: 150,
+      width: 110,
     },
     {
       field: "edit",
@@ -82,22 +84,18 @@ const MemberIsRecipe = () => {
   ];
 
   useEffect(() => {
-    axios.get(`${apiUrl}/user/fetchMemberIsRecipe.php`).then((res) => {
-      if (res.data.success) {
-        console.log("res: ", typeof res.data.dataUser);
-        const rows = res.data.dataUser.map((recipes) => ({
-          id: recipes.recipe_id,
-          recipe_name: recipes.recipe_name,
-          recipe_description: recipes.recipe_description,
-          user_firstname: recipes.user_firstname,
-          user_lastname: recipes.user_lastname,
-          recipe_datetime: recipes.recipe_datetime,
-        }));
-        console.log("list Member recipe:", rows);
-        setListMemberIsRecipe(rows);
-      }
-    });
-  }, []);
+    addListRecipe(apiUrl, setListMemberIsRecipe);
+  }, [refreshRecipeWhenDelete]);
+
+  const onDelete = (recipe_id, recipe_name, recipe_img) => {
+    handleDeleteRecipe(
+      apiUrl,
+      recipe_name,
+      recipe_id,
+      recipe_img,
+      setRefreshRecipeWhenDelete
+    );
+  };
 
   return (
     <ContainerMemberIsRecipe>
@@ -109,7 +107,35 @@ const MemberIsRecipe = () => {
         rowsPerPageOptions={[10]}
         onCellClick={(params) => {
           if (params.field === "edit") {
-            console.log(params.row);
+            console.log("member's recipe onClick", params.row);
+            console.log("location.state", location.state);
+            axios
+              .post(`${apiUrl}/recipe/cookingTagIngreById.php`, {
+                id_user: null,
+                id_recipe: params.row.recipe_id,
+                id_writter: params.row.user_id,
+              })
+              .then((res) => {
+                console.log(res.data);
+                if (res.data.success) {
+                  navigate(`/recipe/edit/${params.id}`, {
+                    state: {
+                      recipeIngredientFromState: res.data.dataIngre,
+                      recipeCookingFromState: res.data.dataCooking,
+                      recipeTagFromState: res.data.dataTag,
+                      recipeFromState: params.row,
+                      adminState: true, //recipe info of user
+                    },
+                  });
+                }
+              });
+          }
+          if (params.field === "delete") {
+            onDelete(
+              params.row.recipe_id,
+              params.row.recipe_name,
+              params.row.recipe_img
+            );
           }
         }}
       />

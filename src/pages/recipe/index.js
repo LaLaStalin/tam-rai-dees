@@ -167,6 +167,7 @@ const Recipe = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     console.log("location: ", location.state);
+
     axios
       .post(`${apiUrl}/recipe/cookingTagIngreById.php`, {
         id_user: user.user_id ? user.user_id : null,
@@ -344,7 +345,7 @@ const Recipe = () => {
                       recipeIngredientFromState: listIngredient,
                       recipeCookingFromState: listCooking,
                       recipeTagFromState: listTag,
-                      recipeFromState: location.state,
+                      recipeFromState: location.state, //recipe info of user
                     },
                   })
                 }

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { CardIngredient } from "../../components/Card";
 
 const CardIngredientByType = (props) => {
   const handleActiveIngredient = (id, name, type) => {
+    const controlActiveFilter = [];
     //เช็คว่ามีการกดวัตถุดิบนั้นหรือยัง ถ้ากดแล้วเราจะให้มันลบออกจากลิส และขอบ border ก็จะเอาออกด้วย
     if (props.ingredientActive.some((el) => el.idIngre === id)) {
       const newArrayActive = [...props.ingredientActive];
@@ -10,17 +11,24 @@ const CardIngredientByType = (props) => {
         (object) => object.idIngre === id
       );
       newArrayActive.splice(findIndex, 1);
-      console.log("new: ", newArrayActive);
       props.setIngredientActive(newArrayActive);
+      props.handleFilterWholeRecipe(newArrayActive);
       return;
     }
 
     // ADD ingredient
-    props.setIngredientActive([
-      ...props.ingredientActive,
+    props.setIngredientActive((prvState) => [
+      ...prvState,
       { idIngre: id, nameIngre: name, typeIngre: type, delete: "ลบ" },
     ]);
-    console.log("ARRAY: ", props.ingredientActive);
+    //Create Real time setState
+    controlActiveFilter.push(...props.ingredientActive, {
+      idIngre: id,
+      nameIngre: name,
+      typeIngre: type,
+      delete: "ลบ",
+    });
+    props.handleFilterWholeRecipe(controlActiveFilter);
   };
 
   return (

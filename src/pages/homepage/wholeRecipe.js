@@ -66,8 +66,6 @@ const WholeRecipe = (props) => {
     }
   }, [props.showRecipe]);
 
-  console.log("LIST: ", props.showRecipe);
-
   return (
     <ContainerWholeRecipe ref={props.refRecipe}>
       <div className="header-whole-recipe">

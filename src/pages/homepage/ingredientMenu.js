@@ -150,7 +150,7 @@ const listIngredientCardByType = [
   { valuesListIngredient: materialDry, typeName: "Dry" },
 ];
 
-const IngredientMenu = () => {
+const IngredientMenu = (props) => {
   const [menuIngredientActive, setMenuIngredientActive] = useState("Meat");
   const [ingredientActive, setIngredientActive] = useState([]);
 
@@ -174,7 +174,6 @@ const IngredientMenu = () => {
   //เอาไว้ set ค่าให้กับ first index และ last index เพื่อจัดการกับข้อมูลใน array
   const handlePagination = useCallback(
     (event, page) => {
-      console.log(page);
       const indexOfLastIngre = parseInt(page) * ingredientPerPage; //10
       const indexOfFirstIngre = indexOfLastIngre - ingredientPerPage; // 10 - 10 = 0
       setIndexLastIngredient(() => indexOfLastIngre);
@@ -187,7 +186,6 @@ const IngredientMenu = () => {
   const handleMenuChange = useCallback(
     (keyword) => {
       setMenuIngredientActive(keyword);
-      console.log("key: ", keyword);
       //CARD INGREDIENTS
       if (keyword === "Meat")
         setLengthOfIngredient(materialMeat.length / ingredientPerPage);
@@ -217,6 +215,36 @@ const IngredientMenu = () => {
     [menuIngredientActive]
   );
 
+  //filter Whole Recipe
+  const handleFilterWholeRecipe = (controlActiveFilter) => {
+    // Get Current Active ingredeint
+    const getCurrentStateFromArrayActive = [];
+    controlActiveFilter.forEach((items) =>
+      getCurrentStateFromArrayActive.push(items.idIngre.toString())
+    );
+
+    console.log("JION: ", getCurrentStateFromArrayActive);
+
+    if (getCurrentStateFromArrayActive.length > 0) {
+      const filterAllRecipe = props.allRecipe.filter((items) => {
+        let filterCheck = false;
+        getCurrentStateFromArrayActive.map((tagsId) => {
+          //เช็คว่า ingredient tag ที่เลือก ตรงกับ recipe tag id ตัวไหน
+          filterCheck = items.tags.includes(tagsId);
+        });
+        console.log("filter: ", filterCheck);
+        // return only recipe that have the same tag id
+        if (filterCheck) return items;
+      });
+      console.log("filter: ", filterAllRecipe);
+      //return recipe which is filterd
+      props.setShowRecipe(filterAllRecipe);
+    } else {
+      // if do not choose anything will return all recipe
+      props.setShowRecipe(props.allRecipe);
+    }
+  };
+
   const handleDeleteIngredientChosen = (id) => {
     const newArrayActive = [...ingredientActive];
     const findIndex = newArrayActive.findIndex(
@@ -224,6 +252,7 @@ const IngredientMenu = () => {
     );
     newArrayActive.splice(findIndex, 1);
     setIngredientActive(newArrayActive);
+    handleFilterWholeRecipe(newArrayActive);
   };
 
   const renderCardIngredients = () => {
@@ -239,8 +268,13 @@ const IngredientMenu = () => {
                   key={items.typeName}
                   type={items.typeName}
                   arrayIngredient={items.valuesListIngredient}
+                  //SET ingredientActive HERE
                   ingredientActive={ingredientActive}
                   setIngredientActive={setIngredientActive}
+                  //Filter Whole Recipe
+                  allRecipe={props.allRecipe}
+                  setShowRecipe={props.setShowRecipe}
+                  handleFilterWholeRecipe={handleFilterWholeRecipe}
                   //PROPS FOR PAGINATION
                   indexLast={indexLastIngredient}
                   indexFirst={indexFirstIngredient}
@@ -293,7 +327,10 @@ const IngredientMenu = () => {
                   color: "salmon",
                   cursor: "pointer",
                 }}
-                onClick={() => setIngredientActive([])}
+                onClick={() => {
+                  setIngredientActive([]);
+                  props.setShowRecipe(props.allRecipe);
+                }}
               >
                 clean
               </p>

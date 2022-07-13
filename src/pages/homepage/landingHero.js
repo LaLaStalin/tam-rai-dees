@@ -68,7 +68,6 @@ const LandingHero = (props) => {
             .toLowerCase()
             .includes(e.target.value.toLowerCase());
         });
-        console.log(filterAllRecipe);
         props.setShowRecipe(filterAllRecipe);
       } else {
         props.setShowRecipe(props.allRecipe);

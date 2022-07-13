@@ -21,7 +21,10 @@ const Homepage = () => {
   useEffect(() => {
     axios.get(`${apiUrl}/user/fetchAllUser.php`).then((res) => {
       setAllUser(res.data.dataUser);
+
+      console.log("data: ", res.data);
       const addLikeIntoRecipe = [];
+      //add Like to recipe object
       res.data.dataRecipe.forEach((items) => {
         for (let i = 0; i < res.data.like.length; i++) {
           if (items.recipe_id === res.data.like[i].recipe_id_by_like) {
@@ -33,10 +36,29 @@ const Homepage = () => {
           }
         }
       });
-      setAllRecipe(addLikeIntoRecipe);
-      setShowRecipe(addLikeIntoRecipe);
+
+      const addTagsArrayToRecipe = [];
+      //add Tags into recipe
+      addLikeIntoRecipe.forEach((items) => {
+        const tagsMock = [];
+        res.data.dataTags.forEach((tags) => {
+          if (items.recipeAdded.recipe_id === tags.recipe_id) {
+            tagsMock.push(tags.tag_id);
+          }
+        });
+        addTagsArrayToRecipe.push({
+          recipeAdded: items.recipeAdded,
+          likeCount: items.likeCount,
+          tags: tagsMock,
+        });
+      });
+      console.log("TAG: ", addTagsArrayToRecipe);
+      setAllRecipe(addTagsArrayToRecipe);
+      setShowRecipe(addTagsArrayToRecipe);
     });
   }, []);
+
+  console.log("recipe: ", allRecipe);
 
   document.title = "Tam Rai Dee - Home";
   return (
@@ -48,7 +70,7 @@ const Homepage = () => {
         setShowRecipe={setShowRecipe}
         refRecipe={refRecipe}
       />
-      <IngredientMenu />
+      <IngredientMenu allRecipe={allRecipe} setShowRecipe={setShowRecipe} />
       <WholeRecipe
         allUser={allUser}
         showRecipe={showRecipe}

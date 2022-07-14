@@ -16,7 +16,7 @@ const CardIngredientByType = (props) => {
       return;
     }
 
-    // ADD ingredient
+    // ADD ingredients
     props.setIngredientActive((prvState) => [
       ...prvState,
       { idIngre: id, nameIngre: name, typeIngre: type, delete: "ลบ" },
@@ -30,7 +30,7 @@ const CardIngredientByType = (props) => {
     });
     props.handleFilterWholeRecipe(controlActiveFilter);
   };
-
+  //Return Html
   return (
     <>
       {/*slice คือ param ตัวแรก มันจะเอา index ตัวนั้น ถึง index param ที่2 แต่ไม่เอา index ของ param ที่ 2*/}

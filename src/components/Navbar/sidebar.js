@@ -129,8 +129,19 @@ const Sidebar = (props) => {
                   props.isSetMobile(!props.getMobile);
                 }}
               >
-                <h5>Make your recipe</h5>
+                <h5>เขียนสูตรอาหาร</h5>
               </Link>
+              {user.user_urole === "A" && (
+                <Link
+                  to="/admin"
+                  className="menu-item"
+                  onClick={() => {
+                    props.isSetMobile(!props.getMobile);
+                  }}
+                >
+                  <h5>Admin</h5>
+                </Link>
+              )}
             </>
           ) : (
             <>

@@ -32,18 +32,22 @@ const Register = () => {
       .then((res) => {
         console.log("dsa", res);
         if (res.data.exist) {
-          alert(res.data.warning);
+          Swal.fire({
+            icon: "error",
+            title: "อีเมล",
+            text: `${res.data.warning}><`,
+          });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Success",
+            text: "สมัครสมาชิกสำเร็จ><",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/login");
         }
-        // alert(res.data.success);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Success",
-          text: "สมัครสมาชิกสำเร็จ><",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/login");
       });
   };
   const validateForm = (values) => {

@@ -37,7 +37,7 @@ const ContainerLandingHero = styled.section`
 
     & > p {
       font-size: var(--txt-header);
-      color: #777777;
+      color: gray;
     }
   }
 
@@ -61,7 +61,8 @@ const LandingHero = (props) => {
             writter: items.recipeAdded.user_firstname,
             lastname: items.recipeAdded.user_lastname,
             des: items.recipeAdded.recipe_description.replace(/\s/g, ""),
-            duration: items.recipeAdded.recipe_duration_m + "นาที",
+            duration_m: items.recipeAdded.recipe_duration_m + " นาที",
+            duration_hr: items.recipeAdded.recipe_duration_hr + " ชั่วโมง",
           };
           return Object.values(objectForSearch)
             .join("")

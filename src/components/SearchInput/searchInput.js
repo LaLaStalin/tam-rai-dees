@@ -7,7 +7,7 @@ const BoxInputSearch = styled.div`
   align-items: center;
   position: relative;
   width: ${(props) => props.w};
-  border-radius: ${({ radius }) => (radius ? radius : "50px")};
+  border-radius: ${({ radius }) => (radius ? radius : "10px")};
   background-color: var(--bg-theme);
   color: var(--txt-theme);
   box-shadow: ${({ shadow }) =>

@@ -6,6 +6,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { AuthContext } from "../../util/context";
 import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 
 const logoAnimate = keyframes`
     from {transform: translateY(0px);}
@@ -97,7 +99,6 @@ const AuthWrapper = styled.div`
   }
 
   .help-icon {
-    margin-left: 40px;
     font-size: 24px;
     color: #dbdbdb;
     cursor: pointer;
@@ -177,9 +178,14 @@ const Navbar = (props) => {
               </Avatar>
             </span>
           </Link>
-          <Link to="/admin">
+          {/* <Link to="/admin">
             <FiHelpCircle className="help-icon" keyword="/admin" />
-          </Link>
+          </Link> */}
+          <Tooltip title="Help">
+            <span style={{ marginLeft: "40px", height: "24px" }}>
+              <FiHelpCircle className="help-icon" />
+            </span>
+          </Tooltip>
         </AuthWrapper>
       </>
     );

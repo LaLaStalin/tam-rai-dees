@@ -6,6 +6,7 @@ import { Icon } from "@iconify/react";
 import { RiHeart3Fill } from "react-icons/ri";
 import { ButtonTransparent } from "../Button/index";
 import { AuthContext } from "../../util/context";
+import { CardActionArea } from "@mui/material";
 
 const ContainerCardIngredient = styled(motion.div)`
   position: relative;
@@ -25,7 +26,10 @@ const ContainerCardIngredient = styled(motion.div)`
     left: 20px;
     top: 10px;
     font-size: var(--txt-sub);
-    color: gray;
+    color: ${(props) =>
+      props.active.some((el) => el.idIngre === props.id)
+        ? "var(--txt-theme)"
+        : "gray"};
     font-weight: 500;
   }
 
@@ -138,12 +142,14 @@ export const CardRecipe = (props) => {
         </motion.span>
       </span>
 
-      <div className="img-recipe">
-        <img
-          src={`${apiUrl}/imgs/recipe/${props.recipe_img}`}
-          alt="img-recipe"
-        />
-      </div>
+      <CardActionArea className="img-recipe">
+        <div className="img-recipe" onClick={props.onClicked}>
+          <img
+            src={`${apiUrl}/imgs/recipe/${props.recipe_img}`}
+            alt="img-recipe"
+          />
+        </div>
+      </CardActionArea>
 
       <div className="content-recipe">
         <div className="content-recipe-info">

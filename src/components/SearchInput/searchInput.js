@@ -6,6 +6,7 @@ const BoxInputSearch = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  margin: 0 var(--pLR);
   width: ${(props) => props.w};
   border-radius: ${({ radius }) => (radius ? radius : "10px")};
   background-color: var(--bg-theme);

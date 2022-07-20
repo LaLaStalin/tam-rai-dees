@@ -109,6 +109,7 @@ const Footer = () => {
           <span className="arrow-button">
             <RiArrowUpSLine className="arrow-icon" onClick={scrollTop} />
           </span>
+
           <p>&copy; Tam Rai Dee 2022</p>
         </div>
       </div>

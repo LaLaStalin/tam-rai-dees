@@ -7,7 +7,6 @@ import styled, { keyframes } from "styled-components";
 import { AuthContext } from "../../util/context";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
@@ -139,12 +138,16 @@ const Navbar = (props) => {
     const handleClickHelp = (event) => {
       if (poperOpen) return;
       setAnchorEl(event.currentTarget);
-      console.log("WQEWQD");
     };
 
     const handleCloseHelp = () => {
       setAnchorEl(null);
-      console.log("FFFF");
+    };
+
+    const styleMenuItem = {
+      display: "flex",
+      flexDirection: "column",
+      padding: "8px 16px",
     };
 
     return (
@@ -173,11 +176,21 @@ const Navbar = (props) => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleCloseHelp}>มีอะไรใหม่</MenuItem>
-          <MenuItem onClick={handleCloseHelp}>สมัครสมาชิก</MenuItem>
-          <MenuItem onClick={handleCloseHelp}>สร้างสูตรอาหารของตัวเอง</MenuItem>
-          <MenuItem onClick={handleCloseHelp}>แก้ไขสูตรอาหาร</MenuItem>
-          <MenuItem onClick={handleCloseHelp}>เปลี่ยนรหัสผ่าน</MenuItem>
+          <MenuItem style={styleMenuItem} onClick={handleCloseHelp}>
+            มีอะไรใหม่
+          </MenuItem>
+          <MenuItem style={styleMenuItem} onClick={handleCloseHelp}>
+            สมัครสมาชิก
+          </MenuItem>
+          <MenuItem style={styleMenuItem} onClick={handleCloseHelp}>
+            สร้างสูตรอาหารของตัวเอง
+          </MenuItem>
+          <MenuItem style={styleMenuItem} onClick={handleCloseHelp}>
+            แก้ไขสูตรอาหาร
+          </MenuItem>
+          <MenuItem style={styleMenuItem} onClick={handleCloseHelp}>
+            เปลี่ยนรหัสผ่าน
+          </MenuItem>
         </Menu>
       </div>
     );
@@ -340,12 +353,15 @@ const Navbar = (props) => {
               {renderNotLoginYet()}
             </>
           )}
-
           <span
             className="nav-mobile"
             onClick={() => props.isSetMobile(!props.getMobile)}
           >
-            <FaHamburger />
+            <Tooltip title="เพิ่มเติม">
+              <span style={{ height: "20px" }}>
+                <FaHamburger />
+              </span>
+            </Tooltip>
           </span>
         </div>
       </NavbarContainer>

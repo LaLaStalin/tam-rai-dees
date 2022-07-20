@@ -218,29 +218,34 @@ const IngredientMenu = (props) => {
   //filter Whole Recipe
   const handleFilterWholeRecipe = (controlActiveFilter) => {
     // Get Current Active ingredeint
+
     const getCurrentStateFromArrayActive = [];
+
     controlActiveFilter.forEach((items) =>
       getCurrentStateFromArrayActive.push(items.idIngre.toString())
     );
 
-    console.log("JION: ", getCurrentStateFromArrayActive);
-
     if (getCurrentStateFromArrayActive.length > 0) {
       const filterAllRecipe = props.allRecipe.filter((items) => {
         let filterCheck = false;
+
         getCurrentStateFromArrayActive.map((tagsId) => {
           //เช็คว่า ingredient tag ที่เลือก ตรงกับ recipe tag id ตัวไหน
+
           filterCheck = items.tags.includes(tagsId);
         });
-        console.log("filter: ", filterCheck);
+
         // return only recipe that have the same tag id
+
         if (filterCheck) return items;
       });
-      console.log("filter: ", filterAllRecipe);
+
       //return recipe which is filterd
+
       props.setShowRecipe(filterAllRecipe);
     } else {
       // if do not choose anything will return all recipe
+
       props.setShowRecipe(props.allRecipe);
     }
   };
@@ -250,7 +255,9 @@ const IngredientMenu = (props) => {
     const findIndex = newArrayActive.findIndex(
       (object) => object.idIngre === id
     );
+
     newArrayActive.splice(findIndex, 1);
+
     setIngredientActive(newArrayActive);
     handleFilterWholeRecipe(newArrayActive);
   };
@@ -275,6 +282,8 @@ const IngredientMenu = (props) => {
                   allRecipe={props.allRecipe}
                   setShowRecipe={props.setShowRecipe}
                   handleFilterWholeRecipe={handleFilterWholeRecipe}
+                  //Delete ingredientActive
+                  handleDeleteIngredientChosen={handleDeleteIngredientChosen}
                   //PROPS FOR PAGINATION
                   indexLast={indexLastIngredient}
                   indexFirst={indexFirstIngredient}

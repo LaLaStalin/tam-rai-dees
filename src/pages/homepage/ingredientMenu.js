@@ -217,7 +217,7 @@ const IngredientMenu = (props) => {
 
   //filter Whole Recipe
   const handleFilterWholeRecipe = (controlActiveFilter) => {
-    // Get Current Active ingredeint
+    // Get Current Active ingredient
 
     const getCurrentStateFromArrayActive = [];
 
@@ -226,21 +226,21 @@ const IngredientMenu = (props) => {
     );
 
     if (getCurrentStateFromArrayActive.length > 0) {
-      const filterAllRecipe = props.allRecipe.filter((items) => {
+      const filterAllRecipe = props.allRecipe.filter((recipes) => {
         let filterCheck = false;
 
         getCurrentStateFromArrayActive.map((tagsId) => {
-          //เช็คว่า ingredient tag ที่เลือก ตรงกับ recipe tag id ตัวไหน
+          //Checking whether ingredient tag that was chosen, which one is the same with recipe tag id.
 
-          filterCheck = items.tags.includes(tagsId);
+          filterCheck = recipes.tags.includes(tagsId);
         });
 
         // return only recipe that have the same tag id
 
-        if (filterCheck) return items;
+        if (filterCheck) return recipes;
       });
 
-      //return recipe which is filterd
+      //return recipe which is filtered
 
       props.setShowRecipe(filterAllRecipe);
     } else {

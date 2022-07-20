@@ -22,9 +22,11 @@ const Homepage = () => {
     axios.get(`${apiUrl}/user/fetchAllUser.php`).then((res) => {
       setAllUser(res.data.dataUser);
 
-      console.log("data: ", res.data);
       const addLikeIntoRecipe = [];
+
       //add Like to recipe object
+      //Array be like [recipeAdded: [...], likeCount: 0]
+
       res.data.dataRecipe.forEach((items) => {
         for (let i = 0; i < res.data.like.length; i++) {
           if (items.recipe_id === res.data.like[i].recipe_id_by_like) {
@@ -32,35 +34,40 @@ const Homepage = () => {
               recipeAdded: items,
               likeCount: res.data.like[i].count_like,
             });
+
             break;
           }
         }
       });
 
-      const addTagsArrayToRecipe = [];
       //add Tags into recipe
+      //Array be like [recipeAdded: [...], likeCount: 0, tags:, [...]]
+
+      const addTagsArrayToRecipe = [];
+
       addLikeIntoRecipe.forEach((items) => {
         const tagsMock = [];
+
         res.data.dataTags.forEach((tags) => {
           if (items.recipeAdded.recipe_id === tags.recipe_id) {
             tagsMock.push(tags.tag_id);
           }
         });
+
         addTagsArrayToRecipe.push({
           recipeAdded: items.recipeAdded,
           likeCount: items.likeCount,
           tags: tagsMock,
         });
       });
-      console.log("TAG: ", addTagsArrayToRecipe);
+
       setAllRecipe(addTagsArrayToRecipe);
       setShowRecipe(addTagsArrayToRecipe);
     });
   }, []);
 
-  console.log("recipe: ", allRecipe);
-
   document.title = "Tam Rai Dee - Home";
+
   return (
     <ContainerGlobal>
       <LandingHero

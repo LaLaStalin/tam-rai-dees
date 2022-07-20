@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiHelpCircle } from "react-icons/fi";
 import Divider from "../Divider/divider";
 import { FaHamburger } from "react-icons/fa";
@@ -7,6 +7,9 @@ import styled, { keyframes } from "styled-components";
 import { AuthContext } from "../../util/context";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const logoAnimate = keyframes`
     from {transform: translateY(0px);}
@@ -78,6 +81,7 @@ const AuthWrapper = styled.div`
   .profile-button {
     border-radius: 14px;
     /* box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3); */
+    margin-right: 15px;
     cursor: pointer;
     padding: 1.5px 1.5px 1.5px 2px;
     display: flex;
@@ -126,6 +130,59 @@ const Navbar = (props) => {
   const { user, apiUrl } = AuthContext();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const HandleHelp = () => {
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    let poperOpen = Boolean(anchorEl);
+
+    const handleClickHelp = (event) => {
+      if (poperOpen) return;
+      setAnchorEl(event.currentTarget);
+      console.log("WQEWQD");
+    };
+
+    const handleCloseHelp = () => {
+      setAnchorEl(null);
+      console.log("FFFF");
+    };
+
+    return (
+      <div onClick={handleClickHelp}>
+        <Tooltip title="ศูนย์ช่วยเหลือ">
+          <span
+            style={{
+              marginLeft:
+                location.pathname === "/login" ||
+                location.pathname === "/register"
+                  ? "0"
+                  : "40px",
+              height: "24px",
+            }}
+          >
+            <FiHelpCircle className="help-icon" />
+          </span>
+        </Tooltip>
+
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={poperOpen}
+          onClose={handleCloseHelp}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={handleCloseHelp}>มีอะไรใหม่</MenuItem>
+          <MenuItem onClick={handleCloseHelp}>สมัครสมาชิก</MenuItem>
+          <MenuItem onClick={handleCloseHelp}>สร้างสูตรอาหารของตัวเอง</MenuItem>
+          <MenuItem onClick={handleCloseHelp}>แก้ไขสูตรอาหาร</MenuItem>
+          <MenuItem onClick={handleCloseHelp}>เปลี่ยนรหัสผ่าน</MenuItem>
+        </Menu>
+      </div>
+    );
+  };
+
   const renderAlreayLogin = () => {
     return (
       <>
@@ -154,19 +211,24 @@ const Navbar = (props) => {
               </MenuItems>
             </Tooltip>
           </Link>
+
           <Divider vertical="30px" color="var(--divider-theme)" />
+
           {/* Admin */}
           {user.user_urole === "A" && (
             <Link to="/admin">
-              <MenuItems
-                path={location.pathname}
-                keyword="/admin"
-                style={{ fontWeight: 550 }}
-              >
-                admin
-              </MenuItems>
+              <Tooltip title="จัดการข้อมูลต่างๆ">
+                <MenuItems
+                  path={location.pathname}
+                  keyword="/admin"
+                  style={{ fontWeight: 550 }}
+                >
+                  admin
+                </MenuItems>
+              </Tooltip>
             </Link>
           )}
+
           {/* Profile */}
           <Link to="/profile">
             <Tooltip title="My Profile" followCursor>
@@ -186,11 +248,8 @@ const Navbar = (props) => {
             </Tooltip>
           </Link>
 
-          <Tooltip title="ศูนย์ช่วยเหลือ">
-            <span style={{ marginLeft: "40px", height: "24px" }}>
-              <FiHelpCircle className="help-icon" />
-            </span>
-          </Tooltip>
+          {/* Help */}
+          {HandleHelp()}
         </AuthWrapper>
       </>
     );
@@ -218,15 +277,13 @@ const Navbar = (props) => {
               </Tooltip>
             </Link>
 
-            <Tooltip title="ศูนย์ช่วยเหลือ">
-              <span style={{ height: "24px" }}>
-                <FiHelpCircle className="help-icon" />
-              </span>
-            </Tooltip>
+            {/* Help */}
+            {HandleHelp()}
           </AuthWrapper>
         ) : (
           <AuthWrapper>
             <Divider vertical="30px" color="var(--divider-theme)" />
+
             <Link
               to="/login"
               style={{ display: "flex", alignItems: "center", gap: "10px" }}
@@ -242,11 +299,8 @@ const Navbar = (props) => {
               </Tooltip>
             </Link>
 
-            <Tooltip title="ศูนย์ช่วยเหลือ">
-              <span style={{ marginLeft: "40px", height: "24px" }}>
-                <FiHelpCircle className="help-icon" />
-              </span>
-            </Tooltip>
+            {/* Help */}
+            {HandleHelp()}
           </AuthWrapper>
         )}
       </>
@@ -267,6 +321,7 @@ const Navbar = (props) => {
                 className="logo-icon"
               />
             </Link>
+
             <Link to="/">
               <Tooltip title="Home" followCursor>
                 <h3 className="text-logo">Tam Rai Dee</h3>

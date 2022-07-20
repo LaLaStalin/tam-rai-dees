@@ -6,7 +6,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { AuthContext } from "../../util/context";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 
 const logoAnimate = keyframes`
@@ -132,22 +131,28 @@ const Navbar = (props) => {
       <>
         {/*Already login*/}
         <AuthWrapper path={location.pathname}>
-          <MenuItems
-            path={location.pathname}
-            keyword="/recipe/create"
-            onClick={() => navigate("/recipe/create")}
-          >
-            + เขียนสูตรอาหาร
-          </MenuItems>
-          <Divider vertical="30px" color="var(--divider-theme)" />
-          <Link to="/myrecipes">
+          <Tooltip title="เขียนสูตรอาหารของตัวเองเพื่อแชร์ให้เพื่อนๆ">
             <MenuItems
               path={location.pathname}
-              keyword="/myrecipes"
-              style={{ fontWeight: 550 }}
+              keyword="/recipe/create"
+              onClick={() => navigate("/recipe/create")}
             >
-              My Recipes
+              + เขียนสูตรอาหาร
             </MenuItems>
+          </Tooltip>
+
+          <Divider vertical="30px" color="var(--divider-theme)" />
+
+          <Link to="/myrecipes">
+            <Tooltip title="สูตรอาหารของฉันและสูตรอาหารของเพื่อนๆ">
+              <MenuItems
+                path={location.pathname}
+                keyword="/myrecipes"
+                style={{ fontWeight: 550 }}
+              >
+                My Recipes
+              </MenuItems>
+            </Tooltip>
           </Link>
           <Divider vertical="30px" color="var(--divider-theme)" />
           {/* Admin */}
@@ -164,24 +169,24 @@ const Navbar = (props) => {
           )}
           {/* Profile */}
           <Link to="/profile">
-            <span className="profile-button">
-              <Avatar
-                className="Avatar"
-                style={{ borderRadius: "10px" }}
-                src={
-                  user.user_img
-                    ? `${apiUrl}/imgs/profile/${user.user_img}`
-                    : null
-                }
-              >
-                {!user.user_img && user.user_firstname[0]}
-              </Avatar>
-            </span>
+            <Tooltip title="My Profile" followCursor>
+              <span className="profile-button">
+                <Avatar
+                  className="Avatar"
+                  style={{ borderRadius: "10px" }}
+                  src={
+                    user.user_img
+                      ? `${apiUrl}/imgs/profile/${user.user_img}`
+                      : null
+                  }
+                >
+                  {!user.user_img && user.user_firstname[0]}
+                </Avatar>
+              </span>
+            </Tooltip>
           </Link>
-          {/* <Link to="/admin">
-            <FiHelpCircle className="help-icon" keyword="/admin" />
-          </Link> */}
-          <Tooltip title="Help">
+
+          <Tooltip title="ศูนย์ช่วยเหลือ">
             <span style={{ marginLeft: "40px", height: "24px" }}>
               <FiHelpCircle className="help-icon" />
             </span>
@@ -198,19 +203,26 @@ const Navbar = (props) => {
         {location.pathname === "/login" || location.pathname === "/register" ? (
           <AuthWrapper path={location.pathname}>
             <Link to="/login">
-              <MenuItems path={location.pathname} keyword="/login">
-                Login
-              </MenuItems>
-            </Link>
-            <Link to="/register">
-              <MenuItems path={location.pathname} keyword="/register">
-                Register
-              </MenuItems>
+              <Tooltip title="เข้าสู่ระบบ">
+                <MenuItems path={location.pathname} keyword="/login">
+                  Login
+                </MenuItems>
+              </Tooltip>
             </Link>
 
-            <Link to="/admin">
-              <FiHelpCircle className="help-icon" keyword="/admin" />
+            <Link to="/register">
+              <Tooltip title="สมัครสมาชิก">
+                <MenuItems path={location.pathname} keyword="/register">
+                  Register
+                </MenuItems>
+              </Tooltip>
             </Link>
+
+            <Tooltip title="ศูนย์ช่วยเหลือ">
+              <span style={{ height: "24px" }}>
+                <FiHelpCircle className="help-icon" />
+              </span>
+            </Tooltip>
           </AuthWrapper>
         ) : (
           <AuthWrapper>
@@ -219,15 +231,22 @@ const Navbar = (props) => {
               to="/login"
               style={{ display: "flex", alignItems: "center", gap: "10px" }}
             >
-              <MenuItems keyword="">Login</MenuItems>
-              <span className="profile-button">
-                <Avatar className="Avatar" style={{ borderRadius: "10px" }} />
-              </span>
+              <Tooltip title="เข้าสู่ระบบ">
+                <MenuItems keyword="/login">Login</MenuItems>
+              </Tooltip>
+
+              <Tooltip title="Profile" followCursor>
+                <span className="profile-button">
+                  <Avatar className="Avatar" style={{ borderRadius: "10px" }} />
+                </span>
+              </Tooltip>
             </Link>
 
-            <Link to="/admin">
-              <FiHelpCircle className="help-icon" keyword="/admin" />
-            </Link>
+            <Tooltip title="ศูนย์ช่วยเหลือ">
+              <span style={{ marginLeft: "40px", height: "24px" }}>
+                <FiHelpCircle className="help-icon" />
+              </span>
+            </Tooltip>
           </AuthWrapper>
         )}
       </>
@@ -249,7 +268,9 @@ const Navbar = (props) => {
               />
             </Link>
             <Link to="/">
-              <h3 className="text-logo">Tam Rai Dee</h3>
+              <Tooltip title="Home" followCursor>
+                <h3 className="text-logo">Tam Rai Dee</h3>
+              </Tooltip>
             </Link>
           </div>
 

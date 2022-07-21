@@ -632,11 +632,11 @@ const RecipeForm = (props) => {
           timer: 1500,
         });
         setTimeout(() => {
-          if (location.state.adminState) {
-            navigate("/admin");
-          } else {
-            navigate("/myrecipes");
-          }
+          // if (admin) {
+          //   navigate("/admin");
+          // } else {
+          // }
+          navigate("/myrecipes");
         }, 1500);
       }
     });

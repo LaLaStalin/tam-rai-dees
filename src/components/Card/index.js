@@ -77,16 +77,22 @@ const ContainerCardRecipe = styled.div`
     cursor: pointer;
   }
 
-  .img-recipe {
-    width: 220px;
-    height: 176px;
+  .action-img-recipe {
+    width: 320px;
+    height: 180px;
     border-radius: 12px;
 
-    & > img {
+    .img-recipe {
       width: 100%;
       height: 100%;
-      object-fit: cover;
       border-radius: 12px;
+
+      & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+      }
     }
   }
 
@@ -142,7 +148,7 @@ export const CardRecipe = (props) => {
         </motion.span>
       </span>
 
-      <CardActionArea className="img-recipe">
+      <CardActionArea className="action-img-recipe">
         <div className="img-recipe" onClick={props.onClicked}>
           <img
             src={`${apiUrl}/imgs/recipe/${props.recipe_img}`}

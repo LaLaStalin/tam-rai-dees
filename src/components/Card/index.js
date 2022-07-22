@@ -7,6 +7,7 @@ import { RiHeart3Fill } from "react-icons/ri";
 import { ButtonTransparent } from "../Button/index";
 import { AuthContext } from "../../util/context";
 import { CardActionArea } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const ContainerCardIngredient = styled(motion.div)`
   position: relative;
@@ -101,7 +102,6 @@ const ContainerCardRecipe = styled.div`
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    height: 176px;
 
     .content-recipe-info {
       display: flex;
@@ -114,6 +114,11 @@ const ContainerCardRecipe = styled.div`
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        margin-right: 20px;
+
+        @media screen and (max-width: 400px) {
+          font-size: 18px;
+        }
       }
 
       .content-recipe-name {
@@ -132,6 +137,10 @@ const ContainerCardRecipe = styled.div`
         gap: 4px;
         font-size: var(--txt-primary);
         margin: 10px 0;
+
+        @media screen and (max-width: 420px) {
+          font-size: 10px;
+        }
       }
     }
   }
@@ -139,6 +148,9 @@ const ContainerCardRecipe = styled.div`
 
 export const CardRecipe = (props) => {
   const { apiUrl } = AuthContext();
+  const matches = useMediaQuery("(max-width:740px)");
+  const matchesMobile = useMediaQuery("(max-width:420px)");
+
   return (
     <ContainerCardRecipe>
       <span className="icon-like">
@@ -163,7 +175,10 @@ export const CardRecipe = (props) => {
           <p className="content-recipe-name">{props.writter}</p>
           <Divider horizontal="100%" color="lightgray" />
           <p>
-            {props.description.substring(0, 180)}
+            {props.description.substring(
+              0,
+              matches ? (matchesMobile ? 50 : 100) : 180
+            )}
             {props.description.length > 190 && ". . ."}
           </p>
         </div>
@@ -176,8 +191,7 @@ export const CardRecipe = (props) => {
               color="var(--txt-theme)"
             />
             <p>
-              {" "}
-              ใช้เวลาทำอาหาร{" "}
+              {matchesMobile ? " ใช้เวลาทำอาหาร " : " ใช้เวลาทำอาหาร "}
               {props.duration_hr && props.duration_hr + " ชั่งโมง "}
               {props.duration_m} นาที
             </p>

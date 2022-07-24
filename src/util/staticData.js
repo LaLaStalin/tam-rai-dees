@@ -241,7 +241,11 @@ export const materialMeatTransform = [
     name: "ปลากรอบ",
     src: "./images/ingredients/transform/ปลากรอบ.png",
   },
-  { id: 75, name: "กากหมู", src: "./images/ingredients/transform/กากหมู.png" },
+  {
+    id: 75,
+    name: "กากหมู",
+    src: "./images/ingredients/transform/กากหมู.png",
+  },
   {
     id: 76,
     name: "หมูแผ่น",
@@ -278,8 +282,8 @@ export const materialDry = [
   { id: 86, name: "ขนมปัง", src: "./images/ingredients/dry/ขนมปัง.png" },
   {
     id: 87,
-    name: "ขนมคบเคี้ยว",
-    src: "./images/ingredients/dry/ขนม.png",
+    name: "ขนมขบเคี้ยว",
+    src: "./images/ingredients/dry/ขนมขบเคี้ยว.png",
   },
   {
     id: 88,

@@ -44,16 +44,18 @@ export const MenuIngredient = [
   },
 ];
 
+// IM เนื้อสัตว์
 export const materialMeat = [
   { id: 1, name: "ไก่", src: "./images/ingredients/meat/ไก่.png" },
   { id: 2, name: "เป็ด", src: "./images/ingredients/meat/เป็ด.png" },
   { id: 3, name: "แกะ", src: "./images/ingredients/meat/แกะ.png" },
-  { id: 4, name: "วัว", src: "./images/ingredients/meat/วัว.png" },
+  { id: 4, name: "เนื้อ", src: "./images/ingredients/meat/วัว.png" },
   { id: 5, name: "หมู", src: "./images/ingredients/meat/หมู.png" },
   { id: 6, name: "กบ", src: "./images/ingredients/meat/กบ.png" },
   { id: 7, name: "จระเข้", src: "./images/ingredients/meat/จระเข้.png" },
 ];
 
+// IS อาหารทะเล
 export const materialSea = [
   { id: 8, name: "กุ้ง", src: "./images/ingredients/sea/กุ้ง.jpg" },
   { id: 9, name: "ปลา", src: "./images/ingredients/sea/ปลาสด.png" },
@@ -63,6 +65,7 @@ export const materialSea = [
   { id: 13, name: "หมึก", src: "./images/ingredients/sea/หมึก.png" },
 ];
 
+// IV พืชผัก
 export const materialVegetable = [
   { id: 14, name: "แครอท", src: "./images/ingredients/vegetable/แครอท.png" },
   {
@@ -141,8 +144,44 @@ export const materialVegetable = [
     name: "มันสำปะหลัง",
     src: "./images/ingredients/vegetable/มันสำปะหลัง.png",
   },
+  {
+    id: 102,
+    name: "พริกหวาน",
+    src: "./images/ingredients/vegetable/พริกหวาน.png",
+  },
+  {
+    id: 103,
+    name: "กระเทียม",
+    src: "./images/ingredients/vegetable/กระเทียม.png",
+  },
+  {
+    id: 104,
+    name: "หอมหัวใหญ่",
+    src: "./images/ingredients/vegetable/หอมหัวใหญ่.png",
+  },
+  {
+    id: 105,
+    name: "เคล",
+    src: "./images/ingredients/vegetable/เคล.png",
+  },
+  {
+    id: 106,
+    name: "ดอกกะหล่ำ",
+    src: "./images/ingredients/vegetable/ดอกกะหล่ำ.png",
+  },
+  {
+    id: 107,
+    name: "เห็ด",
+    src: "./images/ingredients/vegetable/เห็ด.png",
+  },
+  {
+    id: 108,
+    name: "พริก",
+    src: "./images/ingredients/vegetable/พริก.png",
+  },
 ];
 
+// IF ผลไม้
 export const materialFruit = [
   { id: 35, name: "ส้ม", src: "./images/ingredients/fruit/ส้ม.png" },
   { id: 36, name: "กล้วย", src: "./images/ingredients/fruit/กล้วย.png" },
@@ -168,6 +207,7 @@ export const materialFruit = [
   },
 ];
 
+// IE ไข่ นม เนย ชีส
 export const materialEggMilkButterCheese = [
   { id: 49, name: "ไข่ไก่", src: "./images/ingredients/egg/ไข่ไก่.png" },
   { id: 50, name: "ไข่เป็ด", src: "./images/ingredients/egg/ไข่เป็ด.png" },
@@ -181,8 +221,14 @@ export const materialEggMilkButterCheese = [
     name: "ไข่เยี่ยวม้า",
     src: "./images/ingredients/egg/ไข่เยี่ยวม้า.png",
   },
+  {
+    id: 109,
+    name: "ไข่นกกระทา",
+    src: "./images/ingredients/egg/ไข่นกกระทา.png",
+  },
 ];
 
+// IC ผลิตภัณฑ์แปรรูปแช่เย็น
 export const materialFrozen = [
   { id: 57, name: "เต้าหู้", src: "./images/ingredients/frozen/เต้าหู้.png" },
   {
@@ -196,6 +242,7 @@ export const materialFrozen = [
   { id: 62, name: "ไข่กุ้ง", src: "./images/ingredients/frozen/ไข่กุ้ง.png" },
 ];
 
+// IW ผลัตภัณฑ์เนื้อสัตว์แปรรูป
 export const materialMeatTransform = [
   { id: 63, name: "แฮม", src: "./images/ingredients/transform/แฮม.png" },
   {
@@ -253,6 +300,7 @@ export const materialMeatTransform = [
   },
 ];
 
+// ID อาหารแห้ง
 export const materialDry = [
   { id: 77, name: "ข้าว", src: "./images/ingredients/dry/ข้าว.png" },
   {
@@ -303,12 +351,16 @@ export const materialDry = [
   { id: 91, name: "น้ำมันพืช", src: "./images/ingredients/dry/น้ำมันพืช.png" },
   {
     id: 92,
-    name: "อาหารตากแห้ง",
-    src: "./images/ingredients/dry/อาหารตากแห้ง.png",
+    name: "น้ำมันมะกอก",
+    src: "./images/ingredients/dry/น้ำมันมะกอก.png",
   },
   { id: 93, name: "ผักอบแห้ง", src: "./images/ingredients/dry/ผักอบแห้ง.png" },
+  { id: 110, name: "โซดา", src: "./images/ingredients/dry/โซดา.png" },
+  { id: 111, name: "ไวน์ขาว", src: "./images/ingredients/dry/ไวน์ขาว.png" },
+  { id: 112, name: "น้ำตาล", src: "./images/ingredients/dry/น้ำตาล.png" },
 ];
 
+// C วิธีการ
 export const CookingTechniques = [
   { id: 94, name: "ผัด", keyword: "Stir Fried" },
   { id: 95, name: "ปิ้งย่าง", keyword: "Grilled" },

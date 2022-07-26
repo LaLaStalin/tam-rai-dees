@@ -36,7 +36,7 @@ const Menu = styled.div`
     cursor: pointer;
 
     &:hover {
-      color: red;
+      color: #ff3e43;
     }
   }
 

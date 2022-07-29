@@ -585,7 +585,8 @@ const RecipeForm = (props) => {
             listIngredient: getValueFromListIngredient,
             listCooking: getValueFromListCooking,
             minute: values.minute,
-            hour: values.hour ? values.hour : null,
+            // hour: values.hour ? values.hour : null,
+            hour: !values.hour || values.hour == 0 ? null : values.hour,
             amount: values.amount ? values.amount : null,
             listTag: getValueFromListTag,
           })

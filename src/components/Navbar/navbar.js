@@ -176,9 +176,11 @@ const Navbar = (props) => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem style={styleMenuItem} onClick={handleCloseHelp}>
-            มีอะไรใหม่
-          </MenuItem>
+          <a href="./images/help/NewFeature.pdf" target="_blank">
+            <MenuItem style={styleMenuItem} onClick={handleCloseHelp}>
+              มีอะไรใหม่
+            </MenuItem>
+          </a>
           <MenuItem style={styleMenuItem} onClick={handleCloseHelp}>
             สมัครสมาชิก
           </MenuItem>

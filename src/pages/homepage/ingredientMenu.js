@@ -225,19 +225,26 @@ const IngredientMenu = (props) => {
       getCurrentStateFromArrayActive.push(items.idIngre.toString())
     );
 
+    console.log(getCurrentStateFromArrayActive);
+
     if (getCurrentStateFromArrayActive.length > 0) {
       const filterAllRecipe = props.allRecipe.filter((recipes) => {
         let filterCheck = false;
-
+        let countCheck = 0;
+        console.log("recipe: ", recipes);
+        // ['1', '3', '4'] -> 2
         getCurrentStateFromArrayActive.map((tagsId) => {
           //Checking whether ingredient tag that was chosen, which one is the same with recipe tag id.
-
+          // ['1', '2'] -> 1
+          // ['1', '3']
           filterCheck = recipes.tags.includes(tagsId);
+          if (filterCheck) countCheck += 1;
         });
 
         // return only recipe that have the same tag id
-
-        if (filterCheck) return recipes;
+        if (countCheck === getCurrentStateFromArrayActive.length) {
+          return recipes;
+        }
       });
 
       //return recipe which is filtered

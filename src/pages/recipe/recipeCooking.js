@@ -100,7 +100,9 @@ const RecipeCooking = (props) => {
             className="time-icon"
             color="var(--txt-theme)"
           />
-          {props.duration_hr && <p>{props.duration_hr} ชั่วโมง</p>}
+          {props.duration_hr && props.duration_hr !== "0" && (
+            <p>{props.duration_hr} ชั่วโมง</p>
+          )}
           <p>{props.duration_m} นาที</p>
         </div>
         <h1>วิธีทำ</h1>

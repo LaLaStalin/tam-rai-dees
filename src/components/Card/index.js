@@ -192,7 +192,9 @@ export const CardRecipe = (props) => {
             />
             <p>
               {matchesMobile ? " ใช้เวลาทำอาหาร " : " ใช้เวลาทำอาหาร "}
-              {props.duration_hr && props.duration_hr + " ชั่งโมง "}
+              {props.duration_hr &&
+                props.duration_hr !== "0" &&
+                props.duration_hr + " ชั่งโมง "}
               {props.duration_m} นาที
             </p>
           </span>

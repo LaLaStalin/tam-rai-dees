@@ -317,7 +317,10 @@ const Recipe = () => {
           </div>
         </div>
         {/* Ingre */}
-        <RecipeIngredient listIngredient={listIngredient} />
+        <RecipeIngredient
+          listIngredient={listIngredient}
+          amount={location.state.recipe_amount}
+        />
         {/* Cooking */}
         <RecipeCooking
           listCooking={listCooking}

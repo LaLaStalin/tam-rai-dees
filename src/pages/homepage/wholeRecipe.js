@@ -76,30 +76,33 @@ const WholeRecipe = (props) => {
 
         <p>เมนูอาหารที่เกี่ยวข้องกับวัตถุดิบที่คุณเลือกหรือที่คุณค้นหา. . .</p>
       </div>
-      {listRecipe
-        .slice(indexFirstIngredient, indexLastIngredient)
-        .map((recipe) => (
-          <CardRecipe
-            key={recipe.recipeAdded.recipe_id}
-            id={recipe.recipeAdded.recipe_id}
-            recipe_img={recipe.recipeAdded.recipe_img}
-            like={recipe.likeCount}
-            nameRecipe={recipe.recipeAdded.recipe_name}
-            writter={
-              recipe.recipeAdded.user_firstname +
-              " " +
-              recipe.recipeAdded.user_lastname
-            }
-            description={recipe.recipeAdded.recipe_description}
-            duration_m={recipe.recipeAdded.recipe_duration_m}
-            duration_hr={recipe.recipeAdded.recipe_duration_hr}
-            onClicked={() =>
-              navigate(`/recipe/${recipe.recipe_id}`, {
-                state: recipe.recipeAdded,
-              })
-            }
-          />
-        ))}
+      {listRecipe.length > 0
+        ? listRecipe
+            .slice(indexFirstIngredient, indexLastIngredient)
+            .map((recipe) => (
+              <CardRecipe
+                key={recipe.recipeAdded.recipe_id}
+                id={recipe.recipeAdded.recipe_id}
+                recipe_img={recipe.recipeAdded.recipe_img}
+                like={recipe.likeCount}
+                nameRecipe={recipe.recipeAdded.recipe_name}
+                writter={
+                  recipe.recipeAdded.user_firstname +
+                  " " +
+                  recipe.recipeAdded.user_lastname
+                }
+                description={recipe.recipeAdded.recipe_description}
+                duration_m={recipe.recipeAdded.recipe_duration_m}
+                duration_hr={recipe.recipeAdded.recipe_duration_hr}
+                onClicked={() =>
+                  navigate(`/recipe/${recipe.recipe_id}`, {
+                    state: recipe.recipeAdded,
+                  })
+                }
+              />
+            ))
+        : "ไม่พบสูตรอาหาร"}
+
       <Pagination
         count={Math.ceil(lengthOfIngredeint)}
         shape="rounded"

@@ -74,7 +74,9 @@ const RecipeIngredient = (props) => {
   return (
     <>
       <RecipeInfoContainer>
-        <p className="amount-recipe">สำหรับ 2 ท่าน</p>
+        <p className="amount-recipe">
+          {props.amount && `สำหรับ ${props.amount}`}
+        </p>
         <h1>ส่วนผสม</h1>
         {props.listIngredient.map((items, index) => (
           <motion.ul

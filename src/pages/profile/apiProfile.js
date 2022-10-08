@@ -83,7 +83,7 @@ export const handleCancelAccount = () => {
 export const handleSubmitPassword = (values, user, apiUrl, setUser) => {
   Swal.fire({
     title: "Are you sure?",
-    text: "อยากจะแก้ไขโปรไฟล์ของคุณจริงๆหรอ><",
+    text: "อยากจะแก้ไขรหัสผ่านของคุณจริงๆหรอ><",
     icon: "warning",
     cancelButtonText: "ไม่แก้ไข",
     showCancelButton: true,

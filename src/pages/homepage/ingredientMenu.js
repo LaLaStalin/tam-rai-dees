@@ -80,7 +80,6 @@ const ContainerIngredientMenu = styled.section`
       font-size: var(--txt-primary);
 
       &:hover {
-        /* background-color: #fafafa; */
         background-color: #f4f4f4;
 
         &:hover > li {
@@ -113,7 +112,7 @@ const ContainerCard = styled.section`
   & > div {
     display: grid;
     justify-content: center;
-    grid-gap: 20px;
+    grid-gap: 30px;
     grid-template-columns: ${(props) =>
       props.ingredientActive.length >= 8
         ? "repeat(4, 210px)"
@@ -348,7 +347,7 @@ const IngredientMenu = (props) => {
                   props.setShowRecipe(props.allRecipe);
                 }}
               >
-                clean
+                reset
               </p>
             </>
           )}

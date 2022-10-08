@@ -37,7 +37,8 @@ const ContainerLandingHero = styled.section`
 
     & > p {
       font-size: var(--txt-header);
-      color: gray;
+      color: lightgray;
+      opacity: 0.6;
     }
   }
 

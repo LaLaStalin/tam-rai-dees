@@ -29,7 +29,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    //ถ้ามี user เคย login แล้ว
+    //ถ้ามี user เคย login แล้ว#
     const authCheck = localStorage.getItem("user_setup");
     if (authCheck) {
       console.log("sdds");

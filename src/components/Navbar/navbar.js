@@ -152,22 +152,24 @@ const Navbar = (props) => {
 
     return (
       <div onClick={handleClickHelp}>
-        <Tooltip title="ศูนย์ช่วยเหลือ">
-          <span
-            style={{
-              marginLeft:
-                location.pathname === "/login" ||
-                location.pathname === "/register"
-                  ? "0"
-                  : "40px",
-              height: "24px",
-            }}
-          >
-            <FiHelpCircle className="help-icon" />
-          </span>
-        </Tooltip>
+        <a href="https://nattida-jang.gitbook.io/tamraidee/" target="_blank">
+          <Tooltip title="ศูนย์ช่วยเหลือ">
+            <span
+              style={{
+                marginLeft:
+                  location.pathname === "/login" ||
+                  location.pathname === "/register"
+                    ? "0"
+                    : "40px",
+                height: "24px",
+              }}
+            >
+              <FiHelpCircle className="help-icon" />
+            </span>
+          </Tooltip>
+        </a>
 
-        <Menu
+        {/* <Menu
           id="basic-menu"
           anchorEl={anchorEl}
           open={poperOpen}
@@ -193,7 +195,7 @@ const Navbar = (props) => {
           <MenuItem style={styleMenuItem} onClick={handleCloseHelp}>
             เปลี่ยนรหัสผ่าน
           </MenuItem>
-        </Menu>
+        </Menu> */}
       </div>
     );
   };
@@ -264,6 +266,7 @@ const Navbar = (props) => {
           </Link>
 
           {/* Help */}
+
           {HandleHelp()}
         </AuthWrapper>
       </>

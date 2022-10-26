@@ -169,6 +169,7 @@ const Navbar = (props) => {
           </Tooltip>
         </a>
 
+        {/* แถบเมนู help */}
         {/* <Menu
           id="basic-menu"
           anchorEl={anchorEl}

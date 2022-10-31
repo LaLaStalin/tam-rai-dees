@@ -51,7 +51,8 @@ const ContainerAccount = styled.div`
         font-size: 35px;
         object-fit: cover;
         border-radius: 12px;
-        background: var(--main-color);
+        background: ${({ urlProfile }) =>
+          !urlProfile ? "var(--main-color)" : "transparent"};
       }
 
       & > span {
@@ -282,7 +283,7 @@ const Account = () => {
   };
 
   return (
-    <ContainerAccount>
+    <ContainerAccount urlProfile={urlProfile}>
       <div className="wrrapper-account">
         <h3>Personal information</h3>
         <p

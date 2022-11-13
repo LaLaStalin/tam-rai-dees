@@ -159,7 +159,11 @@ const Account = () => {
 
   const handleRemoveProfile = () => {
     setFile([]);
-    setUrlProfile(`${apiUrl}/imgs/profile/${user.user_img}`);
+    if (user.user_img) {
+      setUrlProfile(`${apiUrl}/imgs/profile/${user.user_img}`);
+    } else {
+      setUrlProfile("");
+    }
   };
 
   const renderAvatar = () => {

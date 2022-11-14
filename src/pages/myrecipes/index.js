@@ -35,7 +35,7 @@ const ButtonMenuWrrapper = styled.div`
 `;
 
 const MyRecipes = () => {
-  document.title = "Tam Rai Dee - My Recipe";
+  document.title = "Kin Rai Dee - My Recipe";
 
   const [isMyRecipe, setIsMyRecipe] = useState("recipe");
   const location = useLocation();

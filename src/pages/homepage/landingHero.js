@@ -93,14 +93,14 @@ const LandingHero = (props) => {
       />
       <div className="wrapper-landing-hero">
         <ReactTypingEffect
-          text={["WHAT WE ARE COOKING "]}
+          text={["WHAT ARE YOU COOKING ?"]}
           speed={100}
           eraseSpeed={50}
           typingDelay={1000}
-          cursor="?"
+          cursor="🍔"
           className="content-h1"
         />
-        <p>personalize your experience</p>
+        <p>change your cooking experience</p>
       </div>
       <div className="box-search">
         <SearchInput w="450px" onKeyDown={handleSearch} />

@@ -70,7 +70,7 @@ const mapBtnAdmin = [
 ];
 
 const AdminPage = () => {
-  document.title = "Tam Rai Dee - Admin";
+  document.title = "Kin Rai Dee - Admin";
   const [isBtnAdmin, setIsBtnAdmin] = useState("member");
   const [memberSelected, setMemberSelected] = useState({});
 

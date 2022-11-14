@@ -2,7 +2,7 @@ import React from "react";
 import RecipeForm from "./recipeForm";
 
 const RecipeCreate = (props) => {
-  document.title = "Tam Rai Dee - Create";
+  document.title = "Kin Rai Dee - Create";
 
   return <RecipeForm mode="create" />;
 };

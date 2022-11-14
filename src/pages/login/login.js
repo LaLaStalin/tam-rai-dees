@@ -18,7 +18,7 @@ export const TopicHeaderAuth = (props) => {
         <h1>
           {props.type} to
           <br />
-          Tam Rai Dee
+          Kin Rai Dee
         </h1>
 
         <p>
@@ -34,7 +34,7 @@ export const TopicHeaderAuth = (props) => {
 };
 
 const Login = (props) => {
-  document.title = "Tam Rai Dee - Login";
+  document.title = "Kin Rai Dee - Login";
 
   const { setUser, apiUrl } = AuthContext();
   const location = useLocation();

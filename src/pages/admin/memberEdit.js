@@ -149,7 +149,7 @@ const Header = styled.h1`
 `;
 
 const MemberEdit = (props) => {
-  document.title = "Tam Rai Dee - Register";
+  document.title = "Kin Rai Dee - Register";
   const refInputChangeProfile = useRef();
   const [file, setFile] = useState([]);
   const [uploadImgUrl, setUploadImgUrl] = useState();

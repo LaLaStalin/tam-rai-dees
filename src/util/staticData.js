@@ -39,7 +39,7 @@ export const MenuIngredient = [
   },
   {
     name: "อาหารแห้ง",
-    icon: <Icon icon="noto:rice-ball" />,
+    icon: <Icon icon="emojione:bread" />,
     keyword: "Dry",
   },
 ];

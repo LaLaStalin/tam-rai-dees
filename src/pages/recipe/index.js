@@ -152,7 +152,7 @@ const item = {
 };
 
 const Recipe = () => {
-  document.title = "Tam Rai Dee - Recipe";
+  document.title = "Kin Rai Dee - Recipe";
   const location = useLocation();
   const navigate = useNavigate();
   const { user, apiUrl } = AuthContext();

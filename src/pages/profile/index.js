@@ -130,7 +130,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const [isAccount, setIsAccount] = useState("account");
   const [hei] = useState("HELOOO");
-  document.title = "Tam Rai Dee - Profile";
+  document.title = "Kin Rai Dee - Profile";
 
   const mapBtnSetting = [
     {

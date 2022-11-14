@@ -100,17 +100,17 @@ const Footer = () => {
       <div className="wrapper-footer">
         <div className="logo-wrapper-footer">
           <Link to="/" className="logo-text-footer">
-            <h1>Tam Rai Dee</h1>
+            <h1>Kin Rai Dee</h1>
           </Link>
 
-          <p>Good things come to those who bake.</p>
+          <p>Good things come to those who cook.</p>
         </div>
         <div className="copyright-wrapper-footer">
           <span className="arrow-button">
             <RiArrowUpSLine className="arrow-icon" onClick={scrollTop} />
           </span>
 
-          <p>&copy; Tam Rai Dee 2022</p>
+          <p>&copy; Kin Rai Dee 2022</p>
         </div>
       </div>
     </ContainerFooter>

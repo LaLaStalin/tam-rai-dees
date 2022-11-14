@@ -14,7 +14,7 @@ import { AuthContext } from "../../util/context";
 import Swal from "sweetalert2";
 
 const Register = () => {
-  document.title = "Tam Rai Dee - Register";
+  document.title = "Kin Rai Dee - Register";
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowRetypePassword, setIsRetypePassword] = useState(false);
   const location = useLocation();

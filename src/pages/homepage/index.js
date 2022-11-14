@@ -66,7 +66,7 @@ const Homepage = () => {
     });
   }, []);
 
-  document.title = "Tam Rai Dee - Home";
+  document.title = "Kin Rai Dee - Home";
 
   return (
     <ContainerGlobal>

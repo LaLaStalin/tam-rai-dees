@@ -152,7 +152,7 @@ const Navbar = (props) => {
 
     return (
       <div onClick={handleClickHelp}>
-        <a href="https://nattida-jang.gitbook.io/tamraidee/" target="_blank">
+        <a href="https://nattida-jang.gitbook.io/kinraidee/" target="_blank">
           <Tooltip title="ศูนย์ช่วยเหลือ">
             <span
               style={{
@@ -241,7 +241,7 @@ const Navbar = (props) => {
                   keyword="/admin"
                   style={{ fontWeight: 550 }}
                 >
-                  admin
+                  Admin
                 </MenuItems>
               </Tooltip>
             </Link>
@@ -343,7 +343,7 @@ const Navbar = (props) => {
 
             <Link to="/">
               <Tooltip title="Home" followCursor>
-                <h3 className="text-logo">Tam Rai Dee</h3>
+                <h3 className="text-logo">Kin Rai Dee</h3>
               </Tooltip>
             </Link>
           </div>

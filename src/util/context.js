@@ -10,6 +10,13 @@ const GlobalContexts = (props) => {
     user_urole: null,
   });
 
+  //Deploy Sites
+
+  // const [apiUrl, setApiUrl] = useState(
+  //   "http://kinraidees.infinityfreeapp.com/tamraidee-api"
+  // );
+
+  //Dev Site
   const [apiUrl, setApiUrl] = useState("http://localhost/tamraidee-api");
 
   return (

@@ -20,6 +20,7 @@ const AdminPage = lazy(() => import("./pages/admin/index"));
 function App() {
   const [loading, setLoading] = useState(true);
   const { user, setUser, apiUrl } = AuthContext();
+  const [check, setCheck] = useState(false);
 
   useEffect(() => {
     console.log("load");
@@ -34,6 +35,8 @@ function App() {
     if (authCheck) {
       console.log("sdds");
       const parseUser = JSON.parse(authCheck);
+      setCheck(true);
+      console.log("parse: ", parseUser);
       axios
         .post(`${apiUrl}/user/fetchUserById.php`, {
           id: parseInt(parseUser),
@@ -43,9 +46,12 @@ function App() {
             console.log("data: ", res.data.dataUser);
             setUser(res.data.dataUser);
           }
+        })
+        .catch((err) => {
+          console.log("err ", err);
         });
     }
-  }, []);
+  }, [check]);
 
   return (
     <div>

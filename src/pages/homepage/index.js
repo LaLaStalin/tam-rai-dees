@@ -27,7 +27,7 @@ const Homepage = () => {
       //add Like to recipe object
       //Array be like [recipeAdded: [...], likeCount: 0]
 
-      res.data.dataRecipe.forEach((items) => {
+      res.data.dataRecipe.map((items) => {
         for (let i = 0; i < res.data.like.length; i++) {
           if (items.recipe_id === res.data.like[i].recipe_id_by_like) {
             addLikeIntoRecipe.push({
@@ -45,10 +45,10 @@ const Homepage = () => {
 
       const addTagsArrayToRecipe = [];
 
-      addLikeIntoRecipe.forEach((items) => {
+      addLikeIntoRecipe.map((items) => {
         const tagsMock = [];
 
-        res.data.dataTags.forEach((tags) => {
+        res.data.dataTags.map((tags) => {
           if (items.recipeAdded.recipe_id === tags.recipe_id) {
             tagsMock.push(tags.tag_id);
           }

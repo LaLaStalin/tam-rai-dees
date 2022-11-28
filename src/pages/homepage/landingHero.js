@@ -28,6 +28,10 @@ const ContainerLandingHero = styled.section`
     width: 100%;
     z-index: 2;
 
+    .cursorMargin {
+      margin-left: 10px;
+    }
+
     .content-h1 {
       color: #fff;
       font-size: 35px;
@@ -83,6 +87,7 @@ const LandingHero = (props) => {
     }
   };
 
+  //hi
   return (
     <ContainerLandingHero>
       <Parallax
@@ -93,11 +98,12 @@ const LandingHero = (props) => {
       />
       <div className="wrapper-landing-hero">
         <ReactTypingEffect
-          text={["WHAT ARE YOU COOKING ?"]}
+          text={["WHAT ARE YOU COOKING"]}
           speed={100}
           eraseSpeed={50}
           typingDelay={1000}
-          cursor="🍔"
+          cursor="?"
+          cursorClassName="cursorMargin"
           className="content-h1"
         />
         <p>change your cooking experience</p>

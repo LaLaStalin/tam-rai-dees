@@ -46,6 +46,9 @@ const Recipes = () => {
   );
 
   useEffect(() => {
+    console.log("apiurl:", apiUrl);
+    console.log("apiurl:", apiUrl);
+
     axios
       .post(`${apiUrl}/recipe/fetchAllMyRecipe.php`, {
         id: parseInt(user.user_id),
